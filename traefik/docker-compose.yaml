@@ -1,0 +1,30 @@
+---
+volumes:
+  certs:
+  ts_traefik:
+
+services:
+  traefik:
+    image: ghcr.io/chukysoria/traefik:v0.1.5
+    ports:
+      - 8443:8443/tcp
+      - 8080:8080/tcp
+      - 7359:7359/udp
+    networks:
+      - frontend
+    environment:
+      DOCKER_MODS: 'ghcr.io/chukysoria/tailscale-mod:v1.1.3'
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: traefik
+      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
+    volumes:
+      - certs:/certs:rw
+      - /volume1/docker/traefik:/config:rw
+      - ts_traefik:/tsconfig
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  frontend:
+    external: true
