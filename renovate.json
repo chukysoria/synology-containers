@@ -4,6 +4,7 @@
     "local>chukysoria/renovate-config",
     ":skipStatusChecks"
   ],
+  "automerge": false,
   "packageRules": [
     {
       "matchDatasources": [
@@ -12,7 +13,7 @@
       "matchPackagePrefixes": [
         "lscr.io/linuxserver"
       ],
-      "versioning": "loose"
+      "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<build>\\d+)$"
     }
   ]
 }
