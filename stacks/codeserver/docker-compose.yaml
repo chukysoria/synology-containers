@@ -1,0 +1,36 @@
+---
+volumes:
+  ts_code-server:
+
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:4.19.1-ls184
+    environment:
+      PUID: 1029
+      PGID: 65536
+      TZ: Europe/Madrid
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_SERVE_MODE: https
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: vscode
+      TAILSCALE_SERVE_PORT: 8443
+      #HASHED_PASSWORD= #optional
+      DEFAULT_WORKSPACE: /mnt/hass
+      PROXY_DOMAIN: vscode.fossa-lake.ts.net
+    volumes:
+      - /volume1/docker/codeserver:/config
+      - /volume1/docker/hass:/mnt/hass
+      - ts_code-server:/tsconfig
+    networks:
+      - frontend
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vscode.rule=Host(`vscode.boulebar.duckdns.org`)"
+      - "traefik.http.routers.nodered.middlewares=ip-allowlist@file"
+
+networks:
+  frontend:
+    external: true

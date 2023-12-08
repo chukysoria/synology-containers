@@ -1,0 +1,32 @@
+---
+volumes:
+  ts_duplicati:
+
+services:
+  duplicati:
+    image: ghcr.io/chukysoria/duplicati:v0.1.7
+    environment:
+      PUID: 1029
+      PGID: 65536
+      TZ: Europe/Madrid
+      DOCKER_MODS: ghcr.io/chukysoria/tailscale-mod:v1.1.3
+      TAILSCALE_SERVE_MODE: https
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: duplicati
+      TAILSCALE_SERVE_PORT: 8200
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+    networks:
+      - frontend
+    volumes:
+      - /volume1/docker/duplicati:/config
+      - /volume1/duplicati:/backups
+      - ts_duplicati:/tsconfig
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.duplicati.rule=Host(`duplicati.boulebar.duckdns.org`)"
+    restart: unless-stopped
+
+networks:
+  frontend:
+    external: true

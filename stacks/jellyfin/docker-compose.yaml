@@ -1,26 +1,29 @@
+---
 volumes:
   ts_jellyfin:
 
 services:
   jellyfin:
-    image: ghcr.io/chukysoria/jellyfin:v0.1.6
-    networks:
-      - frontend
-    volumes:
-      - ts_jellyfin:/tsconfig
-      - /volume1/docker/jellyfin:/config:rw
-      - /volume1/video:/media/video
+    image: ghcr.io/chukysoria/jellyfin:v0.1.10
     environment:
-      PUID: 1027
-      PGID: 100
+      PUID: 1029
+      PGID: 65536
       TZ: Europe/Madrid
-      DOCKER_MODS: 'ghcr.io/chukysoria/tailscale-mod:v1.1.3'
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: jellyfin
       TAILSCALE_SERVE_PORT: 8096
+      JELLYFIN_PublishedServerUrl: "https://jellyfin.boulebar.duckdns.org"
+    networks:
+      - frontend
+    volumes:
+      - ts_jellyfin:/tsconfig
+      - /volume1/docker/jellyfin:/config:rw
+      - /volume1/video:/media/video
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.boulebar.duckdns.org`)"

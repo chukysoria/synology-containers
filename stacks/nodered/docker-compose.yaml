@@ -1,0 +1,33 @@
+---
+volumes:
+  ts_nodered:
+
+services:
+  nodered:
+    image: ghcr.io/chukysoria/nodered:v0.1.1
+    environment:
+      PUID: 1029
+      PGID: 65536
+      TZ: Europe/Madrid
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_SERVE_MODE: https
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: nodered
+      TAILSCALE_SERVE_PORT: 1880
+      NPM_PACKAGES: "node-red-contrib-alexa-smart-home"
+    networks:
+      - frontend
+    volumes:
+      - ts_nodered:/tsconfig
+      - /volume1/docker/nodered:/config:rw
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nodered.rule=Host(`nodered.boulebar.duckdns.org`)"
+      - "traefik.http.routers.nodered.middlewares=ip-allowlist@file"
+
+networks:
+  frontend:
+    external: true

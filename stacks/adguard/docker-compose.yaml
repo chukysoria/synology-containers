@@ -1,0 +1,32 @@
+---
+services:
+  adguardhome:
+    image: adguard/adguardhome:v0.107.41
+    volumes:
+      - /volume1/docker/adguard/conf:/opt/adguardhome/conf:uid=1029,gid=65536
+      - /volume1/docker/adguard/work:/opt/adguardhome/work:uid=1029,gid=65536
+    networks:
+      frontend:
+      macvlan:
+        ipv4_address: 192.168.1.50
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adguard.rule=Host(`adguard.boulebar.duckdns.org`)"
+      - "traefik.http.routers.adguard.service=svc-adguard"
+      - "traefik.http.routers.ha.middlewares=csp-homeassistant@file"
+      - "traefik.http.services.svc-adguard.loadbalancer.server.port=80"
+
+networks:
+  frontend:
+    external: true
+  macvlan:
+    name: macvlan
+    driver: macvlan
+    driver_opts:
+      parent: ovs_bond0
+    ipam:
+      config:
+        - subnet: "192.168.1.0/24"
+          ip_range: "192.168.1.48/28"
+          gateway: "192.168.1.1"
