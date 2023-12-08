@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:v1.4.0-ls225
+    image: lscr.io/linuxserver/bazarr:v1.4.0-ls226
     volumes:
       - /volume1/docker/bazarr:/config:rw
       - ts_bazarr:/tsconfig
