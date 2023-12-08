@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.vscode.rule=Host(`vscode.boulebar.duckdns.org`)"
-      - "traefik.http.routers.nodered.middlewares=ip-allowlist@file"
+      - "traefik.http.routers.vscode.middlewares=ip-allowlist@file"
 
 networks:
   frontend:
