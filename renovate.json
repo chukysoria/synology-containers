@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>chukysoria/renovate-config"
+    "local>chukysoria/renovate-config",
+    ":skipStatusChecks"
   ]
 }
