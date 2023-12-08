@@ -1,7 +1,7 @@
 ---
 services:
   adguardhome:
-    image: adguard/adguardhome:v0.107.41
+    image: adguard/adguardhome:v0.107.42
     volumes:
       - /volume1/docker/adguard/conf:/opt/adguardhome/conf:uid=1029,gid=65536
       - /volume1/docker/adguard/work:/opt/adguardhome/work:uid=1029,gid=65536
