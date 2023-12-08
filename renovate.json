@@ -3,5 +3,16 @@
   "extends": [
     "local>chukysoria/renovate-config",
     ":skipStatusChecks"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackagePrefixes": [
+        "lscr.io/linuxserver"
+      ],
+      "versioning": "loose"
+    }
   ]
 }
