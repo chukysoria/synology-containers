@@ -4,7 +4,6 @@
     "local>chukysoria/renovate-config",
     ":skipStatusChecks"
   ],
-  "automerge": false,
   "packageRules": [
     {
       "matchDatasources": [
