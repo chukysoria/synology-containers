@@ -4,7 +4,7 @@ volumes:
 
 services:
   jellyfin:
-    image: ghcr.io/chukysoria/jellyfin:v0.1.10
+    image: ghcr.io/chukysoria/jellyfin:v0.1.11
     environment:
       PUID: 1029
       PGID: 65536
