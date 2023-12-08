@@ -6,7 +6,7 @@ volumes:
 
 services:
   sonarr:
-    image: ghcr.io/chukysoria/sonarr:v0.1.12
+    image: ghcr.io/chukysoria/sonarr:v0.1.14
     volumes:
       - /volume1/docker/sonarr:/config:rw
       - ts_sonarr:/tsconfig
