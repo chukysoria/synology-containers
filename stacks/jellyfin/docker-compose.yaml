@@ -21,7 +21,7 @@ services:
       - frontend
     volumes:
       - ts_jellyfin:/tsconfig
-      - /volume1/docker/jellyfin:/config:rw
+      - /volume2/docker/jellyfin:/config:rw
       - /volume1/video:/media/video
     restart: unless-stopped
     labels:

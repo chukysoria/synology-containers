@@ -8,9 +8,9 @@ services:
   sonarr:
     image: ghcr.io/chukysoria/sonarr:v0.1.14
     volumes:
-      - /volume1/docker/sonarr:/config:rw
+      - /volume2/docker/sonarr:/config:rw
       - ts_sonarr:/tsconfig
-      - /volume1/downloads:/media/downloads
+      - /volume2/downloads:/media/downloads
       - /volume1/video/Series:/media/video/Series
     networks:
       - frontend
@@ -33,11 +33,11 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:v1.4.0-ls226
     volumes:
-      - /volume1/docker/bazarr:/config:rw
+      - /volume2/docker/bazarr:/config:rw
       - ts_bazarr:/tsconfig
-      - /volume1/downloads:/media/downloads
+      - /volume2/downloads:/media/downloads
       - /volume1/video/Series:/media/video/Series
-      - /volume1/video/Series:/media/video/Pelis
+      - /volume1/video/Pelis:/media/video/Pelis
     networks:
       - frontend
     environment:
@@ -61,7 +61,7 @@ services:
     networks:
       - frontend
     volumes:
-      - /volume1/docker/prowlarr:/config:rw
+      - /volume2/docker/prowlarr:/config:rw
       - ts_prowlarr:/tsconfig
     environment:
       PUID: 1029

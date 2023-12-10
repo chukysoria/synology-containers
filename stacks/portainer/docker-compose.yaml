@@ -6,7 +6,7 @@ services:
       - frontend
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /volume1/docker/portainer:/data:uid=1029,gid=65536
+      - /volume2/docker/portainer:/data:uid=1029,gid=65536
     restart: always
     ports:
       - 9443:9443
