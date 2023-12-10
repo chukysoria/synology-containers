@@ -17,7 +17,7 @@ services:
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_SERVE_PORT: "80"
     volumes:
-      - /volume1/docker/grocy:/config
+      - /volume2/docker/grocy:/config
       - grocy_tsconfig:/tsconfig
     networks:
       - frontend

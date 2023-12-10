@@ -19,8 +19,8 @@ services:
     networks:
       - frontend
     volumes:
-      - /volume1/docker/duplicati:/config
-      - /volume1/duplicati:/backups
+      - /volume2/docker/duplicati:/config
+      - /volume2/duplicati:/backups
       - ts_duplicati:/tsconfig
     labels:
       - "traefik.enable=true"

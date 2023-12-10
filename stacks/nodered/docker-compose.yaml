@@ -21,7 +21,7 @@ services:
       - frontend
     volumes:
       - ts_nodered:/tsconfig
-      - /volume1/docker/nodered:/config:rw
+      - /volume2/docker/nodered:/config:rw
     restart: unless-stopped
     labels:
       - "traefik.enable=true"

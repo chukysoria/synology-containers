@@ -19,7 +19,7 @@ services:
       TAILSCALE_FUNNEL: 1
       INSTALL_PACKAGES: nmap
     volumes:
-      - /volume1/docker/hass:/config
+      - /volume2/docker/hass:/config
       - /etc/localtime:/etc/localtime:ro
       - ts_hass:/tsconfig
     network_mode: host

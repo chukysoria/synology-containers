@@ -20,8 +20,8 @@ services:
       DEFAULT_WORKSPACE: /mnt/hass
       PROXY_DOMAIN: vscode.fossa-lake.ts.net
     volumes:
-      - /volume1/docker/codeserver:/config
-      - /volume1/docker/hass:/mnt/hass
+      - /volume2/docker/codeserver:/config
+      - /volume2/docker/hass:/mnt/hass
       - ts_code-server:/tsconfig
     networks:
       - frontend

@@ -9,7 +9,7 @@ services:
       - frontend
     volumes:
       - ts_vaultwarden:/tsconfig
-      - /volume1/docker/vaultwarden:/app/vw/data:rw
+      - /volume2/docker/vaultwarden:/app/vw/data:rw
     environment:
       PUID: 1029
       PGID: 65536

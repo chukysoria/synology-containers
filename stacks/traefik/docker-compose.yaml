@@ -22,7 +22,7 @@ services:
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
     volumes:
       - certs:/certs:rw
-      - /volume1/docker/traefik:/config:rw
+      - /volume2/docker/traefik:/config:rw
       - ts_traefik:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock
 
