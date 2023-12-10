@@ -4,7 +4,7 @@ volumes:
 
 services:
   code-server:
-    image: lscr.io/linuxserver/code-server:4.19.1-ls184
+    image: lscr.io/linuxserver/code-server:4.19.1-ls185
     environment:
       PUID: 1029
       PGID: 65536
