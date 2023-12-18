@@ -11,7 +11,7 @@ services:
       - /volume2/docker/sonarr:/config:rw
       - ts_sonarr:/tsconfig
       - /volume2/downloads:/media/downloads
-      - /volume1/video/Series:/media/video/Series
+      - /volume2/video/Series:/media/video/Series
     networks:
       - frontend
     environment:
@@ -36,8 +36,8 @@ services:
       - /volume2/docker/bazarr:/config:rw
       - ts_bazarr:/tsconfig
       - /volume2/downloads:/media/downloads
-      - /volume1/video/Series:/media/video/Series
-      - /volume1/video/Pelis:/media/video/Pelis
+      - /volume2/video/Series:/media/video/Series
+      - /volume2/video/Pelis:/media/video/Pelis
     networks:
       - frontend
     environment:
