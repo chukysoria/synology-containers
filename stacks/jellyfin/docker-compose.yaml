@@ -22,7 +22,7 @@ services:
     volumes:
       - ts_jellyfin:/tsconfig
       - /volume2/docker/jellyfin:/config:rw
-      - /volume1/video:/media/video
+      - /volume2/video:/media/video
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
