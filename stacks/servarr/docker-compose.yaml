@@ -3,8 +3,34 @@ volumes:
   ts_sonarr:
   ts_bazarr:
   ts_prowlarr:
+  ts_radarr:
 
 services:
+  radarr:
+    image: lscr.io/linuxserver/:5.1.3.8246-ls196
+    volumes:
+      - /volume2/docker/radarr:/config:rw
+      - ts_radarr:/tsconfig
+      - /volume2/downloads:/media/downloads
+      - /volume2/video:/media/video
+    networks:
+      - frontend
+    environment:
+      PUID: 1029
+      PGID: 65536
+      TZ: Europe/Madrid
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_SERVE_MODE: https
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: radarr
+      TAILSCALE_SERVE_PORT: 7878
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.boulebar.duckdns.org`)"
+    restart: unless-stopped
+
   sonarr:
     image: ghcr.io/chukysoria/sonarr:v0.1.15
     volumes:
