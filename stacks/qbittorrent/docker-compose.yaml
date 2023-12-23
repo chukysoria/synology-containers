@@ -24,8 +24,7 @@ services:
       TAILSCALE_HOSTNAME: qbit
       TAILSCALE_SERVE_PORT: 8080
     ports:
-      - 6881:6881
-      - 6881:6881/udp
+      - 2873:2873
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.qbit.rule=Host(`qbit.boulebar.duckdns.org`)"
