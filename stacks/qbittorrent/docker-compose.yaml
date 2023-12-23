@@ -1,0 +1,36 @@
+---
+volumes:
+  ts_qbit:
+
+services:
+  qbittorrent:
+    image: ghcr.io/chukysoria/qbittorrent:v0.1.0
+    volumes:
+      - /volume2/docker/qbit:/config:rw
+      - ts_qbit:/tsconfig
+      - /volume2/downloads:/media/downloads
+      - /volume2/video/torrents:/media/video/torrents
+    networks:
+      - frontend
+    environment:
+      PUID: 1029
+      PGID: 65536
+      TZ: Europe/Madrid
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_SERVE_MODE: https
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: qbit
+      TAILSCALE_SERVE_PORT: 8080
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbit.rule=Host(`qbit.boulebar.duckdns.org`)"
+    restart: unless-stopped
+ 
+networks:
+  frontend:
+    external: true
