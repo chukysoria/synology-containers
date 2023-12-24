@@ -4,7 +4,7 @@ volumes:
 
 services:
   grocy:
-    image: lscr.io/linuxserver/grocy:v4.0.3-ls228
+    image: lscr.io/linuxserver/grocy:v4.0.3-ls229
     environment:
       PUID: 1029
       PGID: 65536
