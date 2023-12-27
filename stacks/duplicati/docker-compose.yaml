@@ -4,7 +4,7 @@ volumes:
 
 services:
   duplicati:
-    image: ghcr.io/chukysoria/duplicati:v0.1.11
+    image: ghcr.io/chukysoria/duplicati:v0.1.12
     environment:
       PUID: 1029
       PGID: 65536
