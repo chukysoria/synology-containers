@@ -4,7 +4,7 @@ volumes:
 
 services:
   qbittorrent:
-    image: ghcr.io/chukysoria/qbittorrent:v0.1.0
+    image: ghcr.io/chukysoria/qbittorrent:v0.1.1
     volumes:
       - /volume2/docker/qbit:/config:rw
       - ts_qbit:/tsconfig
