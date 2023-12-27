@@ -29,7 +29,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.qbit.rule=Host(`qbit.boulebar.duckdns.org`)"
-    restart: unless-stopped
+      - "traefik.http.routers.qbit.service=svc-qbit"
+      - "traefik.http.services.svc-qbit.loadbalancer.server.port=8080"
+restart: unless-stopped
  
 networks:
   frontend:
