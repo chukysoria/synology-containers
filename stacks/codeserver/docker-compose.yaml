@@ -24,7 +24,7 @@ services:
       SUDO_PASSWORD: abc
       VSCODE_EXTENSION_IDS: "keesschollaart.vscode-home-assistant|ms-azuretools.vscode-docker|redhat.vscode-yaml|lukas-tr.materialdesignicons-intellisense|tailscale.vscode-tailscale|ms-vscode-remote.vscode-remote-extensionpack"
       INSTALL_PACKAGES: wget
-      EXTENSIONS_GALLERT: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery","cacheUrl": "https://vscode.blob.core.windows.net/gallery/index","itemUrl": "https://marketplace.visualstudio.com/items"}'
+      EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery","itemUrl": "https://marketplace.visualstudio.com/items"}'
     volumes:
       - /volume2/docker/codeserver:/config
       - /volume2/docker:/mnt/docker
