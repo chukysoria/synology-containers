@@ -28,7 +28,8 @@ services:
       TAILSCALE_SERVE_PORT: 7878
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.boulebar.duckdns.org`)"
+      - "traefik.http.routers.radarr-rtr.rule=Host(`radarr.boulebar.duckdns.org`)"
+      - "traefik.http.routers.radarr-rtr.middlewares=authentik@docker"
     restart: unless-stopped
 
   sonarr:
@@ -53,8 +54,8 @@ services:
       TAILSCALE_SERVE_PORT: 8989
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.boulebar.duckdns.org`)"
-      - "traefik.http.routers.sonarr.middlewares=authentik@docker"
+      - "traefik.http.routers.sonarr-rtr.rule=Host(`sonarr.boulebar.duckdns.org`)"
+      - "traefik.http.routers.sonarr-rtr.middlewares=authentik@docker"
     restart: unless-stopped
 
   bazarr:
