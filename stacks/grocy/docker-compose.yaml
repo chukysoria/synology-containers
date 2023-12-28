@@ -6,10 +6,12 @@ services:
   grocy:
     image: lscr.io/linuxserver/grocy:v4.0.3-ls229
     environment:
+      # General LinuxServer.io
       PUID: 1029
       PGID: 65536
       TZ: Europe/Madrid
       DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      # Tailscale
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
       TAILSCALE_USE_SSH: "1"
       TAILSCALE_HOSTNAME: grocy
@@ -23,8 +25,9 @@ services:
       - frontend
     restart: unless-stopped
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.grocy.rule=Host(`grocy.boulebar.duckdns.org`)"
+      traefik.enable: true
+      traefik.http.routers.grocy-rtr.rule: Host(`grocy.boulebar.duckdns.org`)
+      traefik.http.routers.grocy-rtr.middlewares: authentik@docker
 
 networks:
   frontend:
