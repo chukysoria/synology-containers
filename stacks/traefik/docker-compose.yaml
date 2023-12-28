@@ -13,6 +13,8 @@ services:
     dns:
       - 1.1.1.1
       - 8.8.8.8
+    extra_hosts:
+      - host.docker.internal:{docker0_IP}
     environment:
       PUID: 1029
       PGID: 65536
