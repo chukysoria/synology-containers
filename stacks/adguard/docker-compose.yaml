@@ -11,10 +11,11 @@ services:
         ipv4_address: 192.168.1.50
     restart: unless-stopped
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.adguard.rule=Host(`adguard.boulebar.duckdns.org`)"
-      - "traefik.http.routers.adguard.service=svc-adguard"
-      - "traefik.http.services.svc-adguard.loadbalancer.server.port=80"
+      traefik.enable: true
+      traefik.http.routers.adguard-rtr.rule: Host(`adguard.boulebar.duckdns.org`)
+      traefik.http.routers.adguard-rtr.service: adguard-svc
+      traefik.http.routers.adguard-rtr.middlewares: authentik@docker
+      traefik.http.services.adguard-svc.loadbalancer.server.port: 80
 
 networks:
   frontend:
