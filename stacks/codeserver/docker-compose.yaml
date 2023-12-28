@@ -27,9 +27,9 @@ services:
       - frontend
     restart: unless-stopped
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.vscode.rule=Host(`vscode.boulebar.duckdns.org`)"
-      - "traefik.http.routers.vscode.middlewares=ip-allowlist@file"
+      traefik.enable: true
+      traefik.http.routers.vscode-rtr.rule: Host(`vscode.boulebar.duckdns.org`)
+      traefik.http.routers.vscode-rtr.middlewares: authentik@docker
 
 networks:
   frontend:
