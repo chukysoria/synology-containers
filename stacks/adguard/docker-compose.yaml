@@ -21,6 +21,7 @@ networks:
   frontend:
     external: true
   macvlan:
+    name: macvlan
     driver: macvlan
     driver_opts:
       parent: ovs_bond0
