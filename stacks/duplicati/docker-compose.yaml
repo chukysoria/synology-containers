@@ -24,7 +24,7 @@ services:
       - ts_duplicati:/tsconfig
     labels:
       traefik.enable: true
-      traefik.http.routers.duplicati.rtr.rule: Host(`duplicati.boulebar.duckdns.org`)
+      traefik.http.routers.duplicati-rtr.rule: Host(`duplicati.boulebar.duckdns.org`)
       traefik.http.routers.duplicati-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
