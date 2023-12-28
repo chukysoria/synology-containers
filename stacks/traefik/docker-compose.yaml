@@ -14,7 +14,7 @@ services:
       - 1.1.1.1
       - 8.8.8.8
     extra_hosts:
-      - host.docker.internal:192.168.1.6
+      - host.docker.internal:192.168.1.48
     environment:
       PUID: 1029
       PGID: 65536
