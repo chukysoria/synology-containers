@@ -6,23 +6,30 @@ services:
   code-server:
     image: lscr.io/linuxserver/code-server:4.20.0-ls187
     environment:
+      # General LinuxServer.io
       PUID: 1029
       PGID: 65536
       TZ: Europe/Madrid
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3|linuxserver/mods:universal-docker|linuxserver/mods:code-server-zsh|linuxserver/mods:code-server-extension-arguments|linuxserver/mods:universal-package-install"
+      # Tailscale
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: vscode
       TAILSCALE_SERVE_PORT: 8443
-      #HASHED_PASSWORD= #optional
-      DEFAULT_WORKSPACE: /mnt/hass
-      PROXY_DOMAIN: vscode.fossa-lake.ts.net
+      # Code Server
+      DEFAULT_WORKSPACE: /mnt/docker/hass
+      CS_DISABLE_GETTING_STARTED_OVERRIDE: true
+      SUDO_PASSWORD: abc
+      VSCODE_EXTENSION_IDS: "keesschollaart.vscode-home-assistant|ms-azuretools.vscode-docker|redhat.vscode-yaml|lukas-tr.materialdesignicons-intellisense|tailscale.vscode-tailscale|ms-vscode-remote.vscode-remote-extensionpack"
+      INSTALL_PACKAGES: wget
+      EXTENSIONS_GALLERT: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery","cacheUrl": "https://vscode.blob.core.windows.net/gallery/index","itemUrl": "https://marketplace.visualstudio.com/items"}'
     volumes:
       - /volume2/docker/codeserver:/config
-      - /volume2/docker/hass:/mnt/hass
+      - /volume2/docker:/mnt/docker
       - ts_code-server:/tsconfig
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - frontend
     restart: unless-stopped
