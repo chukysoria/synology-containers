@@ -54,8 +54,6 @@ services:
     networks:
       - frontend
       - database
-    ports:
-      - "9443:9443"
     labels:
       traefik.enable: true
       ## HTTP Routers
