@@ -104,8 +104,9 @@ services:
       TAILSCALE_HOSTNAME: prowlarr
       TAILSCALE_SERVE_PORT: 9696
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.boulebar.duckdns.org`)"
+      traefik.enable: true
+      traefik.http.routers.prowlarr-rtr.rule: Host(`prowlarr.boulebar.duckdns.org`)
+      traefik.http.routers.prowlarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
 networks:
