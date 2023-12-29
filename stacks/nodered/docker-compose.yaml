@@ -29,7 +29,6 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.nodered.rule: Host(`nodered.boulebar.duckdns.org`)
-      traefik.http.routers.nodered.middlewares: ip-allowlist@file
 
 networks:
   frontend:
