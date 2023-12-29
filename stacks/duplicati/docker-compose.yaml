@@ -6,10 +6,12 @@ services:
   duplicati:
     image: ghcr.io/chukysoria/duplicati:v0.1.12
     environment:
+      # General LinuServer.io
       PUID: 1029
       PGID: 65536
       TZ: Europe/Madrid
       DOCKER_MODS: ghcr.io/chukysoria/tailscale-mod:v1.1.3
+      # Tailscale
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
       TAILSCALE_STATE_DIR: /tsconfig

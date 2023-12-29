@@ -29,7 +29,16 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
-      traefik.http.routers.ha-rtr.rule: Host(`ha.boulebar.duckdns.org`)
-      traefik.http.routers.ha-rtr.service: ha-svc
-      traefik.http.routers.ha-rtr.middlewares: csp-homeassistant@file,authentik@docker
+      # Routers
+      traefik.http.routers.ha-passthrough-rtr.rule: Host(`ha.boulebar.duckdns.org`) && !( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) ) && !(PathPrefix(`/outpost.goauthentik.io/`))
+      traefik.http.routers.ha-passthrough-rtr.service: ha-svc
+
+      traefik.http.routers.ha-auth-rtr.rule: Host(`ha.boulebar.duckdns.org`) && ( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) )
+      traefik.http.routers.ha-auth-rtr.service: ha-svc
+
+      # Middlewares
+      traefik.http.routers.ha-passthrough-rtr.middlewares: csp-homeassistant@file
+      traefik.http.routers.ha-auth-rtr.middlewares: csp-homeassistant@file,authentik@docker
+      
+      # Services
       traefik.http.services.ha-svc.loadbalancer.server.port: 8123

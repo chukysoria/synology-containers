@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
-      traefik.http.routers.nodered.rule: Host(`nodered.boulebar.duckdns.org`)
+      traefik.http.routers.nodered-rtr.rule: Host(`nodered.boulebar.duckdns.org`)
 
 networks:
   frontend:
