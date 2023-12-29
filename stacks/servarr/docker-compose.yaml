@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: ghcr.io/chukysoria/sonarr:v0.1.16
+    image: ghcr.io/chukysoria/sonarr:v0.1.17
     volumes:
       - /volume2/docker/sonarr:/config:rw
       - ts_sonarr:/tsconfig
