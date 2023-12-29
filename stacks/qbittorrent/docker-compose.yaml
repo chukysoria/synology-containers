@@ -13,10 +13,12 @@ services:
     networks:
       - frontend
     environment:
+      # General LinuxServer.io
       PUID: 1029
       PGID: 65536
       TZ: Europe/Madrid
       DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      # Tailscale
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
@@ -31,7 +33,7 @@ services:
       - "traefik.http.routers.qbit.rule=Host(`qbit.boulebar.duckdns.org`)"
       - "traefik.http.routers.qbit.service=svc-qbit"
       - "traefik.http.services.svc-qbit.loadbalancer.server.port=8080"
-restart: unless-stopped
+    restart: unless-stopped
  
 networks:
   frontend:
