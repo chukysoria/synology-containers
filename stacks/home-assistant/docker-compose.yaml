@@ -4,7 +4,7 @@ volumes:
 
 services:
   homeassistant:
-    image: lscr.io/linuxserver/homeassistant:2023.12.4-ls214
+    image: lscr.io/linuxserver/homeassistant:2023.12.4-ls215
     environment:
       # General LinuxServer.io
       PUID: 1029
