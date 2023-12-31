@@ -25,24 +25,43 @@ services:
       - /volume2/docker/hass:/config
       - /etc/localtime:/etc/localtime:ro
       - ts_hass:/tsconfig
-    network_mode: host
+    networks:
+      frontend:
+      macvlan:
+        ipv4_address: 192.168.1.51
     restart: unless-stopped
     labels:
       traefik.enable: true
       # Routers
-      traefik.http.routers.ha-rtr.rule: Host(`ha.boulebar.duckdns.org`)
-      traefik.http.routers.ha-rtr.service: ha-svc
+      #traefik.http.routers.ha-rtr.rule: Host(`ha.boulebar.duckdns.org`)
+      #traefik.http.routers.ha-rtr.service: ha-svc
 
-      #traefik.http.routers.ha-passthrough-rtr.rule: Host(`ha.boulebar.duckdns.org`) && !( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) ) && !(PathPrefix(`/outpost.goauthentik.io/`))
-      #traefik.http.routers.ha-passthrough-rtr.service: ha-svc
+      traefik.http.routers.ha-passthrough-rtr.rule: Host(`ha.boulebar.duckdns.org`) && !( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) ) && !(PathPrefix(`/outpost.goauthentik.io/`))
+      traefik.http.routers.ha-passthrough-rtr.service: ha-svc
 
-      #traefik.http.routers.ha-auth-rtr.rule: Host(`ha.boulebar.duckdns.org`) && ( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) )
-      #traefik.http.routers.ha-auth-rtr.service: ha-svc
+      traefik.http.routers.ha-auth-rtr.rule: Host(`ha.boulebar.duckdns.org`) && ( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) )
+      traefik.http.routers.ha-auth-rtr.service: ha-svc
 
       # Middlewares
-      traefik.http.routers.ha-rtr.middlewares: csp-homeassistant@file
-      #traefik.http.routers.ha-passthrough-rtr.middlewares: csp-homeassistant@file
-      #traefik.http.routers.ha-auth-rtr.middlewares: csp-homeassistant@file,authentik@docker
+      #traefik.http.routers.ha-rtr.middlewares: csp-homeassistant@file
+      traefik.http.routers.ha-passthrough-rtr.middlewares: csp-homeassistant@file
+      traefik.http.routers.ha-auth-rtr.middlewares: csp-homeassistant@file,authentik@docker
       
       # Services
       traefik.http.services.ha-svc.loadbalancer.server.port: 8123
+
+networks:
+  frontend:
+    external: true
+  macvlan:
+    name: macvlan
+    driver: macvlan
+    driver_opts:
+      parent: ovs_bond0
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          ip_range: 192.168.1.48/28
+          gateway: 192.168.1.1
+          aux_addresses:
+            torrent: 192.168.1.48
