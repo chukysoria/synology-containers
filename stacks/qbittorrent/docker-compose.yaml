@@ -29,10 +29,11 @@ services:
       - 2873:2873
       - 2873:2873/udp
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.qbit.rule=Host(`qbit.boulebar.duckdns.org`)"
-      - "traefik.http.routers.qbit.service=svc-qbit"
-      - "traefik.http.services.svc-qbit.loadbalancer.server.port=8080"
+      traefik.enable: true
+      traefik.http.routers.qbit-rtr.rule: Host(`qbit.boulebar.duckdns.org`)
+      traefik.http.routers.qbit-rtr.service: qbit-svc
+      traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
+      traefik.http.routers.qbit-rtr.middlewares: authentik@docker
     restart: unless-stopped
  
 networks:
