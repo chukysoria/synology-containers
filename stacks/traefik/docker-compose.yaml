@@ -35,8 +35,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: true
-      traefik.http.routers.dashboard@internalr.rule: Host(`traefik.boulebar.duckdns.org`)
-      traefik.http.routers.dashboard@internal.middlewares: authentik@docker
+      traefik.traefik.routers.dashboard@internal.rule: Host(`traefik.boulebar.duckdns.org`)
+      traefik.traefik.routers.dashboard@internal.middlewares: authentik@docker
 
 networks:
   frontend:
