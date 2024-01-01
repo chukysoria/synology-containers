@@ -1,7 +1,7 @@
 ---
 services:
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ee:latest
     networks:
       - frontend
     volumes:
@@ -11,10 +11,10 @@ services:
     ports:
       - 9443:9443
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.boulebar.duckdns.org`)"
-      - "traefik.http.routers.portainer.service=svc-portainer"
-      - "traefik.http.services.svc-portainer.loadbalancer.server.port=9000"
+      traefik.enable: true
+      traefik.http.routers.portainer-rtr.rule: Host(`portainer.boulebar.duckdns.org`)
+      traefik.http.routers.portainer-rtr.service: portainer-svc
+      traefik.http.services.portainer-svc.loadbalancer.server.port: 9000
 
 networks:
   frontend:
