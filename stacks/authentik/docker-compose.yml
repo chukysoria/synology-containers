@@ -16,11 +16,10 @@ services:
     networks:
       - database
     environment:
+      TZ: Europe/Madrid
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
       POSTGRES_USER: ${PG_USER:-authentik}
       POSTGRES_DB: ${PG_DB:-authentik}
-    env_file:
-      - ./stack.env
 
   redis:
     image: docker.io/library/redis:alpine
@@ -43,11 +42,15 @@ services:
     restart: unless-stopped
     command: server
     environment:
+      TZ: Europe/Madrid
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: true
+      AUTHENTIK_COOKIE_DOMAIN: ${DOMAIN}
     volumes:
       - /volume2/docker/authentik/media:/media
       - /volume2/docker/authentik/custom-templates:/templates
@@ -67,8 +70,6 @@ services:
       traefik.http.middlewares.authentik.forwardauth.address: http://authentik-server:9000/outpost.goauthentik.io/auth/traefik
       traefik.http.middlewares.authentik.forwardauth.trustForwardHeader: true
       traefik.http.middlewares.authentik.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version,Authorization   
-    env_file:
-      - ./stack.env
     depends_on:
       - postgresql
       - redis
@@ -78,11 +79,20 @@ services:
     restart: unless-stopped
     command: worker
     environment:
+      TZ: Europe/Madrid
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_EMAIL__HOST: smtp.gmail.com
+      AUTHENTIK_EMAIL__PORT: 465
+      AUTHENTIK_EMAIL__USERNAME: ${AUTHENTIK_EMAIL__USERNAME}
+      AUTHENTIK_EMAIL__PASSWORD: ${AUTHENTIK_EMAIL__PASSWORD}
+      AUTHENTIK_EMAIL__USE_TLS: FALSE
+      AUTHENTIK_EMAIL__USE_SSL: TRUE
+      AUTHENTIK_EMAIL__TIMEOUT: 10
+      AUTHENTIK_EMAIL__FROM: ${AUTHENTIK_EMAIL__FROM}
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -91,8 +101,6 @@ services:
       - /volume2/docker/authentik/custom-templates:/templates
     networks:
       - database
-    env_file:
-      - ./stack.env
     depends_on:
       - postgresql
       - redis
