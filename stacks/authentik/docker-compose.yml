@@ -21,6 +21,8 @@ services:
     networks:
       - frontend
       - authentik
+    ports:
+      - 9000:9000
     labels:
       traefik.enable: true
       traefik.docker.network: frontend
