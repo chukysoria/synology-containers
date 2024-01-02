@@ -19,7 +19,7 @@ services:
 
 networks:
   frontend:
-    external: true
+    external: true # Defined in portainer
   macvlan:
     name: macvlan
     driver: macvlan

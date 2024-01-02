@@ -17,28 +17,28 @@ services:
       - host.docker.internal:192.168.1.48
     environment:
       # General LinuxServer.io
-      PUID: 1029
-      PGID: 65536
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
       TZ: Europe/Madrid
       DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
       # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
       TAILSCALE_USE_SSH: 1
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: traefik
       # Traefik
-      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
+      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?DuckDNS API Token}
     volumes:
       - certs:/certs:rw
-      - /volume2/docker/traefik:/config:rw
+      - ${BASE_PATH:-/volume2/docker/}traefik:/config:rw
       - ts_traefik:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: true
       # Routers
-      traefik.http.routers.traefik-rtr.rule: Host(`traefik.boulebar.duckdns.org`)
+      traefik.http.routers.traefik-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.traefik-rtr.service: dashboard@internal
-      traefik.http.routers.traefik-api-rtr.rule: Host(`traefik.boulebar.duckdns.org`) && PathPrefix(`/api`)
+      traefik.http.routers.traefik-api-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`) && PathPrefix(`/api`)
       traefik.http.routers.traefik-api-rtr.service: api@internal
       # Middlewares
       traefik.http.routers.traefik-rtr.middlewares: authentik@docker
@@ -46,7 +46,7 @@ services:
 
 networks:
   frontend:
-    external: true
+    external: true # Defined in portainer
   macvlan:
-    external: true
+    external: true # Defined in adguard
       
