@@ -5,32 +5,32 @@ volumes:
 services:
   qbittorrent:
     image: ghcr.io/chukysoria/qbittorrent:v0.1.1
-    volumes:
-      - /volume2/docker/qbit:/config:rw
-      - ts_qbit:/tsconfig
-      - /volume2/downloads:/media/downloads
-      - /volume2/video/torrents:/media/video/torrents
     networks:
       - frontend
     environment:
       # General LinuxServer.io
-      PUID: 1029
-      PGID: 65536
-      TZ: Europe/Madrid
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
+      TZ: ${TZ:-Europe/Madrid}
       DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
       # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: qbit
       TAILSCALE_SERVE_PORT: 8080
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}qbit:/config:rw
+      - ts_qbit:/tsconfig
+      - /volume2/downloads:/media/downloads
+      - /volume2/video/torrents:/media/video/torrents
     ports:
       - 2873:2873
       - 2873:2873/udp
     labels:
       traefik.enable: true
-      traefik.http.routers.qbit-rtr.rule: Host(`qbit.boulebar.duckdns.org`)
+      traefik.http.routers.qbit-rtr.rule: Host(`qbit.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.qbit-rtr.service: qbit-svc
       traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
       traefik.http.routers.qbit-rtr.middlewares: authentik@docker
@@ -38,4 +38,4 @@ services:
  
 networks:
   frontend:
-    external: true
+    external: true # Defined in Portainer

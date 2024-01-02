@@ -32,4 +32,4 @@ services:
 
 networks:
   frontend:
-    external: true
+    external: true # Defined in portainer
