@@ -3,8 +3,8 @@ services:
   adguardhome:
     image: adguard/adguardhome:v0.107.43
     volumes:
-      - /volume2/docker/adguard/conf:/opt/adguardhome/conf:uid=1029,gid=65536
-      - /volume2/docker/adguard/work:/opt/adguardhome/work:uid=1029,gid=65536
+      - ${BASE_PATH:-/volume2/docker/}adguard/conf:/opt/adguardhome/conf:uid=${PUID:-1029},gid=${PGID:-65536}
+      - ${BASE_PATH:-/volume2/docker/}work:/opt/adguardhome/work:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
       frontend:
       macvlan:
@@ -12,14 +12,19 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
-      traefik.http.routers.adguard-rtr.rule: Host(`adguard.boulebar.duckdns.org`)
+      traefik.http.routers.adguard-rtr.rule: Host(`adguard.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.adguard-rtr.service: adguard-svc
       traefik.http.routers.adguard-rtr.middlewares: authentik@docker
       traefik.http.services.adguard-svc.loadbalancer.server.port: 80
 
 networks:
   frontend:
-    external: true
+    name: frontend
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
   macvlan:
     name: macvlan
     driver: macvlan
