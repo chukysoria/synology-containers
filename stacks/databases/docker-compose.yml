@@ -59,7 +59,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
     volumes:
-      - pgadmin:/var/lib/pgadmin:uid
+      - pgadmin:/var/lib/pgadmin
     networks:
       - frontend
       - database
