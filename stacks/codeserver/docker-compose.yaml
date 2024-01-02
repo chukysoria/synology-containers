@@ -27,7 +27,7 @@ services:
       EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery","itemUrl": "https://marketplace.visualstudio.com/items"}'
     volumes:
       - ${BASE_PATH:-/volume2/docker/}codeserver:/config
-      - ${BASE_PATH:-/volume2/docker/}docker:/mnt/docker
+      - ${BASE_PATH:-/volume2/docker/}:/mnt/docker
       - ts_code-server:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
