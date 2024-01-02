@@ -14,7 +14,7 @@
 |-|-|-|-|-|
 |authentik|172.19.2.0/24|172.19.2.1|authentik</br>databases|databases|
 |database|172.19.0.0/24|172.19.0.1|databases|
-|frontend|172.18.0.0/16|172.18.0.1|adguard</br>codeserver</br>databases</br>duplicati</br>portainer</br>traefik|portainer|
+|frontend|172.18.0.0/16|172.18.0.1|adguard</br>codeserver</br>databases</br>duplicati</br>grocy</br>portainer</br>traefik|portainer|
 |homeassistant|172.19.1.0/24|172.19.1.1|databases</br>home-assistant|databases|
 |macvlan *|192.168.1.0/24|192.168.1.1|adguard</br>traefik|adguard|
 

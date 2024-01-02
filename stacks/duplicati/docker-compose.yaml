@@ -17,7 +17,7 @@ services:
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: duplicati
       TAILSCALE_SERVE_PORT: 8200
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
     networks:
       - frontend
     volumes:
