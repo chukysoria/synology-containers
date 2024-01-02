@@ -8,13 +8,13 @@
 4. third
 
 ## Networks
-|Name|Subnet|Gateway|Used by stack|
-|-|-|-|-|
+|Name|Subnet|Gateway|Used by stack|Defined in|
+|-|-|-|-|-|
 |authentik|172.19.2.0/24|172.19.2.1|authentik</br>databases|
 |database|172.19.0.0/24|172.19.0.1|databases|
-|frontend|172.18.0.0/16|172.18.0.1|adguard</br>databases</br>portainer</br>traefik|
+|frontend|172.18.0.0/16|172.18.0.1|adguard</br>databases</br>portainer</br>traefik|portainer|
 |homeassistant|172.19.1.0/24|172.19.1.1|databases</br>home-assistant|
-|macvlan *|192.168.1.0/24|192.168.1.1|adguard</br>traefik|
+|macvlan *|192.168.1.0/24|192.168.1.1|adguard</br>traefik|adguard|
 
 **\* Macvlan network - IP Range: 192.168.1.48/28**
 

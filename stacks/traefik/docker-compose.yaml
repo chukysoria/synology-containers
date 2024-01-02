@@ -48,15 +48,5 @@ networks:
   frontend:
     external: true
   macvlan:
-    name: macvlan
-    driver: macvlan
-    driver_opts:
-      parent: ovs_bond0
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
-          ip_range: 192.168.1.48/28
-          gateway: 192.168.1.1
-          aux_addresses:
-            torrent: 192.168.1.48
+    external: true
       
