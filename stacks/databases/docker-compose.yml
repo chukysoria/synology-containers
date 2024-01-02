@@ -2,6 +2,7 @@
 services:
   postgresql:
     image: postgres:12-alpine
+    container_name: postgres
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
@@ -22,7 +23,7 @@ services:
 
   timescale-db:
     image: timescale/timescaledb:latest-pg16
-    container_name: timescale-db
+    container_name: timescaledb
     restart: unless-stopped    
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER:}"]
