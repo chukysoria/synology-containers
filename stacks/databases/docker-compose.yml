@@ -11,7 +11,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      -  ${BASE_PATH:-/volume2/docker/}databases/postgresql:/var/lib/postgresql/data:uid=${PUID:-1029},gid=${PGID:-65536}
+      -  ${BASE_PATH:-/volume2/docker/}databases/postgresql:/var/lib/postgresql/data
     networks:
       - database
       - authentik
@@ -32,7 +32,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/var/lib/postgresql/data:uid=${PUID:-1029},gid=${PGID:-65536}
+      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/var/lib/postgresql/data
     networks:
       - database
       - homeassistant
@@ -65,7 +65,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}databases/pgadmin:/var/lib/pgadmin:uid=${PUID:-1029},gid=${PGID:-65536}
+      - pgadmin:/var/lib/pgadmin:uid
     networks:
       - frontend
       - database
@@ -98,3 +98,6 @@ networks:
       config:
         - subnet: 172.19.1.0/24
           gateway: 172.19.1.1
+
+volumes:
+  pgadmin:
