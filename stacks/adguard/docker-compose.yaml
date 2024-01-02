@@ -4,7 +4,7 @@ services:
     image: adguard/adguardhome:v0.107.43
     volumes:
       - ${BASE_PATH:-/volume2/docker/}adguard/conf:/opt/adguardhome/conf:uid=${PUID:-1029},gid=${PGID:-65536}
-      - ${BASE_PATH:-/volume2/docker/}work:/opt/adguardhome/work:uid=${PUID:-1029},gid=${PGID:-65536}
+      - ${BASE_PATH:-/volume2/docker/}adguard/work:/opt/adguardhome/work:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
       frontend:
       macvlan:
