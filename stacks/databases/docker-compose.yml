@@ -1,5 +1,25 @@
 ---
 services:
+  postgresql:
+    image: postgres:12-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      -  ${BASE_PATH:-/volume2/docker/}databases/postgresql:/var/lib/postgresql/data:uid=${PUID:-1029},gid=${PGID:-65536}
+    networks:
+      - database
+      - authentik
+    environment:
+      TZ: ${TZ:-Europe/Madrid}      
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_DB: ${PG_DB:-authentik}
+
   timescale-db:
     image: timescale/timescaledb:latest-pg16
     container_name: timescale-db
@@ -11,15 +31,15 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/var/lib/postgresql/data
-    environment:
-      TZ: Europe/Madrid
-      POSTGRES_USER: ${PG_USER:-postgres}
-      POSTGRES_DB: ${PG_DB:-homeassistant}
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/var/lib/postgresql/data:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
       - database
       - homeassistant
+    environment:
+      TZ: ${TZ:-Europe/Madrid}
+      POSTGRES_USER: ${TS_USER:-homeassistant}
+      POSTGRES_PASSWORD: ${TS_PASS:?database password required}
+      POSTGRES_DB: ${TS_DB:-homeassistant}      
 
   redis:
     image: redis:alpine
@@ -33,7 +53,7 @@ services:
       retries: 5
       timeout: 3s
     volumes:
-      - redis:/data
+      - ${BASE_PATH:-/volume2/docker/}databases/redis:/data:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
       - database
       - authentik
@@ -44,7 +64,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
     volumes:
-      - pgadmin:/var/lib/pgadmin
+      - ${BASE_PATH:-/volume2/docker/}databases/pgadmin:/var/lib/pgadmin:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
       - frontend
       - database
@@ -69,8 +89,7 @@ networks:
         - subnet: 172.19.0.0/24
           gateway: 172.19.0.1
   frontend:
-    name: frontend
-    external: true
+    external: true # Defined in postgres
   homeassistant:
     name: homeassistant
     ipam:
@@ -78,7 +97,3 @@ networks:
       config:
         - subnet: 172.19.1.0/24
           gateway: 172.19.1.1
-
-volumes:
-  redis:
-  pgadmin:
