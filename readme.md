@@ -16,6 +16,6 @@
 |database|172.19.0.0/24|172.19.0.1|databases|
 |frontend|172.18.0.0/16|172.18.0.1|adguard</br>codeserver</br>databases</br>duplicati</br>grocy</br>jellyfin</br>nodered</br>portainer</br>qbittorrent</br>servarr</br>traefik</br>vaultwarden|portainer|
 |homeassistant|172.19.1.0/24|172.19.1.1|databases</br>home-assistant|databases|
-|macvlan *|192.168.1.0/24|192.168.1.1|adguard</br>traefik|adguard|
+|macvlan *|192.168.1.0/24|192.168.1.1|adguard</br>homeassistant</br>traefik|adguard|
 
 **\* Macvlan network - IP Range: 192.168.1.48/28**

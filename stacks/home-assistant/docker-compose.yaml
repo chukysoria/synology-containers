@@ -8,12 +8,12 @@ services:
     container_name: homeassistant
     environment:
       # General LinuxServer.io
-      PUID: 1029
-      PGID: 65536
-      TZ: Europe/Madrid
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
+      TZ: ${TZ:-Europe/Madrid}
       DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3|linuxserver/mods:homeassistant-hacs|linuxserver/mods:universal-package-install"
       # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
       TAILSCALE_STATE_DIR: /tsconfig
@@ -23,24 +23,25 @@ services:
       # Packages
       INSTALL_PACKAGES: nmap
     volumes:
-      - /volume2/docker/hass:/config
+      - ${BASE_PATH:-/volume2/docker/}hass:/config
       - /etc/localtime:/etc/localtime:ro
       - ts_hass:/tsconfig
     networks:
       frontend:
+      homeassistant:
       macvlan:
         ipv4_address: 192.168.1.51
     restart: unless-stopped
     labels:
       traefik.enable: true
       # Routers
-      #traefik.http.routers.ha-rtr.rule: Host(`ha.boulebar.duckdns.org`)
+      #traefik.http.routers.ha-rtr.rule: Host(`ha.${DOMAIN:-boulebar.duckdns.org}`)
       #traefik.http.routers.ha-rtr.service: ha-svc
 
-      traefik.http.routers.ha-passthrough-rtr.rule: Host(`ha.boulebar.duckdns.org`) && !( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) ) && !(PathPrefix(`/outpost.goauthentik.io/`))
+      traefik.http.routers.ha-passthrough-rtr.rule: Host(`ha.${DOMAIN:-boulebar.duckdns.org}`) && !( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) ) && !(PathPrefix(`/outpost.goauthentik.io/`))
       traefik.http.routers.ha-passthrough-rtr.service: ha-svc
 
-      traefik.http.routers.ha-auth-rtr.rule: Host(`ha.boulebar.duckdns.org`) && ( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) )
+      traefik.http.routers.ha-auth-rtr.rule: Host(`ha.${DOMAIN:-boulebar.duckdns.org}`) && ( (PathPrefix(`/auth/`)) && !(PathPrefix(`/auth/token`)) )
       traefik.http.routers.ha-auth-rtr.service: ha-svc
 
       # Middlewares
@@ -53,6 +54,9 @@ services:
 
 networks:
   frontend:
-    external: true
+    external: true # Defined in portainer
   macvlan:
-    external: true
+    external: true # Defined in Adguard
+  homeassistant:
+    external: true # Defined in database
+  
