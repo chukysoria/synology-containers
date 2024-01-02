@@ -6,6 +6,8 @@
 2. adguard: Provide DNS
 3. traefik: Set up Reverse Proxy
 4. databases: needed as backend for other containers
+5. Authentik: Authentication, and middleware.
+**Now reverse proxying will start working as middleware is published**
 
 ## Networks
 |Name|Subnet|Gateway|Used by stack|Defined in|

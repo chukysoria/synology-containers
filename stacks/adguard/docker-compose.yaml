@@ -12,6 +12,7 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
+      traefik.docker.network: frontend
       traefik.http.routers.adguard-rtr.rule: Host(`adguard.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.adguard-rtr.service: adguard-svc
       traefik.http.routers.adguard-rtr.middlewares: authentik@docker

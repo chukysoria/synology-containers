@@ -72,6 +72,7 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
+      traefik.docker.network: frontend
       traefik.http.routers.authentik-rtr.rule: Host(`pgadmin.${DOMAIN:-boulebar.duckdns.org}`)
 
 networks:

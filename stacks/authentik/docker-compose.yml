@@ -23,6 +23,7 @@ services:
       - authentik
     labels:
       traefik.enable: true
+      traefik.docker.network: frontend
       ## HTTP Routers
       traefik.http.routers.authentik-rtr.rule: Host(`authentik.$DOMAIN`)
       ## HTTP Services
