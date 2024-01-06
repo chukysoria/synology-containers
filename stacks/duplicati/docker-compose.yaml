@@ -4,7 +4,7 @@ volumes:
 
 services:
   duplicati:
-    image: ghcr.io/chukysoria/duplicati:v0.1.12
+    image: ghcr.io/chukysoria/duplicati:v0.1.13
     environment:
       # General LinuServer.io
       PUID: ${PUID:-1029}
