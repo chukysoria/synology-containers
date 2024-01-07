@@ -4,5 +4,16 @@
     "local>chukysoria/renovate-config",
     "local>chukysoria/renovate-config:docker-linuxserver",
     ":skipStatusChecks"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackagePrefixes": [
+        "timescale/timescaledb-ha"
+      ],
+      "versioning": "regex:^pg(?<major>\\d+)-ts(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    }
   ]
 }

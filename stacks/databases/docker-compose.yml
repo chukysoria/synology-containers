@@ -22,11 +22,11 @@ services:
       POSTGRES_DB: ${PG_DB:-authentik}
 
   timescale-db:
-    image: timescale/timescaledb:latest-pg16
+    image: timescale/timescaledb-ha:pg16-ts2.13
     container_name: timescaledb
     restart: unless-stopped    
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/var/lib/postgresql/data
+      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/home/postgres/pgdata/data
     networks:
       - database
       - homeassistant
@@ -37,7 +37,7 @@ services:
       POSTGRES_DB: ${TS_DB:-homeassistant}      
 
   redis:
-    image: redis:alpine
+    image: redis:7.2.3-alpine
     container_name: redis
     command: --save 60 1 --loglevel warning
     restart: unless-stopped
@@ -54,7 +54,7 @@ services:
       - authentik
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:8.1
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
