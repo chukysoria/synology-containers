@@ -25,6 +25,7 @@ services:
     image: timescale/timescaledb-ha:pg16-ts2.13
     container_name: timescaledb
     restart: unless-stopped    
+    user: ${PUID:-1029}:${PGID:-65536}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/home/postgres/pgdata/data
     networks:
@@ -32,7 +33,7 @@ services:
       - homeassistant
     environment:
       TZ: ${TZ:-Europe/Madrid}
-      POSTGRES_USER: ${TS_USER:-homeassistant}
+      POSTGRES_USER: ${TS_USER:-postgres}
       POSTGRES_PASSWORD: ${TS_PASS:?database password required}
       POSTGRES_DB: ${TS_DB:-homeassistant}      
 
