@@ -26,11 +26,9 @@ services:
       - ${BASE_PATH:-/volume2/docker/}hass:/config
       - /etc/localtime:/etc/localtime:ro
       - ts_hass:/tsconfig
-    networks:
-      frontend:
-      homeassistant:
-      macvlan:
-        ipv4_address: 192.168.1.51
+    network_mode: host
+    extra_hosts:
+      - timescaledb:172.19.0.4
     restart: unless-stopped
     labels:
       traefik.enable: true
@@ -51,12 +49,3 @@ services:
       
       # Services
       traefik.http.services.ha-svc.loadbalancer.server.port: 8123
-
-networks:
-  frontend:
-    external: true # Defined in portainer
-  macvlan:
-    external: true # Defined in Adguard
-  homeassistant:
-    external: true # Defined in database
-  
