@@ -29,8 +29,9 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/home/postgres/pgdata/data
     networks:
-      - database
-      - homeassistant
+      database:
+        ipv4_address: 172.19.0.4
+      homeassistant:
     environment:
       TZ: ${TZ:-Europe/Madrid}
       POSTGRES_USER: ${TS_USER:-postgres}
