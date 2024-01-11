@@ -48,6 +48,8 @@ services:
       TZ: ${TZ:-Europe/Madrid}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}jellyseerr:/app/config
+    networks:
+      - frontend
     labels:
       traefik.enable: true
       # Routers
