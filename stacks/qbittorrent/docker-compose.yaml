@@ -35,7 +35,27 @@ services:
       traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
       traefik.http.routers.qbit-rtr.middlewares: authentik@docker
     restart: unless-stopped
- 
+  
+  unpackerr:
+    image: ghcr.io/hotio/unpackerr:release-0.12.0
+    environment:
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
+      TZ: ${TZ:-Europe/Madrid}
+      UMASK: 002
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}unpackerr:/config
+      - /volume2/video/torrents:/media/video/torrents
+    networks:
+      - frontend
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      traefik.enable: true
+      traefik.http.routers.unpackerr-rtr.rule: Host(`unpackerr.${DOMAIN:-boulebar.duckdns.org}`)
+      # traefik.http.routers.unpackerr-rtr.middlewares: authentik@docker
+    restart: unless-stopped
+
 networks:
   frontend:
     external: true # Defined in Portainer
