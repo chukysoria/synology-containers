@@ -50,12 +50,6 @@ services:
       - frontend
     security_opt:
       - no-new-privileges:true
-    labels:
-      traefik.enable: true
-      traefik.http.routers.unpackerr-rtr.rule: Host(`unpackerr.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.unpackerr-rtr.service: unpackerr-svc
-      traefik.http.services.unpackerr-svc.loadbalancer.server.port: 5656
-      # traefik.http.routers.unpackerr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
 networks:
