@@ -13,8 +13,9 @@ services:
     volumes:
       -  ${BASE_PATH:-/volume2/docker/}databases/postgresql:/var/lib/postgresql/data
     networks:
-      - database
-      - authentik
+      database:
+        ipv4_address: 172.19.0.2
+      authentik:
     environment:
       TZ: ${TZ:-Europe/Madrid}      
       POSTGRES_USER: ${PG_USER:-authentik}
@@ -52,8 +53,9 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/redis:/data:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
-      - database
-      - authentik
+      database:
+        ipv4_address: 172.19.0.3
+      authentik:
 
   pgadmin:
     image: dpage/pgadmin4:8.2
@@ -64,8 +66,9 @@ services:
       - pgadmin:/var/lib/pgadmin
       - ${BASE_PATH:-/volume2/docker/}databases/pgadmin/config_local.py:/pgadmin4/config_local.py
     networks:
-      - frontend
-      - database
+      frontend:
+      database:
+        ipv4_address: 172.19.0.5
     restart: unless-stopped
     labels:
       traefik.enable: true
@@ -87,6 +90,8 @@ networks:
       config:
         - subnet: 172.19.0.0/24
           gateway: 172.19.0.1
+    
+        
   frontend:
     external: true # Defined in postgres
   homeassistant:
