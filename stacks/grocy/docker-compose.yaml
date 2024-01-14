@@ -1,6 +1,6 @@
 ---
 volumes:
-  grocy_tsconfig:
+  ts_grocy:
 
 services:
   grocy:
@@ -18,7 +18,7 @@ services:
       TAILSCALE_STATE_DIR: /tsconfig
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grocy:/config
-      - grocy_tsconfig:/tsconfig
+      - ts_grocy:/tsconfig
     networks:
       - frontend
     restart: unless-stopped

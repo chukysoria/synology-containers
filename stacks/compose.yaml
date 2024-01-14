@@ -3,7 +3,18 @@
 volumes:
   certs:
   pgadmin:
+  ts_duplicati:
+  ts_grocy:
+  ts_hass:
+  ts_jellyfin:
+  ts_nodered:
+  ts_qbit:
+  ts_sonarr:
+  ts_bazarr:
+  ts_prowlarr:
+  ts_radarr:
   ts_traefik:
+  ts_vaultwarden:
 
 services:
   # Adguard
@@ -47,11 +58,112 @@ services:
   traefik:
     extends:
       file: traefik/docker-compose.yaml
-      service: traefik  
+      service: traefik
     depends_on:
       - adguardhome
       - authentik-server
-  
+  # Duplicati
+  duplicati:
+    extends:
+      file: duplicati/docker-compose.yaml
+      service: duplicati  
+    depends_on:
+      - traefik
+  # Grocy
+  grocy:
+    extends:
+      file: grocy/docker-compose.yaml
+      service: grocy  
+    depends_on:
+      - traefik
+  # Home Assistant
+  homeassistant:
+    extends:
+      file: home-assistant/docker-compose.yaml
+      service: homeassistant  
+    depends_on:
+      - traefik
+      - timescale-db
+      - jellyfin
+  # Jellyfin
+  jellyfin:
+    extends:
+      file: jellyfin/docker-compose.yaml
+      service: jellyfin  
+    depends_on:
+      - traefik
+  jellyseerr:
+    extends:
+      file: jellyfin/docker-compose.yaml
+      service: jellyseerr  
+    depends_on:
+      - traefik
+      - jellyfin
+      - sonarr
+      - radarr
+  # nodered
+  nodered:
+    extends:
+      file: nodered/docker-compose.yaml
+      service: nodered  
+    depends_on:
+      - traefik
+      - homeassistant
+  # qBitTorrent
+  qbittorrent:
+    extends:
+      file: qbittorrent/docker-compose.yaml
+      service: qbittorrent  
+    depends_on:
+      - traefik
+  unpackerr:
+    extends:
+      file: qbittorrent/docker-compose.yaml
+      service: unpackerr  
+    depends_on:
+      - qbittorrent
+      - sonarr
+      - radarr
+  # Servarr
+  radarr:
+    extends:
+      file: servarr/docker-compose.yaml
+      service: radarr  
+    depends_on:
+      - traefik
+      - qbittorrent
+  sonarr:
+    extends:
+      file: servarr/docker-compose.yaml
+      service: sonarr  
+    depends_on:
+      - traefik
+      - qbittorrent  
+  bazarr:
+    extends:
+      file: servarr/docker-compose.yaml
+      service: sonarr  
+    depends_on:
+      - traefik
+      - sonarr
+      - radarr
+  prowlarr:
+    extends:
+      file: servarr/docker-compose.yaml
+      service: prowlarr  
+    depends_on:
+      - traefik
+      - qbittorrent
+      - sonarr
+      - radarr
+  # Vaultwarden
+  vaultwarden:
+    extends:
+      file: vaultwarden/docker-compose.yaml
+      service: vaultwarden  
+    depends_on:
+      - traefik
+
 networks:
   authentik:
     name: authentik
@@ -60,6 +172,7 @@ networks:
       config:
         - subnet: 172.19.2.0/24
           gateway: 172.19.2.1
+  adguard:
   database:
     name: database
     ipam:
