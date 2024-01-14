@@ -32,7 +32,6 @@ services:
     networks:
       database:
         ipv4_address: 172.19.0.4
-      homeassistant:
     environment:
       TZ: ${TZ:-Europe/Madrid}
       POSTGRES_USER: ${TS_USER:-postgres}
@@ -75,6 +74,9 @@ services:
       traefik.docker.network: frontend
       traefik.http.routers.pgadmin-rtr.rule: Host(`pgadmin.${DOMAIN:-boulebar.duckdns.org}`)
 
+volumes:
+  pgadmin:
+
 networks:
   authentik:
     name: authentik
@@ -89,18 +91,6 @@ networks:
       driver: default
       config:
         - subnet: 172.19.0.0/24
-          gateway: 172.19.0.1
-    
-        
+          gateway: 172.19.0.1      
   frontend:
     external: true # Defined in postgres
-  homeassistant:
-    name: homeassistant
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.1.0/24
-          gateway: 172.19.1.1
-
-volumes:
-  pgadmin:

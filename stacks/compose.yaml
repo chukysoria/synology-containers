@@ -1,0 +1,83 @@
+---
+# Consolidated Docker Compose File
+volumes:
+  certs:
+  pgadmin:
+  ts_traefik:
+
+services:
+  # Adguard
+  adguardhome:
+    extends:
+      file: adguard/docker-compose.yaml
+      service: adguardhome
+  # Databases
+  postgresql:
+    extends:
+      file: databases/docker-compose.yaml
+      service: postgresql
+  timescale-db:
+    extends:
+      file: databases/docker-compose.yaml
+      service: timescale-db  
+  redis:
+    extends:
+      file: databases/docker-compose.yaml
+      service: redis
+  pgadmin:
+    extends:
+      file: databases/docker-compose.yaml
+      service: pgadmin
+  # Authentik
+  authentik-server:
+    extends:
+      file: authentik/docker-compose.yaml
+      service: authentik-server
+    depends_on:
+      - redis
+      - postgresql
+  authentik-worker:
+    extends:
+      file: authentik/docker-compose.yaml
+      service: authentik-worker    
+    depends_on:
+      - redis
+      - postgresql
+  # Traefik
+  traefik:
+    extends:
+      file: traefik/docker-compose.yaml
+      service: traefik  
+    depends_on:
+      - adguardhome
+      - authentik-server
+  
+networks:
+  authentik:
+    name: authentik
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.2.0/24
+          gateway: 172.19.2.1
+  database:
+    name: database
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24
+          gateway: 172.19.0.1
+  frontend:
+    external: true # Defined in postgres
+  macvlan:
+    name: macvlan
+    driver: macvlan
+    driver_opts:
+      parent: ovs_bond0
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          ip_range: 192.168.1.48/28
+          gateway: 192.168.1.1
+          aux_addresses:
+            torrent: 192.168.1.48

@@ -8,7 +8,6 @@ services:
     image: ghcr.io/chukysoria/traefik:v0.2.2
     networks:
       frontend:
-        ipv4_address: 172.18.0.4
       macvlan:
         ipv4_address: 192.168.1.49
     dns:
@@ -45,6 +44,7 @@ services:
       # Middlewares
       traefik.http.routers.traefik-rtr.middlewares: authentik@docker
       traefik.http.routers.traefik-api-rtr.middlewares: authentik@docker
+    restart: unless-stopped
 
 networks:
   frontend:
