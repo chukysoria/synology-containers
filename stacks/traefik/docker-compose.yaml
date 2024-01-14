@@ -5,7 +5,7 @@ volumes:
 
 services:
   traefik:
-    image: ghcr.io/chukysoria/traefik:v0.2.2
+    image: ghcr.io/chukysoria/traefik:v0.2.3
     networks:
       frontend:
       macvlan:
@@ -29,7 +29,7 @@ services:
       # Traefik
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?DuckDNS API Token}
     volumes:
-      - certs:/certs:rw
+      - ${BASE_PATH:-/volume2/docker/}certs:/certs:rw
       - ${BASE_PATH:-/volume2/docker/}traefik:/config:rw
       - ts_traefik:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock
