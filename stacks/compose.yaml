@@ -15,6 +15,7 @@ volumes:
   ts_radarr:
   ts_traefik:
   ts_vaultwarden:
+  ts_code-server:
 
 services:
   # Adguard
@@ -156,11 +157,18 @@ services:
       - qbittorrent
       - sonarr
       - radarr
-  # Vaultwarden
+  # VS Code
   vaultwarden:
     extends:
       file: vaultwarden/docker-compose.yaml
       service: vaultwarden  
+    depends_on:
+      - traefik
+  # Vaultwarden
+  code-server:
+    extends:
+      file: codeserver/docker-compose.yaml
+      service: code-server  
     depends_on:
       - traefik
 
