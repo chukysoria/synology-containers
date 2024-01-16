@@ -136,14 +136,14 @@ services:
   sonarr:
     extends:
       file: servarr/docker-compose.yaml
-      service: sonarr  
+      service: sonarr
     depends_on:
       - traefik
       - qbittorrent  
   bazarr:
     extends:
       file: servarr/docker-compose.yaml
-      service: sonarr  
+      service: bazarr
     depends_on:
       - traefik
       - sonarr
