@@ -4,7 +4,7 @@ volumes:
 
 services:
   qbittorrent:
-    image: ghcr.io/chukysoria/qbittorrent:v0.1.4
+    image: ghcr.io/chukysoria/qbittorrent:v0.1.5
     networks:
       - frontend
     environment:
