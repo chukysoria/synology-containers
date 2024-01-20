@@ -35,15 +35,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: true
-      traefik.docker.network: frontend
       # Routers
-      traefik.http.routers.traefik-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.traefik-rtr.service: dashboard@internal
-      traefik.http.routers.traefik-api-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`) && PathPrefix(`/api`)
-      traefik.http.routers.traefik-api-rtr.service: api@internal
+      traefik.http.routers.traefik-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      traefik.http.routers.traefik-rtr.service: api@internal
       # Middlewares
       traefik.http.routers.traefik-rtr.middlewares: authentik@docker
-      traefik.http.routers.traefik-api-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
 networks:
