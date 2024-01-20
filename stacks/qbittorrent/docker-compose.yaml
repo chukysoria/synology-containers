@@ -3,10 +3,39 @@ volumes:
   ts_qbit:
 
 services:
+  gluetun:
+      image: qmcgaw/gluetun
+      container_name: gluetun
+      cap_add:
+        - NET_ADMIN
+      devices:
+        - /dev/net/tun:/dev/net/tun
+      volumes:
+        - ${BASE_PATH:-/volume2/docker/}gluetun:/gluetun
+      environment:
+        # General LinuxServer.io
+        PUID: ${PUID:-1029}
+        PGID: ${PGID:-65536}
+        TZ: ${TZ:-Europe/Madrid}
+        # NordVPN
+        VPN_SERVICE_PROVIDER: nordvpn
+        VPN_TYPE: wireguard
+        SERVER_COUNTRIES: Spain
+        WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:?WireGuard private key}
+        FIREWALL_OUTBOUND_SUBNETS: 172.18.0.0/16,192.168.0.0/24 # Frontend and local LAN
+      networks:
+        - frontend
+      labels:
+        traefik.enable: true
+        traefik.http.routers.qbit-rtr.rule: Host(`qbit.${DOMAIN:-boulebar.duckdns.org}`)
+        traefik.http.routers.qbit-rtr.service: qbit-svc
+        traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
+        traefik.http.routers.qbit-rtr.middlewares: authentik@docker
+      restart: unless-stopped
+
   qbittorrent:
     image: ghcr.io/chukysoria/qbittorrent:v0.1.5
-    networks:
-      - frontend
+    network_mode: "container:gluetun"
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
@@ -25,15 +54,6 @@ services:
       - ts_qbit:/tsconfig
       - /volume2/downloads:/media/downloads
       - /volume2/video/torrents:/media/video/torrents
-    ports:
-      - 2873:2873
-      - 2873:2873/udp
-    labels:
-      traefik.enable: true
-      traefik.http.routers.qbit-rtr.rule: Host(`qbit.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.qbit-rtr.service: qbit-svc
-      traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
-      traefik.http.routers.qbit-rtr.middlewares: authentik@docker
     restart: unless-stopped
   
   unpackerr:

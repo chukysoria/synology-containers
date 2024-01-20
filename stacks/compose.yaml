@@ -111,12 +111,18 @@ services:
       - traefik
       - homeassistant
   # qBitTorrent
+  gluetun:
+    extends:
+      file: qbittorrent/docker-compose.yaml
+      service: gluetun  
+    depends_on:
+      - traefik    
   qbittorrent:
     extends:
       file: qbittorrent/docker-compose.yaml
       service: qbittorrent  
     depends_on:
-      - traefik
+      - gluetun
   unpackerr:
     extends:
       file: qbittorrent/docker-compose.yaml
