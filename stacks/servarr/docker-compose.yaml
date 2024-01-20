@@ -63,13 +63,19 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:v1.4.0-ls232
+    image: ghcr.io/chukysoria/bazarr:v0.3.4
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
       - ts_bazarr:/tsconfig
       - /volume2/downloads:/media/downloads
       - /volume2/video/Series:/media/video/Series
       - /volume2/video/Pelis:/media/video/Pelis
+    healthcheck:
+      test: ["nc", "-z", "localhost", "6767"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
     networks:
       - frontend
     environment:
