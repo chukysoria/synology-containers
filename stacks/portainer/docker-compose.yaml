@@ -12,7 +12,13 @@ services:
       - 1.1.1.1
       - 8.8.8.8
     ports:
-      - 9443:9443    
+      - 9443:9443 
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9000"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m   
     labels:
       traefik.enable: true
       traefik.http.routers.portainer-rtr.rule: Host(`portainer.${DOMAIN:-boulebar.duckdns.org}`)
