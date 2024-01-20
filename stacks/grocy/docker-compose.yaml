@@ -22,6 +22,13 @@ services:
     networks:
       - frontend
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "nc", "-z", "localhost", "6767"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
+      start_interval: 5s
     labels:
       traefik.enable: true
       traefik.http.routers.grocy-rtr.rule: Host(`grocy.${DOMAIN:-boulebar.duckdns.org}`)
