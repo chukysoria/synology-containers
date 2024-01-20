@@ -50,6 +50,13 @@ services:
       - ${BASE_PATH:-/volume2/docker/}jellyseerr:/app/config
     networks:
       - frontend
+    healthcheck:
+      test: ["CMD-SHELL", "nc", "-z", "localhost", "5055"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
+      start_interval: 5s
     labels:
       traefik.enable: true
       # Routers
