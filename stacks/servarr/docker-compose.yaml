@@ -70,12 +70,6 @@ services:
       - /volume2/downloads:/media/downloads
       - /volume2/video/Series:/media/video/Series
       - /volume2/video/Pelis:/media/video/Pelis
-    healthcheck:
-      test: ["nc", "-z", "localhost", "6767"]
-      interval: 10s
-      timeout: 30s
-      retries: 5
-      start_period: 2m
     networks:
       - frontend
     environment:
