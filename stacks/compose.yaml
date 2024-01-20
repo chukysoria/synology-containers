@@ -46,137 +46,173 @@ services:
       file: authentik/docker-compose.yaml
       service: authentik-server
     depends_on:
-      - redis
-      - postgresql
+      redis:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
   authentik-worker:
     extends:
       file: authentik/docker-compose.yaml
       service: authentik-worker    
     depends_on:
-      - redis
-      - postgresql
+      redis:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
   # Traefik
   traefik:
     extends:
       file: traefik/docker-compose.yaml
       service: traefik
     depends_on:
-      - adguardhome
-      - authentik-server
+      adguardhome:
+        condition: service_healthy
+      authentik-server:
+        condition: service_healthy
   # Duplicati
   duplicati:
     extends:
       file: duplicati/docker-compose.yaml
       service: duplicati  
     depends_on:
-      - traefik
+      traefik:
+        condition: service_healthy
   # Grocy
   grocy:
     extends:
       file: grocy/docker-compose.yaml
       service: grocy  
     depends_on:
-      - traefik
+      traefik:
+        condition: service_healthy
   # Home Assistant
   homeassistant:
     extends:
       file: home-assistant/docker-compose.yaml
       service: homeassistant  
     depends_on:
-      - traefik
-      - timescale-db
-      - jellyfin
+      traefik:
+        condition: service_healthy
+      timescale-db:
+        condition: service_healthy        
+      jellyfin:
+        condition: service_healthy
   # Jellyfin
   jellyfin:
     extends:
       file: jellyfin/docker-compose.yaml
       service: jellyfin  
     depends_on:
-      - traefik
+      traefik:
+        condition: service_healthy
   jellyseerr:
     extends:
       file: jellyfin/docker-compose.yaml
       service: jellyseerr  
     depends_on:
-      - traefik
-      - jellyfin
-      - sonarr
-      - radarr
+      traefik:
+        condition: service_healthy
+      jellyfin:
+        condition: service_healthy
+      sonarr:
+        condition: service_healthy
+      radarr:
+        condition: service_healthy
   # nodered
   nodered:
     extends:
       file: nodered/docker-compose.yaml
       service: nodered  
     depends_on:
-      - traefik
-      - homeassistant
+      traefik:
+        condition: service_healthy
+      homeassistant:
+        condition: service_healthy
   # qBitTorrent
   gluetun:
     extends:
       file: qbittorrent/docker-compose.yaml
       service: gluetun  
     depends_on:
-      - traefik    
+      traefik:
+        condition: service_healthy 
   qbittorrent:
     extends:
       file: qbittorrent/docker-compose.yaml
       service: qbittorrent  
     depends_on:
-      - gluetun
+      gluetun:
+        condition: service_healthy 
   unpackerr:
     extends:
       file: qbittorrent/docker-compose.yaml
       service: unpackerr  
     depends_on:
-      - qbittorrent
-      - sonarr
-      - radarr
+      qbittorrent:
+        condition: service_healthy 
+      sonarr:
+        condition: service_healthy
+      radarr:
+        condition: service_healthy
   # Servarr
   radarr:
     extends:
       file: servarr/docker-compose.yaml
       service: radarr  
     depends_on:
-      - traefik
-      - qbittorrent
+      traefik:
+        condition: service_healthy 
+      qbittorrent:
+        condition: service_healthy 
   sonarr:
     extends:
       file: servarr/docker-compose.yaml
       service: sonarr
     depends_on:
-      - traefik
-      - qbittorrent  
+      traefik:
+        condition: service_healthy 
+      qbittorrent:
+        condition: service_healthy 
   bazarr:
     extends:
       file: servarr/docker-compose.yaml
       service: bazarr
     depends_on:
-      - traefik
-      - sonarr
-      - radarr
+      traefik:
+        condition: service_healthy 
+      sonarr:
+        condition: service_healthy
+      radarr:
+        condition: service_healthy
   prowlarr:
     extends:
       file: servarr/docker-compose.yaml
       service: prowlarr  
     depends_on:
-      - traefik
-      - qbittorrent
-      - sonarr
-      - radarr
+      traefik:
+        condition: service_healthy
+      qbittorrent:
+        condition: service_healthy 
+      sonarr:
+        condition: service_healthy
+      radarr:
+        condition: service_healthy
   # VS Code
   vaultwarden:
     extends:
       file: vaultwarden/docker-compose.yaml
       service: vaultwarden  
     depends_on:
-      - traefik
+      adguardhome:
+        condition: service_healthy
   # Vaultwarden
   code-server:
     extends:
       file: codeserver/docker-compose.yaml
       service: code-server  
     depends_on:
-      - traefik
+      adguardhome:
+        condition: service_healthy
 
 networks:
   authentik:
