@@ -8,6 +8,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${BASE_PATH:-/volume2/docker/}portainer:/data:uid=${PUID:-1029},gid=${PGID:-65536}
     restart: always
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     ports:
       - 9443:9443    
     labels:
