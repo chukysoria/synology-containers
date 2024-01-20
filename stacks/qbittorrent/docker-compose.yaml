@@ -71,7 +71,7 @@ services:
     security_opt:
       - no-new-privileges:true
     healthcheck:
-      test: ["CMD-SHELL", "grep -f /app/unpackerr"]
+      test: ["CMD-SHELL", "pgrep -f /app/unpackerr"]
       interval: 30s
       timeout: 30s
       retries: 5
