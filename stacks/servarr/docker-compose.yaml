@@ -28,6 +28,13 @@ services:
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: radarr
       TAILSCALE_SERVE_PORT: 7878
+    healthcheck:
+      test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-radarr/data/check"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
+      start_interval: 5s
     labels:
       traefik.enable: true
       traefik.http.routers.radarr-rtr.rule: Host(`radarr.${DOMAIN:-boulebar.duckdns.org}`)
