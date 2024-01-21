@@ -118,6 +118,16 @@ services:
         condition: service_healthy
       radarr:
         condition: service_healthy
+  # Monitoring
+  grafana:
+    extends:
+      file: Monitoring/docker-compose.yaml
+      service: grafana
+    depends_on:
+      traefik:
+        condition: service_healthy
+      timescale-db:
+        condition: service_healthy
   # nodered
   nodered:
     extends:
@@ -222,7 +232,6 @@ networks:
       config:
         - subnet: 172.19.2.0/24
           gateway: 172.19.2.1
-  adguard:
   database:
     name: database
     ipam:
@@ -231,7 +240,14 @@ networks:
         - subnet: 172.19.0.0/24
           gateway: 172.19.0.1
   frontend:
-    external: true # Defined in postgres
+    external: true # Defined in Portainer
+  grafana-net:
+    name: grafana-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.3.0/24
+          gateway: 172.19.3.1  
   macvlan:
     name: macvlan
     driver: macvlan

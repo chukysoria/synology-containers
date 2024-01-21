@@ -32,6 +32,7 @@ services:
     networks:
       database:
         ipv4_address: 172.19.0.4
+      grafana-net:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
@@ -104,6 +105,13 @@ networks:
       driver: default
       config:
         - subnet: 172.19.0.0/24
-          gateway: 172.19.0.1      
+          gateway: 172.19.0.1
+  grafana-net:
+    name: grafana-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.3.0/24
+          gateway: 172.19.3.1  
   frontend:
     external: true # Defined in postgres
