@@ -121,7 +121,7 @@ services:
   # Monitoring
   grafana:
     extends:
-      file: Monitoring/docker-compose.yaml
+      file: monitoring/docker-compose.yaml
       service: grafana
     depends_on:
       traefik:
