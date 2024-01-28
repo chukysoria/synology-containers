@@ -19,8 +19,22 @@ services:
       - ${BASE_PATH:-/volume2/docker/}grafana/data:/var/lib/grafana:rw
     environment:
       TZ: ${TZ:-Europe/Madrid}
+      # Grafana
       GF_SERVER_ROOT_URL: https://grafana.${DOMAIN:-boulebar.duckdns.org}/
       GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,grafana-piechart-panel
+      GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
+      GF_AUTH_GENERIC_OAUTH_NAME: "authentik"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: ${GRAFANA_OAUTH_CLIENT_ID:?OAuth Client ID}
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: ${GRAFANA_OAUTH_CLIENT_SECRET:?OAuth Client Secret}
+      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://authentik.${DOMAIN:-boulebar.duckdns.org}/application/o/authorize/"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://authentik.${DOMAIN:-boulebar.duckdns.org}/application/o/token/"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "https://authentik.${DOMAIN:-boulebar.duckdns.org}/application/o/userinfo/"
+      GF_AUTH_SIGNOUT_REDIRECT_URL: "https://authentik.${DOMAIN:-boulebar.duckdns.org}/application/o/grafana/end-session/"
+      # Optionally enable auto-login (bypasses Grafana login screen)
+      GF_AUTH_OAUTH_AUTO_LOGIN: "true"
+      # Optionally map user groups to Grafana roles
+      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups, 'grafana_admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'"
     restart: on-failure:5
     labels:
       traefik.enable: true
