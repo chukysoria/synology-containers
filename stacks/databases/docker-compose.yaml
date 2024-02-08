@@ -23,7 +23,7 @@ services:
       POSTGRES_DB: ${PG_DB:-authentik}
 
   timescale-db:
-    image: timescale/timescaledb-ha:pg16-ts2.13
+    image: timescale/timescaledb-ha:pg16-ts2.14
     container_name: timescaledb
     restart: unless-stopped    
     user: ${PUID:-1029}:${PGID:-65536}
