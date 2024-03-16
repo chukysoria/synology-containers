@@ -99,7 +99,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: ghcr.io/chukysoria/prowlarr:v0.5.6
+    image: ghcr.io/chukysoria/prowlarr:v0.5.7
     networks:
       - frontend
     volumes:
