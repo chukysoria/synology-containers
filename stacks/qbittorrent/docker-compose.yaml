@@ -34,14 +34,14 @@ services:
       restart: unless-stopped
 
   qbittorrent:
-    image: ghcr.io/chukysoria/qbittorrent:v0.2.17
+    image: lscr.io/linuxserver/qbittorrent:4.6.3-r0-ls306
     network_mode: "container:gluetun"
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3"
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3|ghcr.io/chukysoria/docker-mod-vuetorrent:v0.1.2"
       # Tailscale
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
       TAILSCALE_SERVE_MODE: https
