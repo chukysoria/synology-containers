@@ -55,6 +55,13 @@ services:
       - /volume2/downloads:/media/downloads
       - /volume2/video/torrents:/media/video/torrents
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8080"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
+      start_interval: 5s
   
   unpackerr:
     image: ghcr.io/hotio/unpackerr:release-0.12.0
