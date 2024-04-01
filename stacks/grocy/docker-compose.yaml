@@ -20,7 +20,8 @@ services:
       - ${BASE_PATH:-/volume2/docker/}grocy:/config
       - ts_grocy:/tsconfig
     networks:
-      - frontend
+      frontend:
+        ipv4_address: 172.18.0.10
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "80"]

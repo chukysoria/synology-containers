@@ -29,6 +29,7 @@ services:
     network_mode: host
     extra_hosts:
       - timescaledb:172.19.0.4
+      - grocy:172.18.0.10
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8123"]
