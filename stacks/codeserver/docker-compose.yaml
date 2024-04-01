@@ -4,13 +4,13 @@ volumes:
 
 services:
   code-server:
-    image: ghcr.io/chukysoria/code-server:v0.2.12
+    image: lscr.io/linuxserver/code-server:4.22.1-ls203
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3|linuxserver/mods:universal-docker|linuxserver/mods:code-server-zsh|linuxserver/mods:code-server-extension-arguments|linuxserver/mods:universal-package-install"
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.3|linuxserver/mods:universal-docker|linuxserver/mods:code-server-zsh|linuxserver/mods:code-server-extension-arguments|linuxserver/mods:universal-package-install|ghcr.io/chukysoria/docker-mod-code-server:v0.1.0"
       # Tailscale
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
       TAILSCALE_SERVE_MODE: https
@@ -37,6 +37,13 @@ services:
       traefik.enable: true
       traefik.http.routers.vscode-rtr.rule: Host(`vscode.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.vscode-rtr.middlewares: authentik@docker
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8443"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
+      start_interval: 5s
 
 networks:
   frontend:
