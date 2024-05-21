@@ -248,6 +248,20 @@ networks:
       config:
         - subnet: 172.19.3.0/24
           gateway: 172.19.3.1  
+  grocy-net:
+    name: grocy-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.4.0/24
+          gateway: 172.19.4.1 
+  jellyfin-net:
+    name: jellyfin-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.5.0/24
+          gateway: 172.19.5.1      
   macvlan:
     name: macvlan
     driver: macvlan

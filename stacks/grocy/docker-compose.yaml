@@ -21,7 +21,8 @@ services:
       - ts_grocy:/tsconfig
     networks:
       frontend:
-        ipv4_address: 172.18.0.10
+      grocy-net:
+        ipv4_address: 172.19.4.2
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "80"]
@@ -38,3 +39,10 @@ services:
 networks:
   frontend:
     external: true
+  grocy-net:
+    name: grocy-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.4.0/24
+          gateway: 172.19.4.1  
