@@ -35,6 +35,7 @@ services:
       database:
         ipv4_address: 172.19.0.4
       grafana-net:
+      authentik:
     ports:
       - 5433:5432
     healthcheck:
