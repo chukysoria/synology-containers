@@ -24,10 +24,6 @@ services:
       file: adguard/docker-compose.yaml
       service: adguardhome
   # Databases
-  postgresql:
-    extends:
-      file: databases/docker-compose.yaml
-      service: postgresql
   timescale-db:
     extends:
       file: databases/docker-compose.yaml
@@ -48,7 +44,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      postgresql:
+      timescale-db:
         condition: service_healthy
   authentik-worker:
     extends:
@@ -57,7 +53,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      postgresql:
+      timescale-db:
         condition: service_healthy
   # Traefik
   traefik:
