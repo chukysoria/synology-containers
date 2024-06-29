@@ -13,7 +13,7 @@ services:
     volumes:
       -  ${BASE_PATH:-/volume2/docker/}databases/postgresql:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5434:5432
     networks:
       database:
         ipv4_address: 172.19.0.2
