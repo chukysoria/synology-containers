@@ -12,6 +12,8 @@ services:
       timeout: 5s
     volumes:
       -  ${BASE_PATH:-/volume2/docker/}databases/postgresql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
     networks:
       database:
         ipv4_address: 172.19.0.2
@@ -33,6 +35,8 @@ services:
       database:
         ipv4_address: 172.19.0.4
       grafana-net:
+    ports:
+      - 5433:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
