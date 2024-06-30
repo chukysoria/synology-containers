@@ -4,7 +4,7 @@ volumes:
 
 services:
   grocy:
-    image: lscr.io/linuxserver/grocy:v4.2.0-ls253
+    image: lscr.io/linuxserver/grocy:v4.2.0-ls254
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
