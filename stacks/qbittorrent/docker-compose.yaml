@@ -34,7 +34,7 @@ services:
       restart: unless-stopped
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:4.6.6-r0-ls347
+    image: lscr.io/linuxserver/qbittorrent:4.6.6-r0-ls348
     network_mode: "container:gluetun"
     environment:
       # General LinuxServer.io
