@@ -45,7 +45,7 @@ services:
       authentik:
 
   pgadmin:
-    image: dpage/pgadmin4:8.10
+    image: dpage/pgadmin4:8.11
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
