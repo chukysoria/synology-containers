@@ -18,11 +18,6 @@ volumes:
   ts_code-server:
 
 services:
-  # Adguard
-  adguardhome:
-    extends:
-      file: adguard/docker-compose.yaml
-      service: adguardhome
   # Databases
   timescale-db:
     extends:
@@ -60,54 +55,34 @@ services:
     extends:
       file: traefik/docker-compose.yaml
       service: traefik
-    depends_on:
-      adguardhome:
-        condition: service_healthy
-      authentik-server:
-        condition: service_healthy
   # Duplicati
   duplicati:
     extends:
       file: duplicati/docker-compose.yaml
       service: duplicati  
-    depends_on:
-      traefik:
-        condition: service_healthy
   # Grocy
   grocy:
     extends:
       file: grocy/docker-compose.yaml
       service: grocy  
-    depends_on:
-      traefik:
-        condition: service_healthy
   # Home Assistant
   homeassistant:
     extends:
       file: home-assistant/docker-compose.yaml
       service: homeassistant  
     depends_on:
-      traefik:
-        condition: service_healthy
       timescale-db:
         condition: service_healthy        
-      jellyfin:
-        condition: service_healthy
   # Jellyfin
   jellyfin:
     extends:
       file: jellyfin/docker-compose.yaml
       service: jellyfin  
-    depends_on:
-      traefik:
-        condition: service_healthy
   jellyseerr:
     extends:
       file: jellyfin/docker-compose.yaml
       service: jellyseerr  
     depends_on:
-      traefik:
-        condition: service_healthy
       jellyfin:
         condition: service_healthy
       sonarr:
@@ -120,8 +95,6 @@ services:
       file: monitoring/docker-compose.yaml
       service: grafana
     depends_on:
-      traefik:
-        condition: service_healthy
       timescale-db:
         condition: service_healthy
   # nodered
@@ -130,8 +103,6 @@ services:
       file: nodered/docker-compose.yaml
       service: nodered  
     depends_on:
-      traefik:
-        condition: service_healthy
       homeassistant:
         condition: service_healthy
   # qBitTorrent
@@ -139,9 +110,6 @@ services:
     extends:
       file: qbittorrent/docker-compose.yaml
       service: gluetun  
-    depends_on:
-      traefik:
-        condition: service_healthy 
   qbittorrent:
     extends:
       file: qbittorrent/docker-compose.yaml
@@ -166,26 +134,24 @@ services:
       file: servarr/docker-compose.yaml
       service: radarr  
     depends_on:
-      traefik:
-        condition: service_healthy 
       qbittorrent:
-        condition: service_healthy 
+        condition: service_healthy
+      prowlarr:
+        condition: service_healthy
   sonarr:
     extends:
       file: servarr/docker-compose.yaml
       service: sonarr
     depends_on:
-      traefik:
-        condition: service_healthy 
       qbittorrent:
-        condition: service_healthy 
+        condition: service_healthy
+      prowlarr:
+        condition: service_healthy
   bazarr:
     extends:
       file: servarr/docker-compose.yaml
       service: bazarr
     depends_on:
-      traefik:
-        condition: service_healthy 
       sonarr:
         condition: service_healthy
       radarr:
@@ -195,30 +161,18 @@ services:
       file: servarr/docker-compose.yaml
       service: prowlarr  
     depends_on:
-      traefik:
-        condition: service_healthy
       qbittorrent:
-        condition: service_healthy 
-      sonarr:
-        condition: service_healthy
-      radarr:
         condition: service_healthy
   # VS Code
   vaultwarden:
     extends:
       file: vaultwarden/docker-compose.yaml
       service: vaultwarden  
-    depends_on:
-      adguardhome:
-        condition: service_healthy
   # Vaultwarden
   code-server:
     extends:
       file: codeserver/docker-compose.yaml
       service: code-server  
-    depends_on:
-      adguardhome:
-        condition: service_healthy
 
 networks:
   authentik:
@@ -259,14 +213,4 @@ networks:
         - subnet: 172.19.5.0/24
           gateway: 172.19.5.1      
   macvlan:
-    name: macvlan
-    driver: macvlan
-    driver_opts:
-      parent: ovs_bond0
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
-          ip_range: 192.168.1.48/28
-          gateway: 192.168.1.1
-          aux_addresses:
-            torrent: 192.168.1.48
+    external: true # Defined in Adguard
