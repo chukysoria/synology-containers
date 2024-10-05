@@ -4,7 +4,7 @@ volumes:
 
 services:
   gluetun:
-      image: qmcgaw/gluetun:v3.39.0
+      image: qmcgaw/gluetun:v3.39.1
       container_name: gluetun
       cap_add:
         - NET_ADMIN
@@ -34,7 +34,7 @@ services:
       restart: unless-stopped
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:4.6.6-r0-ls349
+    image: lscr.io/linuxserver/qbittorrent:4.6.7-r0-ls353
     network_mode: "container:gluetun"
     environment:
       # General LinuxServer.io
