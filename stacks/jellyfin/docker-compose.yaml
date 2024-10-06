@@ -27,6 +27,7 @@ services:
     volumes:
       - ts_jellyfin:/tsconfig
       - ${BASE_PATH:-/volume2/docker/}jellyfin:/config:rw
+      - /volume2/music:/media/music
       - /volume2/video:/media/video
     restart: unless-stopped
     labels:
