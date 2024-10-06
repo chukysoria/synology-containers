@@ -131,7 +131,7 @@ services:
       - frontend
     volumes:
       - ${BASE_PATH:-/volume2/docker/}lidarr:/config
-      - /volume2/downloads:/downloads
+      - /volume2/video/torrents/:/downloads
       - /volume2/music:/music
       - ts_lidarr:/tsconfig
     healthcheck:
