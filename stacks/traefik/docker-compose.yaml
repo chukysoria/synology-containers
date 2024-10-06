@@ -36,7 +36,7 @@ services:
     labels:
       traefik.enable: true
       # Routers
-      traefik.http.routers.traefik-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      traefik.http.routers.traefik-rtr.rule: Host(`traefik.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.traefik-rtr.service: api@internal
       # Middlewares
       traefik.http.routers.traefik-rtr.middlewares: authentik@docker
