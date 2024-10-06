@@ -132,7 +132,7 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}lidarr:/config
       - /volume2/video/torrents/:/downloads
-      - /volume2/music:/music
+      - /volume2/music:/media/music
       - ts_lidarr:/tsconfig
     healthcheck:
       test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-lidarr/data/check"]
