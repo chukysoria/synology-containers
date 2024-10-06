@@ -16,6 +16,7 @@ volumes:
   ts_traefik:
   ts_vaultwarden:
   ts_code-server:
+  ts_lidarr:
 
 services:
   # Databases
@@ -162,6 +163,15 @@ services:
       service: prowlarr  
     depends_on:
       qbittorrent:
+        condition: service_healthy
+  lidarr:
+    extends:
+      file: servarr/docker-compose.yaml
+      service: lidarr
+    depends_on:
+      qbittorrent:
+        condition: service_healthy
+      prowlarr:
         condition: service_healthy
   # VS Code
   vaultwarden:
