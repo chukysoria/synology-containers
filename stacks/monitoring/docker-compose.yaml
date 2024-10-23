@@ -1,7 +1,7 @@
 ---
 services:
   grafana:
-    image: grafana/grafana:11.2.3
+    image: grafana/grafana:11.3.0
     networks:
       - frontend
       - grafana-net
