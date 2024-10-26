@@ -14,7 +14,7 @@ services:
       timeout: 30s
       retries: 5
       start_period: 2m
-      # start_interval: 5s
+      start_interval: 5s
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grafana/data:/var/lib/grafana:rw
     environment:
