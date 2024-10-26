@@ -61,7 +61,7 @@ services:
       timeout: 30s
       retries: 5
       start_period: 2m
-      start_interval: 5s
+      # start_interval: 5s
   
   unpackerr:
     image: ghcr.io/hotio/unpackerr:release-0.12.0
@@ -83,7 +83,7 @@ services:
       timeout: 30s
       retries: 5
       start_period: 2m
-      start_interval: 5s
+      # start_interval: 5s
     restart: unless-stopped
 
 networks:
