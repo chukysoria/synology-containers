@@ -6,7 +6,7 @@ services:
     restart: unless-stopped    
     user: ${PUID:-1029}:${PGID:-65536}
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb:/home/postgres/pgdata/data
+      - ${BASE_PATH:-/volume2/docker/}databases/timescaledb-pg17:/home/postgres/pgdata/data
     networks:
       database:
         ipv4_address: 172.19.0.4
