@@ -4,7 +4,7 @@ services:
     image: timescale/timescaledb-ha:pg17-ts2.17
     container_name: timescaledb
     restart: unless-stopped    
-    user: ${PUID:-1029}:${PGID:-65536}
+    # user: ${PUID:-1029}:${PGID:-65536}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/timescaledb-pg17:/home/postgres/pgdata/data
     networks:
