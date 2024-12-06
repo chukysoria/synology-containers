@@ -10,10 +10,10 @@
       "matchDatasources": [
         "docker"
       ],
-      "matchPackagePrefixes": [
-        "timescale/timescaledb-ha"
-      ],
-      "versioning": "regex:^pg(?<major>\\d+)-ts(?<minor>\\d+)\\.(?<patch>\\d+)$"
+      "versioning": "regex:^pg(?<major>\\d+)-ts(?<minor>\\d+)\\.(?<patch>\\d+)$",
+      "matchPackageNames": [
+        "timescale/timescaledb-ha{/,}**"
+      ]
     }
   ]
 }
