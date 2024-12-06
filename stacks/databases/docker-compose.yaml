@@ -1,7 +1,7 @@
 ---
 services:
   timescale-db:
-    image: timescale/timescaledb-ha:pg17-ts2.17
+    image: timescale/timescaledb-ha:pg17-ts2.17@sha256:2f3309a3b153adabdb6632164f4ab92c60f0b07b5d8c66e963fc1b768f7daf3a
     container_name: timescaledb
     restart: unless-stopped    
     # user: ${PUID:-1029}:${PGID:-65536}
@@ -27,7 +27,7 @@ services:
       POSTGRES_DB: ${TS_DB:-homeassistant}      
 
   redis:
-    image: redis:7.4.1-alpine
+    image: redis:7.4.1-alpine@sha256:c1e88455c85225310bbea54816e9c3f4b5295815e6dbf80c34d40afc6df28275
     container_name: redis
     command: --save 60 1 --loglevel warning
     restart: unless-stopped
@@ -45,7 +45,7 @@ services:
       authentik:
 
   pgadmin:
-    image: dpage/pgadmin4:8.13
+    image: dpage/pgadmin4:8.13@sha256:561c1f8f99f2fe24bc63814db9e30292cf4360331de9182da21e3554ce61bdaa
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
