@@ -4,7 +4,7 @@ volumes:
 
 services:
   nodered:
-    image: ghcr.io/chukysoria/nodered:v1.2.26
+    image: ghcr.io/chukysoria/nodered:v1.2.26@sha256:4781871b31f3cb08aa9db786c1224d5360f788fe9b0f98b1ea29333aa6c331e9
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}

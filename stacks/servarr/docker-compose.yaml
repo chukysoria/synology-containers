@@ -8,7 +8,7 @@ volumes:
 
 services:
   radarr:
-    image: lscr.io/linuxserver/radarr:5.15.1.9463-ls247
+    image: lscr.io/linuxserver/radarr:5.15.1.9463-ls247@sha256:2e37ae0af799e01f413a97ee82c7e581a5b635816df0380889bc65d554dbeb17
     volumes:
       - ${BASE_PATH:-/volume2/docker/}radarr:/config:rw
       - ts_radarr:/tsconfig
@@ -43,7 +43,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: ghcr.io/chukysoria/sonarr:v0.3.23
+    image: ghcr.io/chukysoria/sonarr:v0.3.23@sha256:fa892f00b7fc01561a5a339ff04d68406235a5e46689a31169181a02ae6cb7ec
     volumes:
       - ${BASE_PATH:-/volume2/docker/}sonarr:/config:rw
       - ts_sonarr:/tsconfig
@@ -71,7 +71,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: ghcr.io/chukysoria/bazarr:v0.5.20
+    image: ghcr.io/chukysoria/bazarr:v0.5.20@sha256:812b3691a97f877ef417e542f2d43fcccedaf699504d9e73dcc3a710d725e624
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
       - ts_bazarr:/tsconfig
@@ -100,7 +100,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: ghcr.io/chukysoria/prowlarr:v0.6.21
+    image: ghcr.io/chukysoria/prowlarr:v0.6.21@sha256:d752eb373fea332e274c366749ef5fddcbcaa9423fea2af7f07c990310f43bc0
     networks:
       - frontend
     volumes:
@@ -126,7 +126,7 @@ services:
     restart: unless-stopped
 
   lidarr:
-    image: lscr.io/linuxserver/lidarr:2.7.1.4417-ls19
+    image: lscr.io/linuxserver/lidarr:2.7.1.4417-ls19@sha256:7c4c1d52799932b7c2b7e5786adf31ea4edf37093645ccaf06e6d7f6fb2124e7
     networks:
       - frontend
     volumes:

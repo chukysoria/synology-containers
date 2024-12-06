@@ -4,7 +4,7 @@ volumes:
 
 services:
   gluetun:
-      image: qmcgaw/gluetun:v3.39.1
+      image: qmcgaw/gluetun:v3.39.1@sha256:6a8058e626763cbf735ac2f78c774dbb24fec2490bd9d9f7d67e22592cb4a991
       container_name: gluetun
       cap_add:
         - NET_ADMIN
@@ -34,7 +34,7 @@ services:
       restart: unless-stopped
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:5.0.2-r0-ls367
+    image: lscr.io/linuxserver/qbittorrent:5.0.2-r0-ls367@sha256:00360a0160872bffeaea5e232acfdb086063be5f03e0cba48b129b7087cb7ba1
     network_mode: "container:gluetun"
     environment:
       # General LinuxServer.io
@@ -64,7 +64,7 @@ services:
       # start_interval: 5s
   
   unpackerr:
-    image: ghcr.io/hotio/unpackerr:release-0.12.0
+    image: ghcr.io/hotio/unpackerr:release-0.12.0@sha256:968e7a2c6ba9cd9732208b0e450e0ccbe362d3391447e26f7b8b64591ed1463d
     environment:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
