@@ -126,7 +126,7 @@ services:
     restart: unless-stopped
 
   lidarr:
-    image: lscr.io/linuxserver/lidarr:2.7.1.4417-ls19@sha256:7c4c1d52799932b7c2b7e5786adf31ea4edf37093645ccaf06e6d7f6fb2124e7
+    image: lscr.io/linuxserver/lidarr:2.7.1.4417-ls20@sha256:4a581cedce8a0367672943f14be2d8b1d4edcadfd98640e12c9ff29ab5093f76
     networks:
       - frontend
     volumes:
