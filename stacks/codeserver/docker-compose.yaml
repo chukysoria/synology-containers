@@ -19,7 +19,7 @@ services:
       TAILSCALE_HOSTNAME: vscode
       TAILSCALE_SERVE_PORT: 8443
       # Code Server
-      DEFAULT_WORKSPACE: /mnt/docker/hass
+      DEFAULT_WORKSPACE: ${BASE_PATH:-/volume2/docker/}hass
       CS_DISABLE_GETTING_STARTED_OVERRIDE: true
       SUDO_PASSWORD: abc
       VSCODE_EXTENSION_IDS: "keesschollaart.vscode-home-assistant|ms-azuretools.vscode-docker|redhat.vscode-yaml|lukas-tr.materialdesignicons-intellisense|tailscale.vscode-tailscale|ms-vscode-remote.vscode-remote-extensionpack"
@@ -27,7 +27,7 @@ services:
       EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery","itemUrl": "https://marketplace.visualstudio.com/items"}'
     volumes:
       - ${BASE_PATH:-/volume2/docker/}codeserver:/config
-      - ${BASE_PATH:-/volume2/docker/}:/mnt/docker
+      - ${BASE_PATH:-/volume2/docker/}:${BASE_PATH:-/volume2/docker/}
       - ts_code-server:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
