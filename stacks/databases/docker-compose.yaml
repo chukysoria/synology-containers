@@ -27,7 +27,7 @@ services:
       POSTGRES_DB: ${TS_DB:-homeassistant}      
 
   redis:
-    image: redis:7.4.2-alpine@sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb
+    image: redis:7.4.1-alpine@sha256:c1e88455c85225310bbea54816e9c3f4b5295815e6dbf80c34d40afc6df28275
     container_name: redis
     command: --save 60 1 --loglevel warning
     restart: unless-stopped
