@@ -4,7 +4,7 @@ volumes:
 
 services:
   homeassistant:
-    image: lscr.io/linuxserver/homeassistant:2025.1.1-ls64@sha256:b8d36ed6a93953b6a7ca5a31cacbfc80531a0abda9777fb0db71687a3ec02b4b
+    image: lscr.io/linuxserver/homeassistant:2025.1.2-ls65@sha256:300949611ab4cbda8d417f72e8e5dbf67f044d4f851f4a0ce123647675a256bf
     container_name: homeassistant
     environment:
       # General LinuxServer.io
