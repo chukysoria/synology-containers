@@ -4,13 +4,15 @@ volumes:
 
 services:
   duplicati:
-    image: ghcr.io/chukysoria/duplicati:v0.3.17@sha256:ccabc9e3968a304e76bb2261c4a474d9a63f7c4ac89dd8c23ea8a99fb2de710a
+    image: ghcr.io/chukysoria/duplicati:v0.1.0
     environment:
       # General LinuServer.io
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
       DOCKER_MODS: ghcr.io/chukysoria/tailscale-mod:v1.1.5
+      # Duplicati
+      SETTINGS_ENCRYPTION_KEY: ${DUPLICATI_ENCRYPTION_KEY:?Duplicati Encryption Key}
       # Tailscale
       TAILSCALE_SERVE_MODE: https
       TAILSCALE_USE_SSH: 1
@@ -32,4 +34,4 @@ services:
 
 networks:
   frontend:
-    external: true # Deined in Portainer
+    external: true # Defined in Portainer
