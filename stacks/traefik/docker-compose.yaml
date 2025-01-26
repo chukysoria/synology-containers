@@ -10,6 +10,7 @@ services:
       frontend:
       macvlan:
         ipv4_address: 192.168.1.49
+      firefly-net-frontend:
     dns:
       - 1.1.1.1
       - 8.8.8.8
@@ -47,4 +48,6 @@ networks:
     external: true # Defined in portainer
   macvlan:
     external: true # Defined in adguard
-      
+  firefly-net-frontend:
+    external: true # Defined in firefly
+  

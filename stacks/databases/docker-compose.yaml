@@ -12,6 +12,7 @@ services:
         ipv4_address: 172.19.0.4
       grafana-net:
       authentik:
+      firefly-db-net:
     # ports:
     #   - 5433:5432
     healthcheck:
@@ -43,6 +44,7 @@ services:
       database:
         ipv4_address: 172.19.0.3
       authentik:
+      firefly-db-net:
 
   pgadmin:
     image: dpage/pgadmin4:8.14@sha256:8a68677a97b8c8d1427dc915672a26d2c4a04376916a68256f53d669d6171be7
@@ -93,6 +95,13 @@ networks:
       driver: default
       config:
         - subnet: 172.19.3.0/24
-          gateway: 172.19.3.1  
+          gateway: 172.19.3.1
+  firefly-db-net:
+    name: firefly-db-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.8.0/24
+          gateway: 172.19.8.1
   frontend:
     external: true # Defined in portainer

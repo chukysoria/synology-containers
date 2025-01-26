@@ -221,6 +221,27 @@ networks:
       driver: default
       config:
         - subnet: 172.19.5.0/24
-          gateway: 172.19.5.1      
+          gateway: 172.19.5.1
+  firefly-net:
+    name: firefly-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.6.0/24
+          gateway: 172.19.6.1   
+  firefly-net-frontend:
+    name: firefly-net-frontend
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.7.0/24
+          gateway: 172.19.7.1    
+  firefly-db-net:
+    name: firefly-db-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.8.0/24
+          gateway: 172.19.8.1
   macvlan:
     external: true # Defined in Adguard
