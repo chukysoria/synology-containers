@@ -1,0 +1,62 @@
+services:
+  app:
+    image: fireflyiii/core:latest
+    hostname: app
+    container_name: firefly_iii_core
+    networks:
+      - firefly-net
+      - firefly-net-frontend
+      - firefly-db-net
+    restart: always
+    volumes:
+      - firefly_iii_upload:/var/www/html/storage/upload
+    env_file: .env
+    labels:
+      traefik.enable: true
+      traefik.docker.network: firefly-net-frontend
+      traefik.http.routers.fireflyiii-rtr.rule: Host(`firefly.${DOMAIN:-boulebar.duckdns.org}`)
+
+  importer:
+    image: fireflyiii/data-importer:latest
+    hostname: importer
+    restart: always
+    container_name: firefly_iii_importer
+    networks:
+      - firefly-net
+      - firefly-net-frontend 
+      - firefly-db-net   
+    depends_on:
+      - app
+    env_file: .importer.env
+    labels:
+      traefik.enable: true
+      traefik.docker.network: firefly-net-frontend
+      traefik.http.routers.firefly-importer-rtr.rule: Host(`ffimporter.${DOMAIN:-boulebar.duckdns.org}`)
+
+  cron:
+    #
+    # To make this work, set STATIC_CRON_TOKEN in your .env file or as an environment variable and replace REPLACEME below
+    # The STATIC_CRON_TOKEN must be *exactly* 32 characters long
+    #
+    image: alpine:latest
+    container_name: firefly_iii_cron
+    restart: always
+    command: sh -c "
+      apk add tzdata
+      && ln -s /usr/share/zoneinfo/${TZ:-Europe/Madrid} /etc/localtime
+      | echo \"0 3 * * * wget -qO- http://app:8080/api/v1/cron/${STATIC_CRON_TOKEN};echo\" 
+      | crontab - 
+      && crond -f -L /dev/stdout"
+    networks:
+      - firefly-net
+
+volumes:
+   firefly_iii_upload:
+
+networks:
+  firefly-net:
+    external: true # Defined in databases 
+  firefly-net-frontend:
+    external: true # Defined in databases
+  firefly-db-net:
+    external: true # Defined in databases
