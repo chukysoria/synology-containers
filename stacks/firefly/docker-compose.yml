@@ -1,6 +1,6 @@
 services:
   app:
-    image: fireflyiii/core:latest
+    image: fireflyiii/core:latest@sha256:8391c11f3260354a1feb48d1cf2cb822ad00db311efe2b21eccd7d5ee6bfe60a
     hostname: app
     container_name: firefly_iii_core
     networks:
@@ -17,7 +17,7 @@ services:
       traefik.http.routers.fireflyiii-rtr.rule: Host(`firefly.${DOMAIN:-boulebar.duckdns.org}`)
 
   importer:
-    image: fireflyiii/data-importer:latest
+    image: fireflyiii/data-importer:latest@sha256:e63b5b6c24bef446185fe46bdc740a2b07219accdb65e8ec17234aa32708a34b
     hostname: importer
     restart: always
     container_name: firefly_iii_importer
@@ -38,7 +38,7 @@ services:
     # To make this work, set STATIC_CRON_TOKEN in your .env file or as an environment variable and replace REPLACEME below
     # The STATIC_CRON_TOKEN must be *exactly* 32 characters long
     #
-    image: alpine:latest
+    image: alpine:latest@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099
     container_name: firefly_iii_cron
     restart: always
     command: sh -c "
