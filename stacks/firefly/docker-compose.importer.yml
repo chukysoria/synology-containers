@@ -10,8 +10,6 @@ services:
       - firefly-net
       - firefly-net-frontend 
       - firefly-db-net   
-    depends_on:
-      - app
     labels:
       traefik.enable: true
       traefik.docker.network: firefly-net-frontend
