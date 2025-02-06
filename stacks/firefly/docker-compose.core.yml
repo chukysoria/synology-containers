@@ -9,7 +9,7 @@ services:
       - firefly-db-net
     restart: always
     env_file:
-      - stack.env
+      - ../../stack.env
     volumes:
       - firefly_iii_upload:/var/www/html/storage/upload
     labels:
