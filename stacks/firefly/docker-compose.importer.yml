@@ -4,6 +4,8 @@ services:
     hostname: importer
     restart: always
     container_name: firefly_iii_importer
+    env_file:
+      - ../../stack.env
     networks:
       - firefly-net
       - firefly-net-frontend 
