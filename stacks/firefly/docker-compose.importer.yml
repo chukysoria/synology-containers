@@ -1,0 +1,25 @@
+services:
+  importer:
+    image: fireflyiii/data-importer:version-1.6.0
+    hostname: importer
+    restart: always
+    container_name: firefly_iii_importer
+    networks:
+      - firefly-net
+      - firefly-net-frontend 
+      - firefly-db-net   
+    depends_on:
+      - app
+    labels:
+      traefik.enable: true
+      traefik.docker.network: firefly-net-frontend
+      traefik.http.routers.firefly-importer-rtr.rule: Host(`ffimporter.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.firefly-importer-rtr.middlewares: authentik@docker
+
+networks:
+  firefly-net:
+    external: true # Defined in firefly core
+  firefly-net-frontend:
+    external: true # Defined in traefik
+  firefly-db-net:
+    external: true # Defined in databases

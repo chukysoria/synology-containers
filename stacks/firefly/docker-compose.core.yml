@@ -1,6 +1,6 @@
 services:
   app:
-    image: fireflyiii/core:latest
+    image: fireflyiii/core:version-6.2.4
     hostname: app
     container_name: firefly_iii_core
     networks:
@@ -10,45 +10,11 @@ services:
     restart: always
     volumes:
       - firefly_iii_upload:/var/www/html/storage/upload
-    env_file: .env
     labels:
       traefik.enable: true
       traefik.docker.network: firefly-net-frontend
       traefik.http.routers.fireflyiii-rtr.rule: Host(`firefly.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.fireflyiii-rtr.middlewares: authentik@docker
-
-  importer:
-    image: fireflyiii/data-importer:latest
-    hostname: importer
-    restart: always
-    container_name: firefly_iii_importer
-    networks:
-      - firefly-net
-      - firefly-net-frontend 
-      - firefly-db-net   
-    depends_on:
-      - app
-    env_file: .importer.env
-    labels:
-      traefik.enable: true
-      traefik.docker.network: firefly-net-frontend
-      traefik.http.routers.firefly-importer-rtr.rule: Host(`ffimporter.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.firefly-importer-rtr.middlewares: authentik@docker
-
-  firefly-pico:
-    image: cioraneanu/firefly-pico:latest
-    container_name: firefly_pico
-    env_file: .pico.env
-    networks:
-      - firefly-net
-      - firefly-net-frontend
-      - firefly-db-net
-    labels:
-      traefik.enable: true
-      traefik.docker.network: firefly-net-frontend
-      traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
-      
 
   fftc:
     image: akopulko/ffiiitc:latest
@@ -57,13 +23,37 @@ services:
       - firefly-net
     restart: always
     container_name: ffiiitc
-    env_file: .ffiiitc.env
     environment:
       - FF_APP_URL=http://app:8080
+      - FF_API_KEY=${FF_API_KEY:?Firefly III API Key}
     volumes:
       - ffiiitc-data:/app/data
     depends_on:
       - app
+
+  firefly-pico:
+    image: cioraneanu/firefly-pico:1.6.0
+    container_name: firefly_pico
+    environment:
+      - FIREFLY_URL=http://app:8080
+      - DB_CONNECTION=pgsql
+      - DB_HOST=timescaledb
+      - DB_PORT=5432
+      - DB_DATABASE=firefly-pico
+      - DB_USERNAME=firefly-pico
+      - DB_PASSWORD=${PG_PICO_PASS:?Firefly Pico DB Password}
+      - TZ=${TZ:-Europe/Madrid}
+    networks:
+      - firefly-net
+      - firefly-net-frontend
+      - firefly-db-net
+    depends_on:
+      - app
+    labels:
+      traefik.enable: true
+      traefik.docker.network: firefly-net-frontend
+      traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
 
 volumes:
    firefly_iii_upload:
