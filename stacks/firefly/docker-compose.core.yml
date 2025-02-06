@@ -63,6 +63,7 @@ volumes:
 
 networks:
   firefly-net:
+    name: firefly-net
     driver: bridge
   firefly-net-frontend:
     external: true # Defined in traefik
