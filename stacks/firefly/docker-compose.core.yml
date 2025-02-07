@@ -69,7 +69,7 @@ services:
       TZ: ${TZ:-Europe/Madrid}
       DOCKER_MODS: "linuxserver/mods:universal-cron"
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}firefly/cron:/config/crontabs:ro
+      - ${BASE_PATH:-/volume2/docker/}firefly/cron:/config/crontabs:rw
 
 volumes:
    firefly_iii_upload:
