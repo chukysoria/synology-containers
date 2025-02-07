@@ -58,7 +58,7 @@ services:
       traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
 
   cron:
-    image: ghcr.io/chukysoria/baseimage-alpine:v0.7.6-3.21
+    image: ghcr.io/chukysoria/baseimage-alpine:v0.7.6-3.21@sha256:897fdaab1a890cb0a5b4248644a6b1f343c8147295845ec26d0446a29b08ab27
     networks:
       - firefly-net
     restart: unless-stopped
