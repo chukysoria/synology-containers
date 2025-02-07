@@ -1,6 +1,6 @@
 services:
   importer:
-    image: fireflyiii/data-importer:version-1.6.0
+    image: fireflyiii/data-importer:version-1.6.0@sha256:6dae0dd6f415d4cbc1a858533fced215aee50fcf69c39645f2b80ef1616db612
     hostname: importer
     restart: always
     container_name: firefly_iii_importer
