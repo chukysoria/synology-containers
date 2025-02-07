@@ -9,7 +9,9 @@ services:
     networks:
       - firefly-net
       - firefly-net-frontend 
-      - firefly-db-net   
+      - firefly-db-net
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}firefly/import:/import:rw
     labels:
       traefik.enable: true
       traefik.docker.network: firefly-net-frontend
