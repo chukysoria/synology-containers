@@ -57,6 +57,20 @@ services:
       traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
 
+  cron:
+    image: ghcr.io/chukysoria/baseimage-alpine:v0.7.6-3.21
+    networks:
+      - firefly-net
+    restart: unless-stopped
+    environment:
+      # General LinuxServer.io
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
+      TZ: ${TZ:-Europe/Madrid}
+      DOCKER_MODS: "linuxserver/mods:universal-cron"
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}firefly/cron:/config/crontabs:ro
+
 volumes:
    firefly_iii_upload:
    ffiiitc-data:
