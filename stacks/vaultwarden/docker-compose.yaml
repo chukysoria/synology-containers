@@ -4,7 +4,7 @@ volumes:
 
 services:
   vaultwarden:
-    image: ghcr.io/chukysoria/vaultwarden:v0.5.6@sha256:c4d8d47347fc8d3c3741991ccd1b110a3a6998b959ede931db5e9bf2f8bea5eb
+    image: ghcr.io/chukysoria/vaultwarden:v0.5.7@sha256:3d3e9a3bc954cf285bef887ccad7b5a1a3550bff19d7f3a298f270cb966e09da
     networks:
       - frontend
     volumes:
