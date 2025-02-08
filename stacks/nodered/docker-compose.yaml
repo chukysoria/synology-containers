@@ -22,14 +22,19 @@ services:
       NPM_PACKAGES: "node-red-contrib-alexa-smart-home passport-openidconnect"
     networks:
       - frontend
+      - nodered-backend
     volumes:
       - ts_nodered:/tsconfig
       - ${BASE_PATH:-/volume2/docker/}nodered:/config:rw
     restart: unless-stopped
     labels:
       traefik.enable: true
+      traefik.docker.network: frontend
       traefik.http.routers.nodered-rtr.rule: Host(`nodered.${DOMAIN:-boulebar.duckdns.org}`)
 
 networks:
   frontend:
     external: true # Defined in portainer
+  nodered-backend:
+    driver: bridge
+    name: nodered-backend
