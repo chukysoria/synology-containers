@@ -71,7 +71,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: ghcr.io/chukysoria/bazarr:v0.7.3@sha256:d116f646c1303eb155df6b11a3adeb0a8619a981f16402064baa0ce2fe153d47
+    image: ghcr.io/chukysoria/bazarr:v0.7.4@sha256:ed59f6704fe31a27aed60f61149e3c4899381d1735d7f0063bc35551ef9aa0dc
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
       - ts_bazarr:/tsconfig
