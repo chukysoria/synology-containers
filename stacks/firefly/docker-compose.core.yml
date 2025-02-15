@@ -19,21 +19,6 @@ services:
       traefik.http.routers.fireflyiii-rtr.rule: Host(`firefly.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.fireflyiii-rtr.middlewares: authentik@docker
 
-  fftc:
-    image: akopulko/ffiiitc:latest@sha256:453f55acb45089614ea77c5480596c71c053f8f3b1a98ec467f9a151675d59d0
-    hostname: fftc
-    networks:
-      - firefly-net
-    restart: always
-    container_name: ffiiitc
-    environment:
-      - FF_APP_URL=http://app:8080
-      - FF_API_KEY=${FF_API_KEY:?Firefly III API Key}
-    volumes:
-      - ffiiitc-data:/app/data
-    depends_on:
-      - app
-
   firefly-pico:
     image: cioraneanu/firefly-pico:1.6.0@sha256:b2f93cc61cb0de35d748e56c8ad9e9cc28eb6a3f23766b5e6b5aa9bd3f5e9de3
     container_name: firefly_pico
@@ -74,7 +59,6 @@ services:
 
 volumes:
    firefly_iii_upload:
-   ffiiitc-data:
 
 networks:
   firefly-net:
