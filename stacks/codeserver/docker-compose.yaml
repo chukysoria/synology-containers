@@ -4,7 +4,7 @@ volumes:
 
 services:
   code-server:
-    image: lscr.io/linuxserver/code-server:4.96.4-ls253@sha256:b0b34e9afb1342b06690bd8c1f22cf2c7c4e562f8a7b2e50c3917eee06a5eed4
+    image: lscr.io/linuxserver/code-server:4.96.4-ls254@sha256:e90a25d7a6537db3b6f5bde9ebe8f3b0a75759f26febfc5b05e04302e34e46c2
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
