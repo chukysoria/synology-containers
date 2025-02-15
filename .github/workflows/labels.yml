@@ -17,5 +17,5 @@ on:
 jobs:
   labels:
     name: ♻️ Sync labels
-    uses: chukysoria/workflows/.github/workflows/labels.yml@059ffb38edd65c05615494be32f81b111cfb0cc6 # v1.1.3
+    uses: chukysoria/workflows/.github/workflows/labels.yml@bc0599ac8658bdb8224905ec19096b067a7c924a # v1.1.4
                                                                                                                             
