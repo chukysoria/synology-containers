@@ -54,6 +54,8 @@ services:
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
       DOCKER_MODS: "linuxserver/mods:universal-cron|linuxserver/mods:universal-package-install|ghcr.io/chukysoria/tailscale-mod:v1.1.5"
+      INSTALL_PIP_PACKAGES: ${INSTALL_PIP_PACKAGES:-}
+      INSTALL_PACKAGES: ${INSTALL_PACKAGES:-}
       # Tailscale
       TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
       TAILSCALE_USE_SSH: 1
