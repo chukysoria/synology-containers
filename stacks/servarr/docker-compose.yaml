@@ -8,7 +8,7 @@ volumes:
 
 services:
   radarr:
-    image: lscr.io/linuxserver/radarr:5.19.3.9730-ls263@sha256:06f209efdfb25df8eaa6c275f6106d0a9e6b2c8502bd6dde3f95683c2a66aac1
+    image: lscr.io/linuxserver/radarr:5.20.2.9777-ls264@sha256:23677e1cb09bd957796f4521748f0eff9eb65d883949c10442635eabe64b750a
     volumes:
       - ${BASE_PATH:-/volume2/docker/}radarr:/config:rw
       - ts_radarr:/tsconfig
