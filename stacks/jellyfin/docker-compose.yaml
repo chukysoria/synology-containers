@@ -44,7 +44,7 @@ services:
       traefik.udp.services.jellyfin-udp-svc.loadbalancer.server.port: 7359
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:2.5.1@sha256:52ca0b18c58ec4e769b8acae9beaae37a520a365c7ead52b7fc3ba1c3352d1f0
+    image: fallenbagel/jellyseerr:2.5.2@sha256:2a611369ad1d0d501c2d051fc89b6246ff081fb4a30879fdc75642cf6a37b1a6
     environment:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
