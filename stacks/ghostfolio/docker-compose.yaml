@@ -24,13 +24,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - POSTGRES_DB=ghostfolio-db
-      - POSTGRES_USER=ghostfolio
-      - POSTGRES_PASSWORD=${GHOSTFOLIO_POSTGRES_PASSWORD:?Ghostfolio DB Password}
-      - POSTGRES_HOST=timescaledb
-      - POSTGRES_PORT=5432
       - ACCESS_TOKEN_SALT=${GHOSTFOLIO_ACCESS_TOKEN_SALT:?Ghostfolio Access Token Salt}
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?connect_timeout=300&sslmode=prefer
+      - DATABASE_URL=postgresql://ghostfolio:${GHOSTFOLIO_POSTGRES_PASSWORD:?Ghostfolio DB Password}@timescaledb:5432/ghostfolio-db?connect_timeout=300&sslmode=prefer
       - JWT_SECRET_KEY=${GHOSTFOLIO_JWT_SECRET_KEY:?Ghostfolio JWT Secret Key}
 
 networks:
