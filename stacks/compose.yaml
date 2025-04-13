@@ -57,10 +57,10 @@ services:
       file: traefik/docker-compose.yaml
       service: traefik
   # Duplicati
-  duplicati:
-    extends:
-      file: duplicati/docker-compose.yaml
-      service: duplicati  
+  #duplicati:
+  #  extends:
+  #    file: duplicati/docker-compose.yaml
+  #    service: duplicati  
   # Grocy
   grocy:
     extends:
@@ -183,6 +183,16 @@ services:
     extends:
       file: codeserver/docker-compose.yaml
       service: code-server  
+  # Ghostfolio
+  ghostfolio:
+    extends:
+      file: ghostfolio/docker-compose.yaml
+      service: ghostfolio  
+    depends_on:
+      timescale-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
 networks:
   authentik:
@@ -243,6 +253,20 @@ networks:
       config:
         - subnet: 172.19.8.0/24
           gateway: 172.19.8.1
+  ghostfolio-db-net:
+    name: ghostfolio-db-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.9.0/24
+          gateway: 172.19.9.1
+  ghostfolio-net-frontend:
+    name: ghostfolio-net-frontend
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.10.0/24
+          gateway: 172.19.10.1
   macvlan:
     external: true # Defined in Adguard
   nodered-backend:

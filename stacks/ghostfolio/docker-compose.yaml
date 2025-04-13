@@ -1,0 +1,41 @@
+name: ghostfolio
+services:
+  ghostfolio:
+    image: ghostfolio/ghostfolio:2.150.0
+    container_name: ghostfolio
+    restart: unless-stopped
+    init: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ghostfolio-net-frontend
+      traefik.http.routers.ghostfolio-rtr.rule: Host(`ghostfolio.${DOMAIN:-boulebar.duckdns.org}`)
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3333/api/v1/health']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ghostfolio-net-frontend
+      - ghostfolio-db-net
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_DB=ghostfolio-db
+      - POSTGRES_USER=ghostfolio
+      - POSTGRES_PASSWORD=${GHOSTFOLIO_POSTGRES_PASSWORD:?Ghostfolio DB Password}
+      - POSTGRES_HOST=timescaledb
+      - POSTGRES_PORT=5432
+      - ACCESS_TOKEN_SALT=${GHOSTFOLIO_ACCESS_TOKEN_SALT:?Ghostfolio Access Token Salt}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?connect_timeout=300&sslmode=prefer
+      - JWT_SECRET_KEY=${GHOSTFOLIO_JWT_SECRET_KEY:?Ghostfolio JWT Secret Key}
+
+networks:
+  ghostfolio-net-frontend:
+    external: true # Defined in traefik
+  ghostfolio-db-net:
+    external: true # Defined in databases
+

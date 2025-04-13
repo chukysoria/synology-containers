@@ -11,6 +11,7 @@ services:
       macvlan:
         ipv4_address: 192.168.1.49
       firefly-net-frontend:
+      ghostfolio-net-frontend:
     dns:
       - 1.1.1.1
       - 8.8.8.8
@@ -49,5 +50,17 @@ networks:
   macvlan:
     external: true # Defined in adguard
   firefly-net-frontend:
-    external: true # Defined in firefly
+    name: firefly-net-frontend
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.7.0/24
+          gateway: 172.19.7.1
+  ghostfolio-net-frontend:
+    name: ghostfolio-net-frontend
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.10.0/24
+          gateway: 172.19.10.1
   

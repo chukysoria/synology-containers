@@ -13,6 +13,7 @@ services:
       grafana-net:
       authentik:
       firefly-db-net:
+      ghostfolio-db-net:
     # ports:
     #   - 5433:5432
     healthcheck:
@@ -45,6 +46,7 @@ services:
         ipv4_address: 172.19.0.3
       authentik:
       firefly-db-net:
+      ghostfolio-db-net:
 
   pgadmin:
     image: dpage/pgadmin4:9.2@sha256:52cb72a9e3da275324ca0b9bb3891021366d501aad375db34584a7bca8ce02ff
@@ -103,5 +105,12 @@ networks:
       config:
         - subnet: 172.19.8.0/24
           gateway: 172.19.8.1
+  ghostfolio-db-net:
+    name: ghostfolio-db-net
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.9.0/24
+          gateway: 172.19.9.1
   frontend:
     external: true # Defined in portainer
