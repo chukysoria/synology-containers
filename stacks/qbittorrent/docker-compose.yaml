@@ -35,7 +35,12 @@ services:
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:5.0.4-r0-ls389@sha256:90a82ca3ad221a8df88f245aec649f0c10b83109dfdacec14fb33e345e605560
-    network_mode: "container:gluetun"
+    #network_mode: "container:gluetun"
+    networks:
+      - frontend
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}

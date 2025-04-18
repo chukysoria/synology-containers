@@ -107,17 +107,17 @@ services:
       homeassistant:
         condition: service_healthy
   # qBitTorrent
-  gluetun:
-    extends:
-      file: qbittorrent/docker-compose.yaml
-      service: gluetun  
+  # gluetun:
+  #   extends:
+  #     file: qbittorrent/docker-compose.yaml
+  #     service: gluetun  
   qbittorrent:
     extends:
       file: qbittorrent/docker-compose.yaml
       service: qbittorrent  
-    depends_on:
-      gluetun:
-        condition: service_healthy 
+    #depends_on:
+    #  gluetun:
+    #    condition: service_healthy 
   unpackerr:
     extends:
       file: qbittorrent/docker-compose.yaml
