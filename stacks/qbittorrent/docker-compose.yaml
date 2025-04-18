@@ -67,7 +67,13 @@ services:
       retries: 5
       start_period: 2m
       # start_interval: 5s
-  
+    labels:
+      traefik.enable: true
+      traefik.http.routers.qbit-rtr.rule: Host(`qbit.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.qbit-rtr.service: qbit-svc
+      traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
+      traefik.http.routers.qbit-rtr.middlewares: authentik@docker 
+ 
   unpackerr:
     image: ghcr.io/hotio/unpackerr:release-0.12.0@sha256:968e7a2c6ba9cd9732208b0e450e0ccbe362d3391447e26f7b8b64591ed1463d
     environment:
