@@ -1,7 +1,7 @@
 ---
 services:
   timescale-db:
-    image: timescale/timescaledb-ha:pg17-ts2.19@sha256:7aa16b4a32e2ac12bf87d5a8563e1e6a248ac884993808fbe382318f6cf0cacc
+    image: timescale/timescaledb-ha:pg17-ts2.19@sha256:7c8602d5c1a8d2eb6f6d6c540c5d71b03e8f89ea386b07985c6a290957881332
     container_name: timescaledb
     restart: unless-stopped    
     # user: ${PUID:-1029}:${PGID:-65536}
