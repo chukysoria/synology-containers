@@ -1,2 +1,2 @@
-.env
-.codegpt
+.test*
+test*
