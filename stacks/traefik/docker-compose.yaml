@@ -5,7 +5,7 @@ volumes:
 
 services:
   traefik:
-    image: ghcr.io/chukysoria/traefik:v1.1.21@sha256:ff8e1fd0f82c32b602ab63508f7cf85b1c1bade651ad8037db078fa8fd39a3a3
+    image: ghcr.io/chukysoria/traefik:v1.1.22@sha256:6578408e6b97294ec8ddf3e384a775889fe5691585d4e010bcbc2fbea6f9c000
     networks:
       frontend:
       macvlan:
