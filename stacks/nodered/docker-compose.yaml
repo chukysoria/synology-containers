@@ -4,7 +4,7 @@ volumes:
 
 services:
   nodered:
-    image: ghcr.io/chukysoria/nodered:v1.4.1@sha256:655e373fdd46783fa1e4310416103910a43fbedb09c2410408c5962d223b84b4
+    image: ghcr.io/chukysoria/nodered:v1.4.2@sha256:fa7d090f694bc8dc23e6cd5b033dd819f9af98213811999fc64010cec39ab783
     container_name: nodered
     environment:
       # General LinuxServer.io
