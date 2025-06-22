@@ -33,7 +33,7 @@ services:
       # start_interval: 5s
     labels:
       sablier.enable: "true"
-      sablier.group: "loadingscreen"
+      sablier.group: "grocy"
     #  traefik.enable: true
     #  traefik.http.routers.grocy-rtr.rule: Host(`grocy.${DOMAIN:-boulebar.duckdns.org}`)
     #  traefik.http.routers.grocy-rtr.middlewares: authentik@docker

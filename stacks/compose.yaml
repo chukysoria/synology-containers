@@ -91,10 +91,6 @@ services:
     depends_on:
       jellyfin:
         condition: service_healthy
-      sonarr:
-        condition: service_healthy
-      radarr:
-        condition: service_healthy
   # Monitoring
   grafana:
     extends:
@@ -130,10 +126,7 @@ services:
     depends_on:
       qbittorrent:
         condition: service_healthy 
-      sonarr:
-        condition: service_healthy
-      radarr:
-        condition: service_healthy
+
   # Servarr
   radarr:
     extends:
@@ -157,11 +150,6 @@ services:
     extends:
       file: servarr/docker-compose.yaml
       service: bazarr
-    depends_on:
-      sonarr:
-        condition: service_healthy
-      radarr:
-        condition: service_healthy
   prowlarr:
     extends:
       file: servarr/docker-compose.yaml

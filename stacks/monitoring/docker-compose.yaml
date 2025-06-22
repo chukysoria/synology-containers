@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
     labels:
       sablier.enable: "true"
-      sablier.group: "loadingscreen"
+      sablier.group: "grafana"
     #  traefik.enable: true
     #  traefik.http.routers.grafana-rtr.rule: Host(`grafana.${DOMAIN:-boulebar.duckdns.org}`)
 

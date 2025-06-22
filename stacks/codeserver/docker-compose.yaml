@@ -35,7 +35,7 @@ services:
     restart: unless-stopped
     labels:
       sablier.enable: "true"
-      sablier.group: "loadingscreen-longhour"
+      sablier.group: "vscode"
     #  traefik.enable: true
     #  traefik.http.routers.vscode-rtr.rule: Host(`vscode.${DOMAIN:-boulebar.duckdns.org}`)
     #  traefik.http.routers.vscode-rtr.middlewares: authentik@docker

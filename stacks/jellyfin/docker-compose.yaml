@@ -62,7 +62,7 @@ services:
       # start_interval: 5s
     labels:
       sablier.enable: "true"
-      sablier.group: "loadingscreen"
+      sablier.group: "jellyseerr"
     #  traefik.enable: true
     #  traefik.http.routers.jellyseerr-rtr.rule: Host(`jellyseerr.${DOMAIN:-boulebar.duckdns.org}`)    
     restart: unless-stopped

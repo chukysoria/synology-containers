@@ -38,7 +38,7 @@ services:
       # start_interval: 5s
     labels:
       sablier.enable: "true"
-      sablier.group: "loadingscreen"
+      sablier.group: "radarr"
     #  traefik.enable: true
     #  traefik.http.routers.radarr-rtr.rule: Host(`radarr.${DOMAIN:-boulebar.duckdns.org}`)
     #  traefik.http.routers.radarr-rtr.middlewares: authentik@docker
@@ -158,7 +158,7 @@ services:
       TAILSCALE_SERVE_PORT: 8686
     labels:
       sablier.enable: "true"
-      sablier.group: "loadingscreen"
+      sablier.group: "lidarr"
     #  traefik.enable: true
     #  traefik.http.routers.lidarr-rtr.rule: Host(`lidarr.${DOMAIN:-boulebar.duckdns.org}`)
     #  traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
