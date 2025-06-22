@@ -31,11 +31,11 @@ services:
       retries: 5
       start_period: 2m
       # start_interval: 5s
-    labels:
-      traefik.enable: true
-      traefik.http.routers.grocy-rtr.rule: Host(`grocy.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.grocy-rtr.middlewares: authentik@docker
-      traefik.http.routers.grocy-api-rtr.rule: Host(`grocy-api.${DOMAIN:-boulebar.duckdns.org}`) && PathPrefix(`/api`)
+    #labels:
+    #  traefik.enable: true
+    #  traefik.http.routers.grocy-rtr.rule: Host(`grocy.${DOMAIN:-boulebar.duckdns.org}`)
+    #  traefik.http.routers.grocy-rtr.middlewares: authentik@docker
+    #  traefik.http.routers.grocy-api-rtr.rule: Host(`grocy-api.${DOMAIN:-boulebar.duckdns.org}`) && PathPrefix(`/api`)
 
 
 networks:

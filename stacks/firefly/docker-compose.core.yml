@@ -37,11 +37,11 @@ services:
       - firefly-db-net
     depends_on:
       - app
-    labels:
-      traefik.enable: true
-      traefik.docker.network: firefly-net-frontend
-      traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
+    #labels:
+    #  traefik.enable: true
+    #  traefik.docker.network: firefly-net-frontend
+    #  traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)
+    #  traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
 
   cron:
     image: ghcr.io/chukysoria/baseimage-alpine:v0.8.4-3.22@sha256:5a0d022a8641d84a4c2f53038f8fee60e25c5edce22bb089e88a79ee6069ecce

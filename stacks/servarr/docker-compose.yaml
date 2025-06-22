@@ -36,10 +36,10 @@ services:
       retries: 5
       start_period: 2m
       # start_interval: 5s
-    labels:
-      traefik.enable: true
-      traefik.http.routers.radarr-rtr.rule: Host(`radarr.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.radarr-rtr.middlewares: authentik@docker
+    #labels:
+    #  traefik.enable: true
+    #  traefik.http.routers.radarr-rtr.rule: Host(`radarr.${DOMAIN:-boulebar.duckdns.org}`)
+    #  traefik.http.routers.radarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
   sonarr:
@@ -154,10 +154,10 @@ services:
       TAILSCALE_STATE_DIR: /tsconfig
       TAILSCALE_HOSTNAME: lidarr
       TAILSCALE_SERVE_PORT: 8686
-    labels:
-      traefik.enable: true
-      traefik.http.routers.lidarr-rtr.rule: Host(`lidarr.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
+    #labels:
+    #  traefik.enable: true
+    #  traefik.http.routers.lidarr-rtr.rule: Host(`lidarr.${DOMAIN:-boulebar.duckdns.org}`)
+    #  traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
 networks:

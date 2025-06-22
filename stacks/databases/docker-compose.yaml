@@ -68,10 +68,10 @@ services:
       retries: 5
       timeout: 3s
       # start_interval: 5s
-    labels:
-      traefik.enable: true
-      traefik.docker.network: frontend
-      traefik.http.routers.pgadmin-rtr.rule: Host(`pgadmin.${DOMAIN:-boulebar.duckdns.org}`)
+    #labels:
+    #  traefik.enable: true
+    #  traefik.docker.network: frontend
+    #  traefik.http.routers.pgadmin-rtr.rule: Host(`pgadmin.${DOMAIN:-boulebar.duckdns.org}`)
 
 volumes:
   pgadmin:
