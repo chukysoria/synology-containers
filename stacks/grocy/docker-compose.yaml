@@ -31,7 +31,9 @@ services:
       retries: 5
       start_period: 2m
       # start_interval: 5s
-    #labels:
+    labels:
+      sablier.enable: "true"
+      sablier.group: "loadingscreen"
     #  traefik.enable: true
     #  traefik.http.routers.grocy-rtr.rule: Host(`grocy.${DOMAIN:-boulebar.duckdns.org}`)
     #  traefik.http.routers.grocy-rtr.middlewares: authentik@docker

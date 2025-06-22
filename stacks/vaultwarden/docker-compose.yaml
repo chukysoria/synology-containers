@@ -26,9 +26,9 @@ services:
       TAILSCALE_SERVE_PORT: 7979
       # Vaultwarden
       ROCKET_PORT: 7979
-    #labels:
-    #  - "traefik.enable=true"
-    #  - "traefik.http.routers.vaultwarden.rule=Host(`vw.${DOMAIN:-boulebar.duckdns.org}`)"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vaultwarden.rule=Host(`vw.${DOMAIN:-boulebar.duckdns.org}`)"
     restart: unless-stopped
 
 networks:

@@ -37,7 +37,9 @@ services:
       - firefly-db-net
     depends_on:
       - app
-    #labels:
+    labels:
+      sablier.enable: "true"
+      sablier.group: "blocking"
     #  traefik.enable: true
     #  traefik.docker.network: firefly-net-frontend
     #  traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)

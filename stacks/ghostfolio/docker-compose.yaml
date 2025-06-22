@@ -9,7 +9,9 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    #labels:
+    labels:
+      sablier.enable: "true"
+      sablier.group: "loadingscreen"
     #  traefik.enable: true
     #  traefik.docker.network: ghostfolio-net-frontend
     #  traefik.http.routers.ghostfolio-rtr.rule: Host(`ghostfolio.${DOMAIN:-boulebar.duckdns.org}`)
