@@ -44,6 +44,16 @@ services:
       traefik.http.routers.traefik-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
+  sablier:
+    image: sablierapp/sablier:1.9.0
+    command:
+      - start
+      - --provider.name=docker
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    networks:
+      - frontend
+
 networks:
   frontend:
     external: true # Defined in portainer

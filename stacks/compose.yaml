@@ -56,6 +56,11 @@ services:
     extends:
       file: traefik/docker-compose.yaml
       service: traefik
+  # Sablier
+  sablier:
+    extends:
+      file: traefik/docker-compose.yaml
+      service: sablier  
   # Duplicati
   #duplicati:
   #  extends:

@@ -36,7 +36,9 @@ services:
       # Optionally map user groups to Grafana roles
       GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups, 'grafana_admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'"
     restart: on-failure:5
-    #labels:
+    labels:
+      sablier.enable: "true"
+      sablier.group: "loadingscreen"
     #  traefik.enable: true
     #  traefik.http.routers.grafana-rtr.rule: Host(`grafana.${DOMAIN:-boulebar.duckdns.org}`)
 
