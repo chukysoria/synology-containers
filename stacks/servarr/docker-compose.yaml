@@ -102,7 +102,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: ghcr.io/chukysoria/prowlarr:v0.9.16@sha256:13997c57b8067d830ed63dd91ad095d931c2f62ce608ac69ad0bc74d5aaa57b4
+    image: ghcr.io/chukysoria/prowlarr:v0.9.17@sha256:fa779128ccb56eb877197abbf39f5cf34a53180d0b307225ec1dd96b756bdb76
     networks:
       - frontend
     volumes:
