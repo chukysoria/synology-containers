@@ -56,11 +56,6 @@ services:
     extends:
       file: traefik/docker-compose.yaml
       service: traefik
-  # Sablier
-  sablier:
-    extends:
-      file: traefik/docker-compose.yaml
-      service: sablier  
   # Duplicati
   #duplicati:
   #  extends:
@@ -186,6 +181,36 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+  # Sablier
+  sablier:
+    extends:
+      file: traefik/docker-compose.yaml
+      service: sablier  
+    depends_on:
+      code-server:
+        condition: service_healthy
+        restart: true
+      ghostfolio:
+        condition: service_healthy
+        restart: true
+      grafana:
+        condition: service_healthy
+        restart: true
+      grocy:
+        condition: service_healthy
+        restart: true
+      jellyseerr:
+        condition: service_healthy
+        restart: true
+      lidarr:
+        condition: service_healthy
+        restart: true
+      pgadmin:
+        condition: service_healthy
+        restart: true
+      radarr:
+        condition: service_healthy
+        restart: true
 
 networks:
   authentik:
