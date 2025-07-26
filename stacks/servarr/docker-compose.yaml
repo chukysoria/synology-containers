@@ -1,17 +1,9 @@
 ---
-volumes:
-  ts_sonarr:
-  ts_bazarr:
-  ts_prowlarr:
-  ts_radarr:
-  ts_lidarr:
-
 services:
   radarr:
     image: lscr.io/linuxserver/radarr:5.26.2.10099-ls279@sha256:ae89f05ad7023258730ed62f5fcca63aab1e27ee5adcca1edb55d716f7cef356
     volumes:
       - ${BASE_PATH:-/volume2/docker/}radarr:/config:rw
-      - ts_radarr:/tsconfig
       - /volume2/downloads:/media/downloads
       - /volume2/video:/media/video
     networks:
@@ -21,14 +13,6 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: radarr
-      TAILSCALE_SERVE_PORT: 7878
     healthcheck:
       test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-radarr/data/check"]
       interval: 30s
@@ -48,7 +32,6 @@ services:
     image: ghcr.io/chukysoria/sonarr:v0.5.5@sha256:9f87be088fefaacd2cd315a9250ca6bc875180547ea70ad819eaf7d954ecab55
     volumes:
       - ${BASE_PATH:-/volume2/docker/}sonarr:/config:rw
-      - ts_sonarr:/tsconfig
       - /volume2/downloads:/media/downloads
       - /volume2/video:/media/video
     networks:
@@ -58,14 +41,6 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: sonarr
-      TAILSCALE_SERVE_PORT: 8989
     labels:
       traefik.enable: true
       traefik.http.routers.sonarr-rtr.rule: Host(`sonarr.${DOMAIN:-boulebar.duckdns.org}`)
@@ -76,7 +51,6 @@ services:
     image: ghcr.io/chukysoria/bazarr:v0.8.6@sha256:c4c0c5b643e3adee06abc7fc9014cc5356e8e6bfacae54225554d49bbf7b6ca5
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
-      - ts_bazarr:/tsconfig
       - /volume2/downloads:/media/downloads
       - /volume2/video/Series:/media/video/Series
       - /volume2/video/Pelis:/media/video/Pelis
@@ -87,14 +61,6 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: bazarr
-      TAILSCALE_SERVE_PORT: 6767
     labels:
       traefik.enable: true
       traefik.http.routers.bazarr-rtr.rule: Host(`bazarr.${DOMAIN:-boulebar.duckdns.org}`)
@@ -107,20 +73,11 @@ services:
       - frontend
     volumes:
       - ${BASE_PATH:-/volume2/docker/}prowlarr:/config:rw
-      - ts_prowlarr:/tsconfig
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: prowlarr
-      TAILSCALE_SERVE_PORT: 9696
     labels:
       traefik.enable: true
       traefik.http.routers.prowlarr-rtr.rule: Host(`prowlarr.${DOMAIN:-boulebar.duckdns.org}`)
@@ -135,7 +92,6 @@ services:
       - ${BASE_PATH:-/volume2/docker/}lidarr:/config
       - /volume2/video/torrents/:/downloads
       - /volume2/music:/media/music
-      - ts_lidarr:/tsconfig
     healthcheck:
       test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-lidarr/data/check"]
       interval: 30s
@@ -148,14 +104,6 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: lidarr
-      TAILSCALE_SERVE_PORT: 8686
     labels:
       sablier.enable: "true"
       sablier.group: "lidarr"

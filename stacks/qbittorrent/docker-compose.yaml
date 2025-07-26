@@ -1,7 +1,4 @@
 ---
-volumes:
-  ts_qbit:
-
 services:
   gluetun:
       image: qmcgaw/gluetun:v3.40.0@sha256:2b42bfa046757145a5155acece417b65b4443c8033fb88661a8e9dcf7fda5a00
@@ -46,17 +43,8 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5|ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.10.2"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: qbit
-      TAILSCALE_SERVE_PORT: 8080
     volumes:
       - ${BASE_PATH:-/volume2/docker/}qbit:/config:rw
-      - ts_qbit:/tsconfig
       - /volume2/downloads:/media/downloads
       - /volume2/video/torrents:/media/video/torrents
     restart: unless-stopped

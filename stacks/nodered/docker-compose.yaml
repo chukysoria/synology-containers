@@ -1,7 +1,4 @@
 ---
-volumes:
-  ts_nodered:
-
 services:
   nodered:
     image: ghcr.io/chukysoria/nodered:v1.4.6@sha256:75720c2a248468c9f3b025a38c77caef89d395bceeb8e920d3c6fa7b4ae5aea1
@@ -11,21 +8,12 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_SERVE_MODE: https
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: nodered
-      TAILSCALE_SERVE_PORT: 1880
       # Node-Red
       NPM_PACKAGES: "node-red-contrib-alexa-smart-home passport-openidconnect"
     networks:
       - frontend
       - nodered-backend
     volumes:
-      - ts_nodered:/tsconfig
       - ${BASE_PATH:-/volume2/docker/}nodered:/config:rw
     restart: unless-stopped
     labels:

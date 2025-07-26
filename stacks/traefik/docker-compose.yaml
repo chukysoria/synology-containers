@@ -1,8 +1,4 @@
 ---
-volumes:
-  certs:
-  ts_traefik:
-
 services:
   traefik:
     image: ghcr.io/chukysoria/traefik:v1.1.28@sha256:97971aa80753e9ed9e31f7cb42806348ac2b577de987b1a5ef5f7b4b16418c2e
@@ -22,18 +18,11 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_USE_SSH: 1
-      TAILSCALE_STATE_DIR: /tsconfig
-      TAILSCALE_HOSTNAME: traefik
       # Traefik
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?DuckDNS API Token}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}certs:/certs:rw
       - ${BASE_PATH:-/volume2/docker/}traefik:/config:rw
-      - ts_traefik:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: true

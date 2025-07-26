@@ -1,7 +1,4 @@
 ---
-volumes:
-  ts_grocy:
-
 services:
   grocy:
     image: lscr.io/linuxserver/grocy:v4.5.0-ls297@sha256:c0408e2070b35947e1b20b79f4a03cb2727e4f628d2ec4e0fbfac051b4093e61
@@ -10,15 +7,8 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
-      # Tailscale
-      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
-      TAILSCALE_USE_SSH: "1"
-      TAILSCALE_HOSTNAME: grocy
-      TAILSCALE_STATE_DIR: /tsconfig
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grocy:/config
-      - ts_grocy:/tsconfig
     networks:
       frontend:
       grocy-net:
