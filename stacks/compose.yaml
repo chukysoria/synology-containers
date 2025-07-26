@@ -190,9 +190,9 @@ services:
       code-server:
         condition: service_healthy
         restart: true
-      ghostfolio:
-        condition: service_healthy
-        restart: true
+     # ghostfolio:
+     #   condition: service_healthy
+     #   restart: true
       grafana:
         condition: service_healthy
         restart: true
