@@ -43,6 +43,7 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
+      DOCKER_MODS: "ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.10.2"
     volumes:
       - ${BASE_PATH:-/volume2/docker/}qbit:/config:rw
       - /volume2/downloads:/media/downloads
