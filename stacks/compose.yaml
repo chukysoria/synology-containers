@@ -172,15 +172,15 @@ services:
       file: codeserver/docker-compose.yaml
       service: code-server  
   # Ghostfolio
-  ghostfolio:
-    extends:
-      file: ghostfolio/docker-compose.yaml
-      service: ghostfolio  
-    depends_on:
-      timescale-db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+  #ghostfolio:
+  #  extends:
+  #    file: ghostfolio/docker-compose.yaml
+  #    service: ghostfolio  
+  #  depends_on:
+  #    timescale-db:
+  #      condition: service_healthy
+  #    redis:
+  #      condition: service_healthy
   # Sablier
   sablier:
     extends:
