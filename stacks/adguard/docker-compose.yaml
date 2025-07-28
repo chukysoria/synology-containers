@@ -1,7 +1,7 @@
 ---
 services:
   adguardhome:
-    image: adguard/adguardhome:v0.107.63@sha256:320ab49bd5f55091c7da7d1232ed3875f687769d6bb5e55eb891471528e2e18f
+    image: adguard/adguardhome:v0.107.64@sha256:23243d0004d9398cf9c83bdfce3dd92005df72aef010f537e7325a021f31a6f5
     volumes:
       - ${BASE_PATH:-/volume2/docker/}adguard/conf:/opt/adguardhome/conf:uid=${PUID:-1029},gid=${PGID:-65536}
       - ${BASE_PATH:-/volume2/docker/}adguard/work:/opt/adguardhome/work:uid=${PUID:-1029},gid=${PGID:-65536}
