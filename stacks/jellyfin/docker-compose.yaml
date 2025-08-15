@@ -1,4 +1,7 @@
 ---
+volumes:
+  ts_jellyfin:
+
 services:
   jellyfin:
     image: ghcr.io/chukysoria/jellyfin:v0.4.50@sha256:8f258dc09954b37f98907046544dbabcc25f2a4ccd40152fc4d2a7440d99b496
@@ -7,6 +10,14 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
+      DOCKER_MODS: "ghcr.io/chukysoria/tailscale-mod:v1.1.5"
+      # Tailscale
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:?Tailscale Authorization key}
+      TAILSCALE_SERVE_MODE: https
+      TAILSCALE_USE_SSH: 1
+      TAILSCALE_STATE_DIR: /tsconfig
+      TAILSCALE_HOSTNAME: jellyfin
+      TAILSCALE_SERVE_PORT: 8096
       # Jellyfin
       JELLYFIN_PublishedServerUrl: "https://jellyfin.${DOMAIN:-boulebar.duckdns.org}"
     networks:
@@ -14,6 +25,7 @@ services:
       jellyfin-net:
         ipv4_address: 172.19.5.2
     volumes:
+      - ts_jellyfin:/tsconfig
       - ${BASE_PATH:-/volume2/docker/}jellyfin:/config:rw
       - /volume2/music:/media/music
       - /volume2/video:/media/video
