@@ -68,7 +68,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: ghcr.io/chukysoria/prowlarr:v0.9.23@sha256:4b439f987537e1d24bba0410573b0abb396fd8398da9e884689e2f8c49afe29d
+    image: ghcr.io/chukysoria/prowlarr:v0.9.24@sha256:dfca9d441a440b16d28228eec41272959f1148cdf6728407e7ead5a4c06ee2e1
     networks:
       - frontend
     volumes:
