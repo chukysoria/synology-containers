@@ -1,7 +1,7 @@
 ---
 services:
   traefik:
-    image: ghcr.io/chukysoria/traefik:v1.1.37@sha256:677b8046dedbc4d952e7f767cabdf9b87a8a1fe94a7495ada1b38f4fd84a7b91
+    image: ghcr.io/chukysoria/traefik:v1.1.38@sha256:8c0dd29cd0ff3f6c13f7c258b1918391a60ffb4d746a3e20a17bfcb8a5560d6d
     networks:
       frontend:
       macvlan:
