@@ -1,7 +1,7 @@
 ---
 services:
   authentik-server:
-    image: ghcr.io/goauthentik/server:2025.10.2@sha256:bb203dabae401cf239ae7c7adbe238f50d931e086a59c5642f0f1e9fb7cf2a37
+    image: ghcr.io/goauthentik/server:2025.10.2@sha256:8322e449feefcc2416f0401038d5a1a28552c4403b079a59d3b4d978d8f3f530
     container_name: authentik-server
     restart: unless-stopped
     command: server
@@ -37,7 +37,7 @@ services:
       traefik.http.middlewares.authentik.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version,Authorization   
 
   authentik-worker:
-    image: ghcr.io/goauthentik/server:2025.10.2@sha256:bb203dabae401cf239ae7c7adbe238f50d931e086a59c5642f0f1e9fb7cf2a37
+    image: ghcr.io/goauthentik/server:2025.10.2@sha256:8322e449feefcc2416f0401038d5a1a28552c4403b079a59d3b4d978d8f3f530
     restart: unless-stopped
     command: worker
     environment:
