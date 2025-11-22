@@ -112,6 +112,28 @@ services:
     #  traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
+  huntarr:
+    image: ghcr.io/aycabta/huntarr:v0.9.0
+    # Persistent config
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
+      - /volume2/video:/media/video
+    networks:
+      - frontend
+    environment:
+      # Common variables
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
+      TZ: ${TZ:-Europe/Madrid}
+      # Application settings
+      HUNTARR_BASE_PATH: /config
+      HUNTARR_BIND_PORT: 8080
+    labels:
+      traefik.enable: true
+      traefik.http.routers.huntarr-rtr.rule: Host(`huntarr.${DOMAIN:-boulebar.duckdns.org}`)
+      # traefik.http.routers.huntarr-rtr.middlewares: authentik@docker
+    restart: unless-stopped
+
 networks:
   frontend:
     external: true # Defined in Portainer
