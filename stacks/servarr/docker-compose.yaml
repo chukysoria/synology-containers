@@ -113,7 +113,7 @@ services:
     restart: unless-stopped
 
   huntarr:
-    image: ghcr.io/aycabta/huntarr:v0.9.0
+    image: ghcr.io/plexguide/huntarr:8.2.10
     # Persistent config
     volumes:
       - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
