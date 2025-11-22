@@ -125,9 +125,6 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
-      # Application settings
-      HUNTARR_BASE_PATH: /config
-      HUNTARR_BIND_PORT: 8080
     labels:
       traefik.enable: true
       traefik.http.routers.huntarr-rtr.rule: Host(`huntarr.${DOMAIN:-boulebar.duckdns.org}`)
