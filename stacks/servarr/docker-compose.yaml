@@ -117,7 +117,6 @@ services:
     # Persistent config
     volumes:
       - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
-      - /volume2/video:/media/video
     networks:
       - frontend
     environment:
@@ -128,7 +127,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.huntarr-rtr.rule: Host(`huntarr.${DOMAIN:-boulebar.duckdns.org}`)
-      # traefik.http.routers.huntarr-rtr.middlewares: authentik@docker
+      traefik.http.routers.huntarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
 networks:
