@@ -117,8 +117,7 @@ services:
     # Persistent config
     volumes:
       - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
-    networks:
-      - frontend
+
     environment:
       # Common variables
       PUID: ${PUID:-1029}
@@ -128,6 +127,25 @@ services:
       traefik.enable: true
       traefik.http.routers.huntarr-rtr.rule: Host(`huntarr.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.huntarr-rtr.middlewares: authentik@docker
+    restart: unless-stopped
+
+  whisparr:
+    image: ghcr.io/hotio/whisparr:v3-3.0.2.1433
+    networks:
+      - frontend
+    environment:
+      # Common variables
+      PUID: ${PUID:-1029}
+      PGID: ${PGID:-65536}
+      TZ: ${TZ:-Europe/Madrid}
+      UMASK: 002
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}whisparr:/config:rw
+      - /volume2/video:/media/video
+    labels:
+      traefik.enable: true
+      traefik.http.routers.whisparr-rtr.rule: Host(`whisparr.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.whisparr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
 networks:
