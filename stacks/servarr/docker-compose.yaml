@@ -114,10 +114,10 @@ services:
 
   huntarr:
     image: ghcr.io/plexguide/huntarr:8.2.10
-    # Persistent config
     volumes:
       - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
-
+    networks:
+      - frontend
     environment:
       # Common variables
       PUID: ${PUID:-1029}
