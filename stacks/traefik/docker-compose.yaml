@@ -34,7 +34,7 @@ services:
     restart: unless-stopped
 
   sablier:
-    image: sablierapp/sablier:1.10.4@sha256:2a9ea56de9f031642cbca9d887790dc6f1fab7259d0e071cf5fc7db5a741332f
+    image: sablierapp/sablier:1.10.5@sha256:c8ec255212d57708d0fa5d5b76f38e6360b4125efce14f667f28030da112ea94
     command:
       - start
       - --provider.name=docker
