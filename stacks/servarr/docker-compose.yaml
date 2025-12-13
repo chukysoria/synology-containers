@@ -1,7 +1,7 @@
 ---
 services:
   radarr:
-    image: lscr.io/linuxserver/radarr:6.0.4.10291-ls287@sha256:e26fbfd3782520c0bb820666f041ca056acfe187a8b95214ee1f47512cc05a29
+    image: lscr.io/linuxserver/radarr:6.0.4.10291-ls288@sha256:06ac318ecb95a34c7b229568dcb4271f02cb5007bb189a0dd67a2032864187ca
     volumes:
       - ${BASE_PATH:-/volume2/docker/}radarr:/config:rw
       - /volume2/downloads:/media/downloads
@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
 
   lidarr:
-    image: lscr.io/linuxserver/lidarr:3.1.0.4875-ls11@sha256:f2a186ce04ec5adb133f92a08dd3efbc918fc71b33077426ef099d94350dfa1b
+    image: lscr.io/linuxserver/lidarr:3.1.0.4875-ls14@sha256:c1e17cc29421c9da603f0c727b7785d280dc98dfb1f835d0b176485dc8c5deb5
     networks:
       - frontend
     volumes:
@@ -113,7 +113,7 @@ services:
     restart: unless-stopped
 
   huntarr:
-    image: ghcr.io/plexguide/huntarr:8.2.10
+    image: ghcr.io/plexguide/huntarr:8.2.10@sha256:b5a47c2b43806165f433d308d69a21e74a687ce59f4fcccb612d6a7acb3af6d7
     volumes:
       - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
     networks:
@@ -130,7 +130,7 @@ services:
     restart: unless-stopped
 
   whisparr:
-    image: ghcr.io/hotio/whisparr:v3-3.0.2.1433
+    image: ghcr.io/hotio/whisparr:v3-3.0.2.1433@sha256:51d3b0b952a0a502ba052704327adbf8885dd02fd39ff9aa434ed63609c75f4f
     networks:
       - frontend
     environment:

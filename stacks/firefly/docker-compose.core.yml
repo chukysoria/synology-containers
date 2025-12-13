@@ -1,6 +1,6 @@
 services:
   app:
-    image: fireflyiii/core:version-6.4.8@sha256:03d14b0853e76c31ce7f7c7aa3994e716fb833136b3fd3656444f514c67cbe41
+    image: fireflyiii/core:version-6.4.9@sha256:5252c462d3c1ed337dc87482c95bc62c25153d2a71ab87aed1c7e67e4a85d850
     hostname: app
     container_name: firefly_iii_core
     networks:
@@ -20,7 +20,7 @@ services:
       traefik.http.routers.fireflyiii-rtr.middlewares: authentik@docker
 
   firefly-pico:
-    image: cioraneanu/firefly-pico:1.9.1@sha256:25b96668834ea020d9d26952a2b853c851578df534c30bbe46fa7399d10e06a0
+    image: cioraneanu/firefly-pico:1.9.2@sha256:5bbda8a6a14df4a0230c6a9281a5ce4762ba7fab729eab6dc21c81377162cdb2
     container_name: firefly_pico
     environment:
       - FIREFLY_URL=http://app:8080

@@ -1,7 +1,7 @@
 ---
 services:
   timescale-db:
-    image: timescale/timescaledb-ha:pg18-ts2.23@sha256:50f1130ea0a0cf59d8416e1a0b8597110b427f47cac23230cd8913b5861516d9
+    image: timescale/timescaledb-ha:pg18-ts2.24@sha256:874753831afbd05a6984afb2004d83f65d2a0862a2192a30347275b526918e66
     container_name: timescaledb
     restart: unless-stopped    
     # user: ${PUID:-1029}:${PGID:-65536}
@@ -49,7 +49,7 @@ services:
       ghostfolio-db-net:
 
   pgadmin:
-    image: dpage/pgadmin4:9.10@sha256:8c128407f45f1c582eda69e71da1a393237388469052e3cc1e6ae4a475e12b70
+    image: dpage/pgadmin4:9.11@sha256:50700ac17936d0227f9e3e4bb086a91efb67064debc4b4737c35545bf1564088
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER:-user@domain.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?PGAdmin password required}
