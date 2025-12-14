@@ -1,7 +1,7 @@
 ---
 services:
   grocy:
-    image: lscr.io/linuxserver/grocy:v4.5.0-ls309@sha256:97d6a1c343501ed385067a82672ed6ae9b84720b39279a693919608934b4aa74
+    image: lscr.io/linuxserver/grocy:v4.5.0-ls310@sha256:771f1b302b0e125d54b21b8714c24edd20e37177010d10610057790d2b557c62
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
