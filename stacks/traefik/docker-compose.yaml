@@ -38,6 +38,7 @@ services:
     command:
       - start
       - --provider.name=docker
+      - --provider.docker.strategy=pause
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
     networks:
