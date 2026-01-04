@@ -1,34 +1,35 @@
 ---
 services:
-  gluetun:
-      image: qmcgaw/gluetun:v3.41.0@sha256:6b54856716d0de56e5bb00a77029b0adea57284cf5a466f23aad5979257d3045
-      container_name: gluetun
-      cap_add:
-        - NET_ADMIN
-      devices:
-        - /dev/net/tun:/dev/net/tun
-      volumes:
-        - ${BASE_PATH:-/volume2/docker/}gluetun:/gluetun
-      environment:
-        # General LinuxServer.io
-        PUID: ${PUID:-1029}
-        PGID: ${PGID:-65536}
-        TZ: ${TZ:-Europe/Madrid}
-        # NordVPN
-        VPN_SERVICE_PROVIDER: nordvpn
-        VPN_TYPE: wireguard
-        SERVER_COUNTRIES: Spain
-        WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:?WireGuard private key}
-        FIREWALL_OUTBOUND_SUBNETS: ${FIREWALL_OUTBOUND_SUBNETS:-172.18.0.0/16,192.168.0.0/24} # Frontend and local LAN
-      networks:
-        - frontend
-      labels:
-        traefik.enable: true
-        traefik.http.routers.qbit-rtr.rule: Host(`qbit.${DOMAIN:-boulebar.duckdns.org}`)
-        traefik.http.routers.qbit-rtr.service: qbit-svc
-        traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
-        traefik.http.routers.qbit-rtr.middlewares: authentik@docker
-      restart: unless-stopped
+  # gluetun:
+  #     image: qmcgaw/gluetun:v3.41.0@sha256:6b54856716d0de56e5bb00a77029b0adea57284cf5a466f23aad5979257d3045
+  #     container_name: gluetun
+  #     cap_add:
+  #       - NET_ADMIN
+  #     devices:
+  #       - /dev/net/tun:/dev/net/tun
+  #     volumes:
+  #       - ${BASE_PATH:-/volume2/docker/}gluetun:/gluetun
+  #     environment:
+  #       # General LinuxServer.io
+  #       PUID: ${PUID:-1029}
+  #       PGID: ${PGID:-65536}
+  #       TZ: ${TZ:-Europe/Madrid}
+  #       # NordVPN
+  #       VPN_SERVICE_PROVIDER: nordvpn
+  #       VPN_TYPE: wireguard
+  #       SERVER_COUNTRIES: Spain
+  #       WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:?WireGuard private key}
+  #       FIREWALL_OUTBOUND_SUBNETS: ${FIREWALL_OUTBOUND_SUBNETS:-172.18.0.0/16,192.168.0.0/24} # Frontend and local LAN
+  #     networks:
+  #       - frontend
+  #     labels:
+  #       traefik.enable: true
+  #       traefik.http.routers.qbit-rtr.rule: Host(`qbit.${DOMAIN:-boulebar.duckdns.org}`)
+  #       traefik.http.routers.qbit-rtr.service: qbit-svc
+  #       traefik.http.services.qbit-svc.loadbalancer.server.port: 8080
+  #       traefik.http.routers.qbit-rtr.middlewares: authentik@docker
+  #     restart: unless-stopped
+
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:5.1.4-r1-ls434@sha256:c4e1276d9eec06f2520b4cdffcff49aea4215e5ac2d51bf0de81cce9f8aa85d4
