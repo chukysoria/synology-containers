@@ -4,16 +4,14 @@ services:
     image: timescale/timescaledb-ha:pg18-ts2.24@sha256:2209a38cfe82cfe456e9ee08faa758306bea04478ce29dbfd40c753422a1d2b3
     container_name: timescaledb
     restart: unless-stopped    
-    # user: ${PUID:-1029}:${PGID:-65536}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/timescaledb-pg18:/home/postgres/pgdata/data
     networks:
-      database:
-        ipv4_address: 172.19.0.4
-      grafana-net:
-      authentik:
-      firefly-db-net:
-      ghostfolio-db-net:
+      - database
+      - grafana-db-net
+      - authentik-db-net
+      - firefly-db-net
+      - ghostfolio-db-net
     # ports:
     #   - 5433:5432
     healthcheck:
@@ -42,11 +40,9 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/redis:/data:uid=${PUID:-1029},gid=${PGID:-65536}
     networks:
-      database:
-        ipv4_address: 172.19.0.3
-      authentik:
-      firefly-db-net:
-      ghostfolio-db-net:
+      - database
+      - firefly-db-net
+      - ghostfolio-db-net
 
   pgadmin:
     image: dpage/pgadmin4:9.11@sha256:50700ac17936d0227f9e3e4bb086a91efb67064debc4b4737c35545bf1564088
@@ -57,9 +53,8 @@ services:
       - pgadmin:/var/lib/pgadmin
       - ${BASE_PATH:-/volume2/docker/}databases/pgadmin/config_local.py:/pgadmin4/config_local.py
     networks:
-      frontend:
-      database:
-        ipv4_address: 172.19.0.5
+      - frontend
+      - database
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-O", "-", "http://localhost:80/misc/ping"]
@@ -80,39 +75,13 @@ volumes:
 
 networks:
   authentik:
-    name: authentik
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.2.0/24
-          gateway: 172.19.2.1
+    external: true
   database:
-    name: database
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.0.0/24
-          gateway: 172.19.0.1
-  grafana-net:
-    name: grafana-net
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.3.0/24
-          gateway: 172.19.3.1
+  grafana-db-net:
+    external: true
   firefly-db-net:
-    name: firefly-db-net
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.8.0/24
-          gateway: 172.19.8.1
+    external: true
   ghostfolio-db-net:
-    name: ghostfolio-db-net
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.9.0/24
-          gateway: 172.19.9.1
+    external: true
   frontend:
     external: true # Defined in portainer

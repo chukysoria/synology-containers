@@ -1,7 +1,7 @@
 ---
 services:
   portainer:
-    image: portainer/portainer-ee:latest@sha256:073b63ebfc68244aae13d453317ee482964b70082d3ee6a53d87b52f93d52c2e
+    image: portainer/portainer-ee:2.33.6-alpine
     networks:
       - frontend
     volumes:
@@ -27,9 +27,3 @@ services:
 
 networks:
   frontend:
-    name: frontend
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.18.0.0/16
-          gateway: 172.18.0.1

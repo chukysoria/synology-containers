@@ -11,3 +11,7 @@ networks:
           gateway: 192.168.1.1
           aux_addresses:
             torrent: 192.168.1.48
+  authentik-db-net:
+  grafana-db-net:
+  firefly-db-net:
+  ghostfolio-db-net:
