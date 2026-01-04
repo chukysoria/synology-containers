@@ -26,12 +26,12 @@ services:
       traefik.enable: true
       traefik.docker.network: frontend
       ## HTTP Routers
-      traefik.http.routers.authentik-rtr.rule: Host(`authentik.$DOMAIN`)
+      traefik.http.routers.authentik-rtr.rule: Host(`authentik.${DOMAIN:-boulebar.duckdns.org}`)
       ## HTTP Services
       traefik.http.routers.authentik-rtr.service: authentik-svc
       traefik.http.services.authentik-svc.loadBalancer.server.port: 9000
       ## Individual Application forwardAuth regex (catch any subdomain using individual application forwardAuth)  
-      traefik.http.routers.authentik-rtr-outpost.rule: HostRegexp(`{subdomain:[a-z0-9-]+}.$DOMAIN`) && PathPrefix(`/outpost.goauthentik.io/`)
+      traefik.http.routers.authentik-rtr-outpost.rule: HostRegexp(`{subdomain:[a-z0-9-]+}.${DOMAIN:-boulebar.duckdns.org}`) && PathPrefix(`/outpost.goauthentik.io/`)
       # `authentik-proxy` refers to the service name in the compose file.
       traefik.http.middlewares.authentik.forwardauth.address: http://authentik-server:9000/outpost.goauthentik.io/auth/traefik
       traefik.http.middlewares.authentik.forwardauth.trustForwardHeader: true
