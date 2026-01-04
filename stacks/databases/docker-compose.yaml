@@ -74,9 +74,9 @@ volumes:
   pgadmin:
 
 networks:
-  authentik:
-    external: true
   database:
+  authentik-db-net:
+    external: true
   grafana-db-net:
     external: true
   firefly-db-net:
