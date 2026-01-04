@@ -12,7 +12,7 @@ services:
       NPM_PACKAGES: "node-red-contrib-alexa-smart-home passport-openidconnect"
     networks:
       - frontend
-      - nodered-backend
+      - nodered-backend-net
     volumes:
       - ${BASE_PATH:-/volume2/docker/}nodered:/config:rw
     restart: unless-stopped
@@ -24,6 +24,5 @@ services:
 networks:
   frontend:
     external: true # Defined in portainer
-  nodered-backend:
-    driver: bridge
-    name: nodered-backend
+  nodered-backend-net:
+    external: true # Defined in base

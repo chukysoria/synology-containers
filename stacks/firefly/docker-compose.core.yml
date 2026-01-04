@@ -5,9 +5,9 @@ services:
     container_name: firefly_iii_core
     networks:
       - firefly-net
-      - firefly-net-frontend
+      - firefly-frontend-net
       - firefly-db-net
-      - nodered-backend
+      - nodered-backend-net
     restart: always
     env_file:
       - ../../stack.env
@@ -15,7 +15,7 @@ services:
       - firefly_iii_upload:/var/www/html/storage/upload
     labels:
       traefik.enable: true
-      traefik.docker.network: firefly-net-frontend
+      traefik.docker.network: firefly-frontend-net
       traefik.http.routers.fireflyiii-rtr.rule: Host(`firefly.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.fireflyiii-rtr.middlewares: authentik@docker
 
@@ -33,7 +33,7 @@ services:
       - TZ=${TZ:-Europe/Madrid}
     networks:
       - firefly-net
-      - firefly-net-frontend
+      - firefly-frontend-net
       - firefly-db-net
     depends_on:
       - app
@@ -73,11 +73,9 @@ volumes:
 
 networks:
   firefly-net:
-    name: firefly-net
-    driver: bridge
-  firefly-net-frontend:
+  firefly-frontend-net:
     external: true # Defined in traefik
   firefly-db-net:
     external: true # Defined in databases
-  nodered-backend:
+  nodered-backend-net:
     external: true # Defined in nodered
