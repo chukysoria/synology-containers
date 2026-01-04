@@ -21,6 +21,7 @@ services:
     networks:
       - frontend
       - authentik
+      - authentik-db-net
     labels:
       traefik.enable: true
       traefik.docker.network: frontend
@@ -64,9 +65,11 @@ services:
       - ${BASE_PATH:-/volume2/docker/}authentik/custom-templates:/templates
     networks:
       - authentik
+      - authentik-db-net
 
 networks:
   authentik:
-    external: true # Defined in databases
+  authentik-db-net:
+    external: true # Defined in base
   frontend:
-    external: true # Defined in databases
+    external: true # Defined in base
