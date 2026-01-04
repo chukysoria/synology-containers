@@ -21,9 +21,7 @@ services:
       # Jellyfin
       JELLYFIN_PublishedServerUrl: "https://jellyfin.${DOMAIN:-boulebar.duckdns.org}"
     networks:
-      frontend:
-      jellyfin-net:
-        ipv4_address: 172.19.5.2
+      - frontend
     volumes:
       - ts_jellyfin:/tsconfig
       - ${BASE_PATH:-/volume2/docker/}jellyfin:/config:rw
@@ -69,11 +67,4 @@ services:
 
 networks:
   frontend:
-    external: true # Defined in Portainer
-  jellyfin-net:
-    name: jellyfin-net
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.5.0/24
-          gateway: 172.19.5.1
+    external: true # Defined in base
