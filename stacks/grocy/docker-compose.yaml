@@ -10,9 +10,7 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grocy:/config
     networks:
-      frontend:
-      grocy-net:
-        ipv4_address: 172.19.4.2
+      - frontend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "80"]
@@ -33,10 +31,3 @@ services:
 networks:
   frontend:
     external: true
-  grocy-net:
-    name: grocy-net
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.4.0/24
-          gateway: 172.19.4.1  
