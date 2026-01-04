@@ -7,11 +7,12 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}databases/timescaledb-pg18:/home/postgres/pgdata/data
     networks:
-      - database
-      - grafana-db-net
-      - authentik-db-net
-      - firefly-db-net
-      - ghostfolio-db-net
+      database:
+        ipv4_address: 172.19.0.4
+      grafana-db-net:
+      authentik-db-net:
+      firefly-db-net:
+      ghostfolio-db-net:
     # ports:
     #   - 5433:5432
     healthcheck:

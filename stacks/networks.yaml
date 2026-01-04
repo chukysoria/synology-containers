@@ -15,3 +15,10 @@ networks:
   grafana-db-net:
   firefly-db-net:
   ghostfolio-db-net:
+  database:
+  name: database
+  ipam:
+    driver: default
+    config:
+      - subnet: 172.19.0.0/24
+        gateway: 172.19.0.1

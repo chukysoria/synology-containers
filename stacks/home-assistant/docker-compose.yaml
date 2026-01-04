@@ -29,8 +29,6 @@ services:
     network_mode: host
     extra_hosts:
       - timescaledb:172.19.0.4
-      - grocy:172.19.4.2
-      - jellyfin:172.19.5.2
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8123"]
