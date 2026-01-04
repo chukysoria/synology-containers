@@ -73,9 +73,10 @@ volumes:
 
 networks:
   firefly-net:
+    external: true # Defined in base
   firefly-frontend-net:
-    external: true # Defined in traefik
+    external: true # Defined in base
   firefly-db-net:
-    external: true # Defined in databases
+    external: true # Defined in base
   nodered-backend-net:
-    external: true # Defined in nodered
+    external: true # Defined in base

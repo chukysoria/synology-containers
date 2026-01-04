@@ -8,20 +8,20 @@ services:
       - ../../stack.env
     networks:
       - firefly-net
-      - firefly-net-frontend 
+      - firefly-frontend-net
       - firefly-db-net
     volumes:
       - ${BASE_PATH:-/volume2/docker/}firefly/import:/import:rw
     labels:
       traefik.enable: true
-      traefik.docker.network: firefly-net-frontend
+      traefik.docker.network: firefly-frontend-net
       traefik.http.routers.firefly-importer-rtr.rule: Host(`ffimporter.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.routers.firefly-importer-rtr.middlewares: authentik@docker
 
 networks:
   firefly-net:
-    external: true # Defined in firefly core
-  firefly-net-frontend:
-    external: true # Defined in traefik
+    external: true # Defined in base
+  firefly-frontend-net:
+    external: true # Defined in base
   firefly-db-net:
-    external: true # Defined in databases
+    external: true # Defined in base
