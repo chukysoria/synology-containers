@@ -14,7 +14,7 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
       AUTHENTIK_ERROR_REPORTING__ENABLED: true
-      AUTHENTIK_COOKIE_DOMAIN: ${DOMAIN}
+      AUTHENTIK_COOKIE_DOMAIN: ${DOMAIN:-boulebar.duckdns.org}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}authentik/media:/media
       - ${BASE_PATH:-/volume2/docker/}authentik/custom-templates:/templates
@@ -43,7 +43,6 @@ services:
     command: worker
     environment:
       TZ: ${TZ:-Europe/Madrid}
-      AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: timescaledb
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
