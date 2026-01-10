@@ -4,7 +4,7 @@ services:
     image: grafana/grafana:12.3.1@sha256:2175aaa91c96733d86d31cf270d5310b278654b03f5718c59de12a865380a31f
     networks:
       - frontend
-      - grafana-net
+      - grafana-db-net
     security_opt:
       - no-new-privileges:true
     user: ${PUID:-1029}:${PGID:-65536}
@@ -45,5 +45,5 @@ services:
 networks:
   frontend:
     external: true # Defined in portainer
-  grafana-net:
+  grafana-db-net:
     external: true # Defined in Database
