@@ -1,7 +1,7 @@
 ---
 services:
   duplicati:
-    image: ghcr.io/chukysoria/duplicati:v1.0.35@sha256:0e7950d9075950b31710ccccfd5e0d9574da7c4c0c8758c1c4f0fc5cd1f2e704
+    image: ghcr.io/chukysoria/duplicati:v1.0.36@sha256:e8962759eb1bbad03a4a18ad206935df1d3461fb0fed50652da822823df418d4
     environment:
       # General LinuServer.io
       PUID: ${PUID:-1029}
