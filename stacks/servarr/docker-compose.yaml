@@ -113,7 +113,7 @@ services:
     restart: unless-stopped
 
   huntarr:
-    image: ghcr.io/plexguide/huntarr:8.2.11@sha256:94f7395112535e86fb76f9119cfdeece38bcffb73e39853e08c7f8e869411ff1
+    image: ghcr.io/plexguide/huntarr:8.2.20@sha256:457b3c760a03c6316fd311daf2952a97794dffa49eb64e4db7163b04c7f3d525
     volumes:
       - ${BASE_PATH:-/volume2/docker/}huntarr:/config:rw
     networks:
