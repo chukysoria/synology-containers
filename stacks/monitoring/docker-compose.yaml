@@ -10,10 +10,10 @@ services:
     user: ${PUID:-1029}:${PGID:-65536}
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health"]
-      interval: 30s
-      timeout: 30s
+      interval: 5s
+      timeout: 5s
       retries: 5
-      start_period: 2m
+      start_period: 3m
       # start_interval: 5s
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grafana/data:/var/lib/grafana:rw
