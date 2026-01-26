@@ -32,7 +32,7 @@ services:
 
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:5.1.4-r1-ls437@sha256:f430d70c70d1547fded30fbc3181c4750cef354212a5138ab754eba9ba8bd9e1
+    image: lscr.io/linuxserver/qbittorrent:5.1.4-r1-ls438@sha256:b8a08ffba8850e2e71153e153cf5eed2dedbf499ef9b123262735ce924b65586
     #network_mode: "container:gluetun"
     networks:
       - frontend
