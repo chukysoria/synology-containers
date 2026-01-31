@@ -16,7 +16,7 @@ services:
       AUTHENTIK_ERROR_REPORTING__ENABLED: true
       AUTHENTIK_COOKIE_DOMAIN: ${DOMAIN:-boulebar.duckdns.org}
     volumes:
-      - ${BASE_PATH:-/volume2/docker/}authentik/media:/media
+      - ${BASE_PATH:-/volume2/docker/}authentik/data:/data
       - ${BASE_PATH:-/volume2/docker/}authentik/custom-templates:/templates
     networks:
       - frontend
@@ -59,7 +59,7 @@ services:
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${BASE_PATH:-/volume2/docker/}authentik/media:/media
+      - ${BASE_PATH:-/volume2/docker/}authentik/data:/data
       - ${BASE_PATH:-/volume2/docker/}authentik/certs:/certs
       - ${BASE_PATH:-/volume2/docker/}authentik/custom-templates:/templates
     networks:
