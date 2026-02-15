@@ -48,7 +48,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: ghcr.io/chukysoria/bazarr:v0.8.25@sha256:7137fe475628c25970ac8145bf7a4ab94773646ccc4c4d4505d0d2cae13fcbf9
+    image: ghcr.io/chukysoria/bazarr:v0.8.26@sha256:1f3d4df2319f57c382e5c31223335f13dfeacd454ff6b911f949c486f431843a
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
       - /volume2/downloads:/media/downloads
