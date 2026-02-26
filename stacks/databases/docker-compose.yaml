@@ -1,7 +1,7 @@
 ---
 services:
   timescale-db:
-    image: timescale/timescaledb-ha:pg18-ts2.25@sha256:80af45cfecba60cfe084a6fbdc310641b1afbbff025ba8f4c610c57cd2dab61d
+    image: timescale/timescaledb-ha:pg18-ts2.25@sha256:a4e289d8a9429aae0fb56498af85a4de12bf0d201e3061b6401e107dc5f94618
     container_name: timescaledb
     restart: unless-stopped    
     volumes:
