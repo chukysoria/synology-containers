@@ -21,11 +21,9 @@ services:
       start_period: 2m
       # start_interval: 5s
     labels:
-      sablier.enable: "true"
-      sablier.group: "radarr"
-    #  traefik.enable: true
-    #  traefik.http.routers.radarr-rtr.rule: Host(`radarr.${DOMAIN:-boulebar.duckdns.org}`)
-    #  traefik.http.routers.radarr-rtr.middlewares: authentik@docker
+      traefik.enable: true
+      traefik.http.routers.radarr-rtr.rule: Host(`radarr.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.radarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
   sonarr:
@@ -105,11 +103,9 @@ services:
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
     labels:
-      sablier.enable: "true"
-      sablier.group: "lidarr"
-    #  traefik.enable: true
-    #  traefik.http.routers.lidarr-rtr.rule: Host(`lidarr.${DOMAIN:-boulebar.duckdns.org}`)
-    #  traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
+      traefik.enable: true
+      traefik.http.routers.lidarr-rtr.rule: Host(`lidarr.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
   whisparr:

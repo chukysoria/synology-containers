@@ -34,11 +34,9 @@ services:
       - frontend
     restart: unless-stopped
     labels:
-      sablier.enable: "true"
-      sablier.group: "vscode"
-    #  traefik.enable: true
-    #  traefik.http.routers.vscode-rtr.rule: Host(`vscode.${DOMAIN:-boulebar.duckdns.org}`)
-    #  traefik.http.routers.vscode-rtr.middlewares: authentik@docker
+      traefik.enable: true
+      traefik.http.routers.vscode-rtr.rule: Host(`vscode.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.vscode-rtr.middlewares: authentik@docker
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8443"]
       interval: 30s

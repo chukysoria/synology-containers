@@ -37,10 +37,8 @@ services:
       GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups, 'grafana_admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'"
     restart: unless-stopped
     labels:
-      sablier.enable: "true"
-      sablier.group: "grafana"
-    #  traefik.enable: true
-    #  traefik.http.routers.grafana-rtr.rule: Host(`grafana.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.enable: true
+      traefik.http.routers.grafana-rtr.rule: Host(`grafana.${DOMAIN:-boulebar.duckdns.org}`)
 
 networks:
   frontend:

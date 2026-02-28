@@ -10,11 +10,9 @@ services:
     security_opt:
       - no-new-privileges:true
     labels:
-      sablier.enable: "true"
-      sablier.group: "ghostfolio"
-    #  traefik.enable: true
-    #  traefik.docker.network: ghostfolio-net-frontend
-    #  traefik.http.routers.ghostfolio-rtr.rule: Host(`ghostfolio.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.enable: true
+      traefik.docker.network: ghostfolio-net-frontend
+      traefik.http.routers.ghostfolio-rtr.rule: Host(`ghostfolio.${DOMAIN:-boulebar.duckdns.org}`)
     healthcheck:
       test: ['CMD-SHELL', 'curl -f http://localhost:3333/api/v1/health']
       interval: 10s
