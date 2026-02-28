@@ -62,7 +62,7 @@ services:
       # start_interval: 5s
     labels:
       traefik.enable: true
-      traefik.http.routers.jellyseerr-rtr.rule: Host(`jellyseerr.${DOMAIN:-boulebar.duckdns.org}`)    
+      traefik.http.routers.seerr-rtr.rule: Host(`seerr.${DOMAIN:-boulebar.duckdns.org}`)    
     restart: unless-stopped
 
 networks:
