@@ -1,7 +1,7 @@
 ---
 services:
   nodered:
-    image: ghcr.io/chukysoria/nodered:v1.4.24@sha256:0b6f79f259c225dfdd0c0a13cef388dfa8f93b5f4333afba8e46777611ca0dbf
+    image: ghcr.io/chukysoria/nodered:v1.4.25@sha256:0bbca62bcdd16d64f25d85719b8cbf6c6b2277ae106e7975221810272791277d
     container_name: nodered
     environment:
       # General LinuxServer.io
