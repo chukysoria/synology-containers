@@ -12,7 +12,7 @@ name: immich
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-server:v2.5.6
     networks:
       - immich-internal
       - frontend
@@ -21,7 +21,7 @@ services:
       - ${UPLOAD_LOCATION}:/data
       - /etc/localtime:/etc/localtime:ro
     env_file:
-      - stack.env
+      - ../../stack.env
     depends_on:
       - redis
       - database
@@ -35,13 +35,13 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-machine-learning:v2.5.6
     networks:
       - immich-internal
     volumes:
       - model-cache:/cache
     env_file:
-      - stack.env
+      - ../../stack.env
     restart: always
     healthcheck:
       disable: false
