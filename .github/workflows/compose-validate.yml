@@ -1,0 +1,31 @@
+---
+
+name: Validate docker-compose
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  compose-validate:
+    name: docker compose config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Print Docker & Compose versions
+        run: |
+          docker --version || true
+          docker compose version || true
+
+      - name: Validate consolidated compose file
+        run: |
+          # Fail early if file missing
+          if [ ! -f stacks/compose.yaml ]; then
+            echo "stacks/compose.yaml not found" >&2
+            exit 1
+          fi
+          # Validate using docker compose config
+          docker compose -f stacks/compose.yaml config > /dev/null
