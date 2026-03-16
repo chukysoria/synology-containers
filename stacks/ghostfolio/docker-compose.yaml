@@ -1,7 +1,7 @@
 name: ghostfolio
 services:
   ghostfolio:
-    image: ghostfolio/ghostfolio:2.236.0@sha256:d86bb5db5bb455377c8fad2c29f468ca015fbd06df9faf1aa14e2bdc50d8a6c6
+    image: ghostfolio/ghostfolio:2.249.0@sha256:67917438fb513ccd1b7dbf6d62a9bfc7333ab2ffc96349196d15a63e66576f86
     container_name: ghostfolio
     restart: unless-stopped
     init: true
