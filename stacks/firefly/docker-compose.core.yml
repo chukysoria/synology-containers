@@ -1,6 +1,6 @@
 services:
   app:
-    image: fireflyiii/core:version-6.5.7@sha256:0c2adf34b473f5462eacc0ac7c9c95c85584b84c0d019ed8c3a4ab5f99a1f088
+    image: fireflyiii/core:version-6.5.8@sha256:4205437885b52df595e45e5c36381ecea8134c3d249db8c0a74625c86fe9c7a4
     hostname: app
     container_name: firefly_iii_core
     networks:
