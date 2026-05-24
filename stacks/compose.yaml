@@ -83,12 +83,26 @@ services:
       jellyfin:
         condition: service_healthy
   # Monitoring
+  prometheus:
+    extends:
+      file: monitoring/docker-compose.yaml
+      service: prometheus
+  cadvisor:
+    extends:
+      file: monitoring/docker-compose.yaml
+      service: cadvisor
+  node-exporter:
+    extends:
+      file: monitoring/docker-compose.yaml
+      service: node-exporter
   grafana:
     extends:
       file: monitoring/docker-compose.yaml
       service: grafana
     depends_on:
       timescale-db:
+        condition: service_healthy
+      prometheus:
         condition: service_healthy
   # nodered
   nodered:

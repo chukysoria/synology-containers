@@ -1,0 +1,44 @@
+---
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'synology-docker'
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # cAdvisor - Container metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    metrics_path: '/metrics'
+
+  # Node Exporter - Host system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Portainer API - Container and stack metrics
+  - job_name: 'portainer'
+    honor_timestamps: true
+    metrics_path: '/api/v2/status'
+    scheme: http
+    static_configs:
+      - targets: ['portainer:9000']
+    # Note: Portainer metrics endpoint may require authentication
+    # Configure bearer token if needed: bearer_token_file: /etc/prometheus/portainer-token
+
+  # Optional: Add other services that export Prometheus metrics
+  # Uncomment and adjust as you add more monitoring-enabled services
+  
+  # - job_name: 'traefik'
+  #   static_configs:
+  #     - targets: ['traefik:8082']
+  
+  # - job_name: 'adguard'
+  #   static_configs:
+  #     - targets: ['adguard:8082']

@@ -1,10 +1,109 @@
 ---
 services:
+  # Prometheus - Metrics collection and storage
+  prometheus:
+    image: prom/prometheus:v3.0.0@sha256:28e97a38b1f03d8e7fc0d5bc4e3e94f1c06dd58dfe50e6da47bb94eb55dc22e8
+    container_name: prometheus
+    restart: unless-stopped
+    networks:
+      - frontend
+      - monitoring-net
+    ports:
+      - "9090:9090"
+    security_opt:
+      - no-new-privileges:true
+    user: ${PUID:-1029}:${PGID:-65536}
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}prometheus/data:/prometheus:rw
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 1m
+    labels:
+      traefik.enable: true
+      traefik.http.routers.prometheus-rtr.rule: Host(`prometheus.${DOMAIN:-boulebar.duckdns.org}`)
+      traefik.http.routers.prometheus-rtr.entrypoints: websecure
+      traefik.http.routers.prometheus-rtr.middlewares: authentik@docker
+      traefik.http.services.prometheus-svc.loadbalancer.server.port: 9090
+
+  # cAdvisor - Container metrics
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1@sha256:0edbe7b22df430861a85f3b1df66c02c2be08e7da0c02f8c8a27f80c5ae1cc51
+    container_name: cadvisor
+    restart: unless-stopped
+    networks:
+      - monitoring-net
+    ports:
+      - "8080:8080"
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    environment:
+      TZ: ${TZ:-Europe/Madrid}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 1m
+
+  # Node Exporter - Host system metrics
+  node-exporter:
+    image: prom/node-exporter:v1.8.2@sha256:89bddca27e5f15e0e918e9eb838fab0c49f6e3bb2cf39e9fb23dc34c3a3db338
+    container_name: node-exporter
+    restart: unless-stopped
+    networks:
+      - monitoring-net
+    ports:
+      - "9100:9100"
+    security_opt:
+      - no-new-privileges:true
+    user: ${PUID:-1029}:${PGID:-65536}
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.netdev.device-exclude=^docker[0-9a-f]+$$'
+    environment:
+      TZ: ${TZ:-Europe/Madrid}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9100/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 1m
+
+  # Grafana - Visualization and dashboards
   grafana:
     image: grafana/grafana:13.0.1@sha256:0f86bada30d65ef9d0183b90c1e2682ac92d53d95da8bed322b984ea78a4a73a
+    container_name: grafana
     networks:
       - frontend
       - grafana-db-net
+      - monitoring-net
     security_opt:
       - no-new-privileges:true
     user: ${PUID:-1029}:${PGID:-65536}
@@ -17,6 +116,7 @@ services:
       # start_interval: 5s
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grafana/data:/var/lib/grafana:rw
+      - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/prometheus.yml:ro
     environment:
       TZ: ${TZ:-Europe/Madrid}
       # Grafana
@@ -45,3 +145,5 @@ networks:
     external: true # Defined in portainer
   grafana-db-net:
     external: true # Defined in Database
+  monitoring-net:
+    external: false # Local network for monitoring stack
