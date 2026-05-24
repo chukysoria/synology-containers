@@ -38,7 +38,7 @@ services:
 
   # cAdvisor - Container metrics
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.49.1@sha256:0edbe7b22df430861a85f3b1df66c02c2be08e7da0c02f8c8a27f80c5ae1cc51
+    image: gcr.io/cadvisor/cadvisor:v0.49.1@sha256:3cde6faf0791ebf7b41d6f8ae7145466fed712ea6f252c935294d2608b1af388
     container_name: cadvisor
     restart: unless-stopped
     networks:
