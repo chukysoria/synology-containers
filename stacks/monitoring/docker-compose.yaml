@@ -15,7 +15,7 @@ services:
     user: ${PUID:-1029}:${PGID:-65536}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}prometheus/data:/prometheus:rw
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ${BASE_PATH:-/volume2/docker/}prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -111,7 +111,7 @@ services:
       # start_interval: 5s
     volumes:
       - ${BASE_PATH:-/volume2/docker/}grafana/data:/var/lib/grafana:rw
-      - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/prometheus.yml:ro
+      - ${BASE_PATH:-/volume2/docker/}grafana/grafana-datasources.yml:/etc/grafana/provisioning/datasources/prometheus.yml:ro
     environment:
       TZ: ${TZ:-Europe/Madrid}
       # Grafana
