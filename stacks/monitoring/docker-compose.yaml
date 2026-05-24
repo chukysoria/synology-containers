@@ -67,7 +67,7 @@ services:
 
   # Node Exporter - Host system metrics
   node-exporter:
-    image: prom/node-exporter:v1.8.2@sha256:89bddca27e5f15e0e918e9eb838fab0c49f6e3bb2cf39e9fb23dc34c3a3db338
+    image: prom/node-exporter:v1.8.2@sha256:4032c6d5bfd752342c3e631c2f1de93ba6b86c41db6b167b9a35372c139e7706
     container_name: node-exporter
     restart: unless-stopped
     networks:
