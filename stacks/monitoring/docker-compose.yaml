@@ -2,7 +2,7 @@
 services:
   # Prometheus - Metrics collection and storage
   prometheus:
-    image: prom/prometheus:v3.0.0@sha256:28e97a38b1f03d8e7fc0d5bc4e3e94f1c06dd58dfe50e6da47bb94eb55dc22e8
+    image: prom/prometheus:v3.0.0
     container_name: prometheus
     restart: unless-stopped
     networks:
@@ -38,7 +38,7 @@ services:
 
   # cAdvisor - Container metrics
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.49.1@sha256:0edbe7b22df430861a85f3b1df66c02c2be08e7da0c02f8c8a27f80c5ae1cc51
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
     container_name: cadvisor
     restart: unless-stopped
     networks:
@@ -67,7 +67,7 @@ services:
 
   # Node Exporter - Host system metrics
   node-exporter:
-    image: prom/node-exporter:v1.8.2@sha256:89bddca27e5f15e0e918e9eb838fab0c49f6e3bb2cf39e9fb23dc34c3a3db338
+    image: prom/node-exporter:v1.8.2
     container_name: node-exporter
     restart: unless-stopped
     networks:
