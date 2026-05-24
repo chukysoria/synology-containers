@@ -57,7 +57,7 @@ services:
       - '--profiling=false'
       - '--docker_only=true'
       - '--housekeeping_interval=30s'
-      - '--disable_metrics=advtcp,cpu_topology,disk,memory_numa,process,sysfs'
+      - '--disable_metrics=advtcp,cpu_topology,disk,memory_numa,process'
       - '--store_container_labels=false'
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz"]
