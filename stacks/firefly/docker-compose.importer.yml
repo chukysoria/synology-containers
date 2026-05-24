@@ -12,6 +12,7 @@ services:
       - firefly-db-net
     volumes:
       - ${BASE_PATH:-/volume2/docker/}firefly/import:/import:rw
+      - ${BASE_PATH:-/volume2/docker/}firefly/upload:/var/www/html/storage/upload:rw
     labels:
       traefik.enable: true
       traefik.docker.network: firefly-frontend-net
