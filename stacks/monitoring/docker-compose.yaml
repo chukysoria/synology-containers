@@ -54,7 +54,7 @@ services:
     environment:
       TZ: ${TZ:-Europe/Madrid}
     command:
-      - '--profiler=false'
+      - '--profiling=false'
       - '--docker_only=true'
       - '--housekeeping_interval=30s'
       - '--disable_metrics=advtcp,cpu_topology,disk,memory_numa,process,sysfs'
