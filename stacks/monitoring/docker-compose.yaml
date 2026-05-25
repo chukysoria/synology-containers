@@ -8,8 +8,6 @@ services:
     networks:
       - frontend
       - monitoring-net
-    ports:
-      - "9090:9090"
     security_opt:
       - no-new-privileges:true
     user: ${PUID:-1029}:${PGID:-65536}
@@ -43,8 +41,6 @@ services:
     restart: unless-stopped
     networks:
       - monitoring-net
-    ports:
-      - "8080:8080"
     security_opt:
       - no-new-privileges:true
     volumes:
@@ -73,8 +69,6 @@ services:
     restart: unless-stopped
     networks:
       - monitoring-net
-    ports:
-      - "9100:9100"
     security_opt:
       - no-new-privileges:true
     user: ${PUID:-1029}:${PGID:-65536}
