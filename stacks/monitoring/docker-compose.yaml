@@ -2,7 +2,7 @@
 services:
   # Prometheus - Metrics collection and storage
   prometheus:
-    image: prom/prometheus:v3.0.0
+    image: prom/prometheus:v3.0.0@sha256:3b9b2a15d376334da8c286d995777d3b9315aa666d2311170ada6059a517b74f
     container_name: prometheus
     restart: unless-stopped
     networks:
@@ -68,7 +68,7 @@ services:
 
   # Node Exporter - Host system metrics
   node-exporter:
-    image: prom/node-exporter:v1.8.2
+    image: prom/node-exporter:v1.8.2@sha256:4032c6d5bfd752342c3e631c2f1de93ba6b86c41db6b167b9a35372c139e7706
     container_name: node-exporter
     restart: unless-stopped
     networks:
