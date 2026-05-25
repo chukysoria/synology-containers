@@ -30,6 +30,7 @@ services:
       - ${BASE_PATH:-/volume2/docker/}:${BASE_PATH:-/volume2/docker/}
       - ts_code-server:/tsconfig
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${BASE_PATH:-/volume2/docker/}codeserver/custom-cont-init.d:/custom-cont-init.d:ro
     networks:
       - frontend
     restart: unless-stopped
