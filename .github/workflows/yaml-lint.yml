@@ -1,0 +1,31 @@
+---
+
+name: YAML Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  lint:
+    name: Super-Linter (YAML)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Super-Linter (YAML only)
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_YAML: true
+          VALIDATE_ALL_CODEBASE: false
+          # Limit linting to compose files and the .github dir
+          FILTER_REGEX_INCLUDE: '(^|/)(stacks/|.github/).*\\.ya?ml$'
+          # Disable other linters to keep this job fast
+          VALIDATE_DOCKERFILE: false
+          VALIDATE_JSON: false
+          VALIDATE_MARKDOWN: false
+          VALIDATE_SHELL: false
+          VALIDATE_GO: false
+          VALIDATE_PYTHON: false
