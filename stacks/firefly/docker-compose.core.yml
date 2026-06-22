@@ -20,7 +20,7 @@ services:
       traefik.http.routers.fireflyiii-rtr.middlewares: authentik@docker
 
   firefly-pico:
-    image: cioraneanu/firefly-pico:1.11.0@sha256:92a1dec240ddf30f401bf24f183f58cf9fb36026d03ca3e59368566f2d60c64a
+    image: cioraneanu/firefly-pico:1.10.0
     container_name: firefly_pico
     environment:
       - FIREFLY_URL=http://app:8080
@@ -41,7 +41,7 @@ services:
       traefik.enable: true
       traefik.docker.network: firefly-frontend-net
       traefik.http.routers.firefly-pico-rtr.rule: Host(`ffpico.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 8080
+      traefik.http.services.firefly-pico-svc.loadbalancer.server.port: 80
 
   cron:
     image: ghcr.io/chukysoria/baseimage-alpine:v1.0.10-3.23@sha256:33ee81d06c76048e3ac4d23e6cc319d05d82084f846eb39a9a40c66f77afba89
