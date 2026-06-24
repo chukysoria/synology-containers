@@ -1,96 +1,5 @@
 ---
 services:
-  # Prometheus - Metrics collection and storage
-  prometheus:
-    image: prom/prometheus:v3.12.0@sha256:69f5241418838263316593f7274a304b095c40bcf22e57272865da91bd60a8ac
-    container_name: prometheus
-    restart: unless-stopped
-    networks:
-      - frontend
-      - monitoring-net
-    security_opt:
-      - no-new-privileges:true
-    user: ${PUID:-1029}:${PGID:-65536}
-    volumes:
-      - ${BASE_PATH:-/volume2/docker/}prometheus/data:/prometheus:rw
-      - ${BASE_PATH:-/volume2/docker/}prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=30d'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.enable-lifecycle'
-    healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9090/-/healthy"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 1m
-    labels:
-      traefik.enable: true
-      traefik.http.routers.prometheus-rtr.rule: Host(`prometheus.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.prometheus-rtr.entrypoints: websecure
-      traefik.http.routers.prometheus-rtr.middlewares: authentik@docker
-      traefik.http.services.prometheus-svc.loadbalancer.server.port: 9090
-
-  # cAdvisor - Container metrics (optimized for Synology)
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.55.1@sha256:3de2bd5203120b866d74a9b283b2ffb8ec382fbf9dc321814700c6ea6f44ec57
-    container_name: cadvisor
-    restart: unless-stopped
-    networks:
-      - monitoring-net
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-    environment:
-      TZ: ${TZ:-Europe/Madrid}
-    command:
-      - '--profiling=false'
-      - '--docker_only=true'
-      - '--housekeeping_interval=30s'
-      - '--disable_metrics=advtcp,cpu_topology,disk,memory_numa,process'
-      - '--store_container_labels=false'
-    healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 1m
-
-  # Node Exporter - Host system metrics
-  node-exporter:
-    image: prom/node-exporter:v1.11.1@sha256:e9cff4fc67b1818f8c97adb115b9f12c9a54b533de86765d4a0effc01b357205
-    container_name: node-exporter
-    restart: unless-stopped
-    networks:
-      - monitoring-net
-    security_opt:
-      - no-new-privileges:true
-    user: ${PUID:-1029}:${PGID:-65536}
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-      - '--collector.netdev.device-exclude=^docker[0-9a-f]+$$'
-    environment:
-      TZ: ${TZ:-Europe/Madrid}
-    healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9100/"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 1m
-
   # Grafana - Visualization and dashboards
   grafana:
     image: grafana/grafana:13.1.0@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63
@@ -98,7 +7,6 @@ services:
     networks:
       - frontend
       - grafana-db-net
-      - monitoring-net
     security_opt:
       - no-new-privileges:true
     user: ${PUID:-1029}:${PGID:-65536}
@@ -140,5 +48,3 @@ networks:
     external: true # Defined in portainer
   grafana-db-net:
     external: true # Defined in Database
-  monitoring-net:
-    external: false # Local network for monitoring stack
