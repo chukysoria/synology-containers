@@ -4,7 +4,7 @@ volumes:
 
 services:
   jellyfin:
-    image: ghcr.io/chukysoria/jellyfin:v0.4.70@sha256:9314fe8b719007d4aeb0dbcd329695e18ac5fec171fc0e5a76f4f66ecabc7010
+    image: ghcr.io/chukysoria/jellyfin:v0.5.1@sha256:ab55077d0625de69def3daa27d93f9d5e64afc786a7db7c89428769ba4a4ee19
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
