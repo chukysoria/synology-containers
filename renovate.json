@@ -23,6 +23,15 @@
       "matchPackageNames": [
         "fireflyiii/core", "fireflyiii/data-importer"
       ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "versioning": "regex:^(?<major>\\d+)-vectorchord(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$",
+      "matchPackageNames": [
+        "ghcr.io/immich-app/postgres"
+      ]
     }
   ]
 }
