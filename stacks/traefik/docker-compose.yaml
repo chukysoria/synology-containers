@@ -5,13 +5,13 @@ services:
     networks:
       frontend:
       macvlan:
-        ipv4_address: 192.168.1.49
+        ipv4_address: 10.174.1.49
       firefly-frontend-net:
     dns:
       - 1.1.1.1
       - 8.8.8.8
     extra_hosts:
-      - host.docker.internal:192.168.1.48
+      - host.docker.internal:10.174.1.48
     environment:
       # General LinuxServer.io
       PUID: ${PUID:-1029}
