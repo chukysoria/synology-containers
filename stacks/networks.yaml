@@ -6,11 +6,11 @@ networks:
       parent: ovs_bond0
     ipam:
       config:
-        - subnet: 192.168.1.0/24
-          ip_range: 192.168.1.48/28
-          gateway: 192.168.1.1
+        - subnet: 10.174.1.0/24
+          ip_range: 10.174.1.48/28
+          gateway: 10.174.1.1
           aux_addresses:
-            torrent: 192.168.1.48
+            torrent: 10.174.1.48
   authentik-db-net:
   grafana-db-net:
   firefly-db-net:
