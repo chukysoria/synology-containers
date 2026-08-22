@@ -1,0 +1,146 @@
+name: Compose deploy smoke test
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+
+jobs:
+  deploy-and-verify:
+    name: Deploy compose and verify containers
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install yq (mikefarah)
+        run: |
+          YQ_VERSION=v4.30.6
+          curl -sL "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" -o /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Show docker & compose
+        run: |
+          docker --version || true
+          docker compose version || true
+
+      - name: Create external networks used by compose
+        run: |
+          set -eo pipefail
+          if [ ! -f stacks/compose.yaml ]; then
+            echo "stacks/compose.yaml not found" >&2
+            exit 1
+          fi
+          # Extract networks where external: true or networks with a 'name' defined
+          # We will ensure named networks exist so compose up succeeds on the runner.
+          mapfile -t networks < <(yq eval '.networks // {} | to_entries[] | select(.value.external == true) | (.key // .value.name)' stacks/compose.yaml | sed '/^\s*$/d')
+          echo "External networks to ensure: ${networks[*]:-<none>}"
+          for net in "${networks[@]}"; do
+            if [ -z "$net" ]; then
+              continue
+            fi
+            if docker network inspect "$net" >/dev/null 2>&1; then
+              echo "Network $net already exists"
+            else
+              echo "Creating network $net (bridge)"
+              docker network create --driver bridge "$net" || true
+            fi
+          done
+
+      - name: Create .env with safe defaults for smoke test
+        run: |
+          set -eo pipefail
+          # Use workspace path for BASE_PATH so volumes mount to a writable location
+          BASE_PATH="${GITHUB_WORKSPACE:-/github/workspace}/ci_data/"
+          cat > .env <<EOF
+PUID=1029
+PGID=65536
+TZ=UTC
+BASE_PATH=$BASE_PATH
+DOMAIN=ci.local
+DUCKDNS_TOKEN=ci-token
+
+# Timescale / Postgres
+TS_USER=postgres
+TS_PASS=ts_pass_for_ci
+TS_DB=homeassistant
+
+# Auth/Postgres for authentik
+PG_USER=authentik
+PG_PASS=authentik_pass_for_ci
+PG_DB=authentik
+
+# PGAdmin
+PGADMIN_USER=ci_user@example.test
+PGADMIN_PASSWORD=pgadmin_pass_for_ci
+
+# Authentik
+AUTHENTIK_SECRET_KEY=dev_secret_key_for_ci
+AUTHENTIK_EMAIL__USERNAME=no-reply@example.test
+AUTHENTIK_EMAIL__PASSWORD=email_pass
+AUTHENTIK_EMAIL__FROM=no-reply@example.test
+
+# Tailscale (used by some stacks) - dummy key so services don't exit
+TAILSCALE_AUTHKEY=ts_dummy_key_for_ci
+
+EOF
+          echo ".env created (preview):"
+          sed -n '1,200p' .env
+
+      - name: Compose up (deploy)
+        run: |
+          set -eo pipefail
+          # Start the full consolidated stack. This may pull images and take time.
+          docker compose -f stacks/compose.yaml up -d --remove-orphans
+
+      - name: Wait for services to be Running/Healthy
+        run: |
+          set -eo pipefail
+          services=$(docker compose -f stacks/compose.yaml config --services)
+          echo "Services to check: $services"
+          fail=0
+          for svc in $services; do
+            echo "Checking $svc"
+            # wait up to 180s per service for running/healthy
+            n=0
+            ok=0
+            while [ $n -lt 36 ]; do
+              cid=$(docker compose -f stacks/compose.yaml ps -q "$svc" 2>/dev/null || true)
+              if [ -n "$cid" ]; then
+                running=$(docker inspect -f '{{.State.Running}}' "$cid" 2>/dev/null || echo false)
+                health=$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{end}}' "$cid" 2>/dev/null || true)
+                echo "  container=$cid running=$running health=$health"
+                if [ "$running" = "true" ]; then
+                  # If health is set, require 'healthy'
+                  if [ -n "$health" ]; then
+                    if [ "$health" = "healthy" ]; then
+                      ok=1
+                      break
+                    fi
+                  else
+                    ok=1
+                    break
+                  fi
+                fi
+              fi
+              n=$((n+1))
+              sleep 5
+            done
+            if [ $ok -ne 1 ]; then
+              echo "Service $svc failed to reach running/healthy" >&2
+              fail=1
+            else
+              echo "Service $svc is running/healthy"
+            fi
+          done
+          if [ $fail -ne 0 ]; then
+            echo "One or more services failed health/run checks" >&2
+            docker compose -f stacks/compose.yaml ps || true
+            docker compose -f stacks/compose.yaml logs --tail 100 || true
+            exit 1
+          fi
+
+      - name: Tear down compose
+        if: always()
+        run: |
+          docker compose -f stacks/compose.yaml down --volumes --remove-orphans || true
