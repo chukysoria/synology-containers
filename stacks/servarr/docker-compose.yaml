@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: ghcr.io/chukysoria/sonarr:v0.6.4@sha256:dfeab57a6c58d8f6ff02d332d75b8a9733d9bb90cf6fbab38490360fab105e47
+    image: ghcr.io/chukysoria/sonarr:v0.6.5@sha256:830fd48149d72aa4a36e8b212a505e55054e4d05850a804c97b4dc6b8057be0a
     volumes:
       - ${BASE_PATH:-/volume2/docker/}sonarr:/config:rw
       - /volume2/downloads:/media/downloads
