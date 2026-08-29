@@ -1,0 +1,49 @@
+name: Check image digests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  digest-check:
+    name: Ensure images are pinned to digests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install yq (mikefarah)
+        run: |
+          YQ_VERSION=v4.30.6
+          curl -sL "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" -o /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Scan compose files for unpinned images (YAML-aware)
+        run: |
+          set -eo pipefail
+          missing=0
+          # Find compose files under stacks/
+          while IFS= read -r -d '' file; do
+            # Extract image entries under services.*.image using yq
+            images=$(yq eval '.services[]?.image // empty' "$file" | sed '/^\s*$/d' || true)
+            if [ -z "$images" ]; then
+              continue
+            fi
+            while IFS= read -r img; do
+              # Skip variables (templates) like ${IMAGE_VAR}
+              if printf '%s' "$img" | grep -q '\${'; then
+                echo "Warning: image uses variable in $file: $img (skipping)"
+                continue
+              fi
+              if ! printf '%s' "$img" | grep -q '@sha256:'; then
+                echo "Missing digest in $file: $img"
+                missing=1
+              fi
+            done <<< "$images"
+          done < <(find stacks -type f \( -name '*.yml' -o -name '*.yaml' \) -print0)
+
+          if [ "$missing" -ne 0 ]; then
+            echo "One or more image references are missing a digest (fail)."
+            exit 1
+          fi
