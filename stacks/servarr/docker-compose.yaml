@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: lscr.io/linuxserver/sonarr:4.0.19.2979-ls322
+    image: lscr.io/linuxserver/sonarr:4.0.19.2979-ls322@sha256:c19aa4ecdf03d73e1d5c901da33744cb7eb4d921f89bafed1ca264601d7fa224
     volumes:
       - ${BASE_PATH:-/volume2/docker/}sonarr:/config:rw
       - /volume2/downloads:/media/downloads
@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:v1.6.0-ls361
+    image: lscr.io/linuxserver/bazarr:v1.6.0-ls361@sha256:3a820372f19fcb2981ea19fe4b5382934d67414afaba974bce831ddda0a64a02
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
       - /volume2/downloads:/media/downloads
@@ -66,7 +66,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:2.5.2.5491-ls157
+    image: lscr.io/linuxserver/prowlarr:2.5.2.5491-ls157@sha256:ab91301778251f82a31bbfc87f0497376d59e84439d9a1ceff6a61d594d1e3d7
     networks:
       - frontend
     volumes:
