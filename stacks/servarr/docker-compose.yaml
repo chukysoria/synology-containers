@@ -1,7 +1,7 @@
 ---
 services:
   radarr:
-    image: lscr.io/linuxserver/radarr:6.3.0.10514-ls315@sha256:95ba0801df4d9d1d79d0d9a3849f656542497dab061d91b87ad4f53a71aff3ef
+    image: lscr.io/linuxserver/radarr:6.3.0.10514-ls316@sha256:fe051413dfd91b383ba04910552e83fb0306895fefee275c48dafe7bb90807dc
     volumes:
       - ${BASE_PATH:-/volume2/docker/}radarr:/config:rw
       - /volume2/downloads:/media/downloads
