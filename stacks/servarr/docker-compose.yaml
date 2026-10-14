@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:v1.6.2-ls367@sha256:c1673816321156b904af9b7e6415ea547ae9622e4acc375358f1e1eb9ed1e904
+    image: lscr.io/linuxserver/bazarr:v1.6.2-ls368@sha256:fb0437897eaa7f96cf6ac42f795f8dcc208d34ec969eac5d366454e767304eb9
     volumes:
       - ${BASE_PATH:-/volume2/docker/}bazarr:/config:rw
       - /volume2/downloads:/media/downloads
