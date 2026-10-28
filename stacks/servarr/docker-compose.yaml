@@ -108,25 +108,6 @@ services:
       traefik.http.routers.lidarr-rtr.middlewares: authentik@docker
     restart: unless-stopped
 
-  whisparr:
-    image: ghcr.io/hotio/whisparr:v3-3.0.2.1433@sha256:51d3b0b952a0a502ba052704327adbf8885dd02fd39ff9aa434ed63609c75f4f
-    networks:
-      - frontend
-    environment:
-      # Common variables
-      PUID: ${PUID:-1029}
-      PGID: ${PGID:-65536}
-      TZ: ${TZ:-Europe/Madrid}
-      UMASK: 002
-    volumes:
-      - ${BASE_PATH:-/volume2/docker/}whisparr:/config:rw
-      - /volume2/video:/media/video
-    labels:
-      traefik.enable: true
-      traefik.http.routers.whisparr-rtr.rule: Host(`whisparr.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.whisparr-rtr.middlewares: authentik@docker
-    restart: unless-stopped
-
 networks:
   frontend:
     external: true # Defined in Portainer
