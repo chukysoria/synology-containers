@@ -171,16 +171,6 @@ services:
         condition: service_healthy
       prowlarr:
         condition: service_healthy
-  # Huntarr (custom)
-  huntarr:
-    extends:
-      file: servarr/docker-compose.yaml
-      service: huntarr
-  # Huntarr (custom)
-  whisparr:
-    extends:
-      file: servarr/docker-compose.yaml
-      service: whisparr
   # VS Code
   vaultwarden:
     extends:
