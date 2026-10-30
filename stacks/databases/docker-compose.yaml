@@ -66,6 +66,8 @@ services:
       POSTGRES_USER: ${TS_USER:-postgres}
       POSTGRES_PASSWORD: ${TS_PASS:?database password required}
       POSTGRES_CLUSTER: "TRUE"
+      # Image default is -Z1, which pg_dumpall rejects; output is gzipped by the script anyway
+      POSTGRES_EXTRA_OPTS: ""
       SCHEDULE: "0 0 2 * * *"
       BACKUP_ON_START: "TRUE"
       BACKUP_KEEP_DAYS: 7
