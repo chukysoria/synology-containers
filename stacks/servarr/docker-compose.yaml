@@ -39,6 +39,12 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
+    healthcheck:
+      test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-sonarr/data/check"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
     labels:
       traefik.enable: true
       traefik.http.routers.sonarr-rtr.rule: Host(`sonarr.${DOMAIN:-boulebar.duckdns.org}`)
@@ -59,6 +65,12 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "6767"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
     labels:
       traefik.enable: true
       traefik.http.routers.bazarr-rtr.rule: Host(`bazarr.${DOMAIN:-boulebar.duckdns.org}`)
@@ -76,6 +88,12 @@ services:
       PUID: ${PUID:-1029}
       PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
+    healthcheck:
+      test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-prowlarr/data/check"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
     labels:
       traefik.enable: true
       traefik.http.routers.prowlarr-rtr.rule: Host(`prowlarr.${DOMAIN:-boulebar.duckdns.org}`)
@@ -88,7 +106,7 @@ services:
       - frontend
     volumes:
       - ${BASE_PATH:-/volume2/docker/}lidarr:/config
-      - /volume2/video/torrents/:/downloads
+      - /volume2/video/torrents:/media/video/torrents # Same path as qBittorrent
       - /volume2/music:/media/music
     healthcheck:
       test: ["CMD", "/etc/s6-overlay/s6-rc.d/svc-lidarr/data/check"]

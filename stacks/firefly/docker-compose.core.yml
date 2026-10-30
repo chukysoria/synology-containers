@@ -32,12 +32,19 @@ services:
       - DB_PASSWORD=${PG_PICO_PASS:?Firefly Pico DB Password}
       - TZ=${TZ:-Europe/Madrid}
       - NGINX_PORT=8080
+    restart: unless-stopped
     networks:
       - firefly-net
       - firefly-frontend-net
       - firefly-db-net
     depends_on:
       - app
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 1m
     labels:
       traefik.enable: true
       traefik.docker.network: firefly-frontend-net

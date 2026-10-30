@@ -28,6 +28,12 @@ services:
       - /volume2/music:/media/music
       - /volume2/video:/media/video
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8096/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 2m
     labels:
       traefik.enable: true
       # Routers
@@ -45,9 +51,8 @@ services:
     image: ghcr.io/seerr-team/seerr:v3.5.1@sha256:d8fab675b55ad293ded98fd71efcfd46054cbad9746534ae1cc4794a88c0b3be
     init: true
     container_name: seerr
+    user: ${PUID:-1029}:${PGID:-65536} # Seerr ignores PUID/PGID
     environment:
-      PUID: ${PUID:-1029}
-      PGID: ${PGID:-65536}
       TZ: ${TZ:-Europe/Madrid}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}jellyseerr:/app/config

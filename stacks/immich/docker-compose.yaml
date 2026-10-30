@@ -30,7 +30,7 @@ services:
       disable: false
     labels:
       traefik.enable: true
-      traefik.http.routers.immich.rule: Host(`immich.boulebar.duckdns.org`)
+      traefik.http.routers.immich.rule: Host(`immich.${DOMAIN:-boulebar.duckdns.org}`)
       traefik.http.services.immich.loadbalancer.server.port: 2283
 
   immich-machine-learning:

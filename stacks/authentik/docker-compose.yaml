@@ -7,13 +7,12 @@ services:
     command: server
     environment:
       TZ: ${TZ:-Europe/Madrid}
-      AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: timescaledb
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
-      AUTHENTIK_ERROR_REPORTING__ENABLED: true
+      AUTHENTIK_ERROR_REPORTING__ENABLED: false
       AUTHENTIK_COOKIE_DOMAIN: ${DOMAIN:-boulebar.duckdns.org}
     volumes:
       - ${BASE_PATH:-/volume2/docker/}authentik/data:/data
@@ -57,9 +56,7 @@ services:
       AUTHENTIK_EMAIL__USE_SSL: TRUE
       AUTHENTIK_EMAIL__TIMEOUT: 10
       AUTHENTIK_EMAIL__FROM: ${AUTHENTIK_EMAIL__FROM}
-    user: root
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ${BASE_PATH:-/volume2/docker/}authentik/data:/data
       - ${BASE_PATH:-/volume2/docker/}authentik/certs:/certs
       - ${BASE_PATH:-/volume2/docker/}authentik/custom-templates:/templates

@@ -24,7 +24,7 @@ services:
       TZ: ${TZ:-Europe/Madrid}
       # Grafana
       GF_SERVER_ROOT_URL: https://grafana.${DOMAIN:-boulebar.duckdns.org}/
-      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,grafana-piechart-panel
+      GF_INSTALL_PLUGINS: grafana-clock-panel
       GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
       GF_AUTH_GENERIC_OAUTH_NAME: "authentik"
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: ${GRAFANA_OAUTH_CLIENT_ID:?OAuth Client ID}

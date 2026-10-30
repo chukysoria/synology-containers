@@ -31,6 +31,28 @@ services:
       - "traefik.http.routers.vaultwarden.rule=Host(`vw.${DOMAIN:-boulebar.duckdns.org}`)"
     restart: unless-stopped
 
+  # Consistent SQLite backup (sqlite3 .backup) plus attachments/sends/keys, so Hyper Backup
+  # doesn't have to copy the live db.sqlite3 + WAL.
+  vaultwarden-backup:
+    image: bruceforce/vaultwarden-backup:2.1.6@sha256:3e464a652874b9575c8a8687cf5504d78ce47b6592e63d50dd32e1c5c882e319
+    network_mode: none
+    restart: unless-stopped
+    depends_on:
+      - vaultwarden
+    volumes:
+      - ${BASE_PATH:-/volume2/docker/}vaultwarden:/data:rw # rw needed: SQLite WAL needs the -shm file
+      - ${BASE_PATH:-/volume2/docker/}backups/vaultwarden:/backup
+    environment:
+      TZ: ${TZ:-Europe/Madrid}
+      UID: ${PUID:-1029}
+      GID: ${PGID:-65536}
+      CRON_TIME: "0 2 * * *"
+      DELETE_AFTER: 30
+      TIMESTAMP: "true"
+      BACKUP_ADD_SENDS: "true"
+    security_opt:
+      - no-new-privileges:true
+
 networks:
   frontend:
     external: true # Defined in Portainer

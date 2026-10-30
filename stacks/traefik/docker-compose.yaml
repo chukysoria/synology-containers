@@ -7,6 +7,7 @@ services:
       macvlan:
         ipv4_address: 192.168.1.49
       firefly-frontend-net:
+      socket-proxy:
     dns:
       - 1.1.1.1
       - 8.8.8.8
@@ -22,7 +23,6 @@ services:
     volumes:
       - ${BASE_PATH:-/volume2/docker/}certs:/certs:rw
       - ${BASE_PATH:-/volume2/docker/}traefik:/config:rw
-      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: true
       # Routers
@@ -31,9 +31,44 @@ services:
       # Middlewares
       traefik.http.routers.traefik-rtr.middlewares: authentik@docker
     restart: unless-stopped
+    depends_on:
+      docker-socket-proxy:
+        condition: service_healthy
 
+  # Read-only, filtered access to the Docker API for Traefik.
+  # Requires `providers.docker.endpoint: tcp://docker-socket-proxy:2375` in traefik.yml
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:v0.5.0@sha256:1f5038b54f06c3e18422902cf00ba21803d1c97805aae032e5e6673d532d3459
+    networks:
+      - socket-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # Everything not listed here is denied (POST/write calls are off by default)
+      CONTAINERS: 1
+      NETWORKS: 1
+      SERVICES: 1
+      TASKS: 1
+      EVENTS: 1
+      VERSION: 1
+      INFO: 1
+      POST: 0
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 2375"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
 
 networks:
+  socket-proxy:
+    internal: true # Only Traefik <-> proxy, no outside access
   frontend:
     external: true # Defined in portainer
   macvlan:

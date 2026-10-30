@@ -21,7 +21,7 @@ services:
       # Code Server
       DEFAULT_WORKSPACE: ${BASE_PATH:-/volume2/docker/}hass
       CS_DISABLE_GETTING_STARTED_OVERRIDE: true
-      SUDO_PASSWORD: abc
+      SUDO_PASSWORD: ${SUDO_PASSWORD:?}
       VSCODE_EXTENSION_IDS: "keesschollaart.vscode-home-assistant|ms-azuretools.vscode-docker|redhat.vscode-yaml|lukas-tr.materialdesignicons-intellisense|tailscale.vscode-tailscale|ms-vscode-remote.vscode-remote-extensionpack"
       INSTALL_PACKAGES: wget
       EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery","itemUrl": "https://marketplace.visualstudio.com/items"}'
