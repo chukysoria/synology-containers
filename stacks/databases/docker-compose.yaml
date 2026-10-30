@@ -99,7 +99,6 @@ services:
       traefik.enable: true
       traefik.docker.network: frontend
       traefik.http.routers.pgadmin-rtr.rule: Host(`pgadmin.${DOMAIN:-boulebar.duckdns.org}`)
-      traefik.http.routers.pgadmin-rtr.middlewares: authentik@docker
 
 volumes:
   pgadmin:
