@@ -28,6 +28,33 @@
       "matchDatasources": [
         "docker"
       ],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)(?:\\.(?<patch>\\d+))?ubu(?<compatibility>\\d+)-ls(?<build>\\d+)$",
+      "matchPackageNames": [
+        "lscr.io/linuxserver/jellyfin"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)_stable_[\\d-]+-ls(?<revision>\\d+)$",
+      "matchPackageNames": [
+        "lscr.io/linuxserver/duplicati"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "versioning": "regex:^release-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+      "matchPackageNames": [
+        "ghcr.io/hotio/unpackerr"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
       "versioning": "regex:^(?<major>\\d+)-vectorchord(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$",
       "matchPackageNames": [
         "ghcr.io/immich-app/postgres"
