@@ -13,8 +13,8 @@ services:
       authentik-db-net:
       firefly-db-net:
       ghostfolio-db-net:
-    # ports:
-    #   - 5433:5432
+    ports:
+      - 5433:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
