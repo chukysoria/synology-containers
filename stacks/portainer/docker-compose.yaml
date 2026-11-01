@@ -1,7 +1,7 @@
 ---
 services:
   portainer:
-    image: portainer/portainer-ee:2.45.3-alpine@sha256:4e706af52d7455c995b41ba8e05585ffa965e0a80adecb32d2fef14d68eb0f79
+    image: portainer/portainer-ee:3.0.0-alpine@sha256:85b264b14ecc7faf7f7af13bd12f2bcc411ebb1162044cb615da26aebc58c599
     networks:
       - frontend
     volumes:
