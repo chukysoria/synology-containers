@@ -20,7 +20,7 @@ services:
       traefik.http.routers.fireflyiii-rtr.middlewares: authentik@docker
 
   firefly-pico:
-    image: cioraneanu/firefly-pico:dev@sha256:4c87abdf3377dbd0297cf3753207784c7cff47c2e37140061ff2b1cd7c2619cf
+    image: cioraneanu/firefly-pico:dev@sha256:ccb0af41db0d652ce26408e653ffe3a58b9fc174ec4e6fdff37fc2767bf243ad
     container_name: firefly_pico
     environment:
       - FIREFLY_URL=http://app:8080
